@@ -35,7 +35,7 @@ const Login = ({change}) => {
             <p>Password</p>
             <input onChange={(e) => setPassword(e.target.value)} required type="password" name="password" id="password" placeholder="password" />
         </label>
-        <button type="submit">Sign up</button>
+        <button type="submit">Login</button>
     </form>
     <a onClick={change}>Changer de composants</a>
 </>
