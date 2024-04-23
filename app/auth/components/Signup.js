@@ -17,8 +17,9 @@ const Signup = ({ change }) => {
             return console.log(error)
         }
 
+        const uid = result.user
         // else successful
-        console.log(result)
+        console.log(uid)
         return router.push(`/user/${1}/profile`)
     }
 

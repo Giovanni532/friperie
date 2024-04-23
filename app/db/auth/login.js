@@ -8,12 +8,6 @@ export default async function login(email, password) {
         error = null;
     try {
         result = await signInWithEmailAndPassword(auth, email, password)
-        .then(data => {
-            console.log(data)
-        })
-        .catch(error => {
-            console.log(error)
-        })
     } catch (e) {
         error = e;
     }
