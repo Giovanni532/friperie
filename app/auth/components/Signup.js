@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import signup from '@/app/db/auth/Signup';
+import signup from '@/app/db/auth/signup';
 import { useRouter } from 'next/navigation';
 
 const Signup = ({ change }) => {
