@@ -17,10 +17,9 @@ const Login = ({change}) => {
         return console.log(error)
     }
 
-    const uid = result.user
-    // else successful
-    console.log(uid)
-    return router.push(`/user/${1}/profile`)
+    const uid = result.user.uid
+
+    return router.push(`/user/${uid}/profile`)
 }
 
   return (
