@@ -2,13 +2,31 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAuthContext } from '@/app/providers/AuthProvider';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { isAdmin } from '../action/action';
 
 export default function Page() {
     const { user } = useAuthContext();
-    const router = useRouter();
+    const [admin, setAdmin] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    return (
-        <div>User admin page (alisson)</div>
-    )
+
+    useEffect(() => {
+        if (user){
+            isAdmin(user.email)
+            .then(result => {
+                setAdmin(result);
+                admin ? setLoading(true) : setLoading(false)
+            })
+        }
+    }, [user])
+
+
+    if(loading){
+        return <p>En cours de verification ..</p>
+    } else if (admin && !loading) {
+        return <p>Bienvenue {user.email} </p>
+    } else {
+        redirect('/')
+    }
 }
