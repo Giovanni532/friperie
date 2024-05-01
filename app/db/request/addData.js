@@ -16,3 +16,7 @@ export default async function addData(colllection, id, data) {
 
     return { resultAddData, errorAddData };
 }
+
+/* COMMENT APPELER LA FONCTION */
+
+// await addData('test', id, data)
