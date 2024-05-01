@@ -1,0 +1,12 @@
+import firebaseDb from "../config";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth(firebaseDb);
+
+export default async function logout() {
+    try {
+        await auth.signOut()
+    } catch (e) {
+        console.log(e);
+    }
+}
