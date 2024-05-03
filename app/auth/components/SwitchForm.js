@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from "react"
-import Login from "./Login";
+import LoginForm from "./LoginForm";
 import Signup from "./Signup";
 
 const SwitchForm = () => {
@@ -15,7 +15,7 @@ const SwitchForm = () => {
     return (
         <>
             {switchForm ?
-                <Login change={handleSwitch} />
+                <LoginForm change={handleSwitch} />
                 :
                 <Signup change={handleSwitch}/>
             }
