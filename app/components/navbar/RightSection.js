@@ -46,7 +46,7 @@ export default function RightSection({ user, handleLogout }) {
                       Voir mes articles
                     </Link>
                     <Link
-                      href={`/user/${user.uid}/dashboard/admin`}
+                      href={`/user/${user.uid}/dashboard/admin/newArticle`}
                     >
                       Ajoutez un article
                     </Link>
