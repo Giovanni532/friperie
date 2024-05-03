@@ -10,3 +10,7 @@ export default async function logout() {
         console.log(e);
     }
 }
+
+/* COMMENT APPELER LA FONCTION */
+
+//await logout()

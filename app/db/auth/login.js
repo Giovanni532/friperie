@@ -14,3 +14,7 @@ export default async function login(email, password) {
 
     return { result, error };
 }
+
+/* COMMENT APPELER LA FONCTION */
+
+//const {result, error} =  await login(email, pwd)

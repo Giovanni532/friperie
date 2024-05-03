@@ -6,3 +6,7 @@ export async function IsAdmin(email){
     }
     return false
 }
+
+/* COMMENT APPELER LA FONCTION */
+
+// IsAdmin(user.email)

@@ -15,3 +15,7 @@ export default async function signup(email, password) {
 
     return { resultSignup, errorSignup };
 }
+
+/* COMMENT APPELER LA FONCTION */
+
+//const {resultSignup, errorSignup} =  await signup(email, pwd)

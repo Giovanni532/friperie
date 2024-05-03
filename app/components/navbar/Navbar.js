@@ -12,9 +12,9 @@ const Navbar = () => {
     const router = useRouter();
     const { user } = useAuthContext();
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         router.push('/')
-        logout()
+        await logout()
     }
 
     return (
