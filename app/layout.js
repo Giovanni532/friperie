@@ -3,7 +3,7 @@ import "./globals.css";
 import { AuthContextProvider } from "./providers/AuthProvider";
 
 import { cn } from "@/lib/utils"
-import NavBar from "./components/NavBar";
+import NavBar from "./components/navbar/Navbar";
 
 const fontSans = FontSans({
   subsets: ["latin"],

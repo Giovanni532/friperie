@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthContext } from '@/app/providers/AuthProvider';
 import { redirect } from 'next/navigation';
-import { isAdmin } from '../action/action';
+import { IsAdmin } from '@/app/utils/(server)/isAdmin';
 
 export default function Page() {
     const { user } = useAuthContext();
@@ -13,11 +13,13 @@ export default function Page() {
 
     useEffect(() => {
         if (user){
-            isAdmin(user.email)
+            IsAdmin(user.email)
             .then(result => {
                 setAdmin(result);
                 admin ? setLoading(true) : setLoading(false)
             })
+        } else {
+            setLoading(false)
         }
     }, [user])
 
