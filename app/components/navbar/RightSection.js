@@ -2,6 +2,16 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { IsAdmin } from "@/app/utils/(server)/isAdmin";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
 
 export default function RightSection({ user, handleLogout }) {
   const [admin, setAdmin] = useState(false);
@@ -25,12 +35,25 @@ export default function RightSection({ user, handleLogout }) {
             Mon compte
           </Link>
           {admin && (
-            <Link
-              href={`/user/${user.uid}/dashboard/admin`}
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Dashboard
-            </Link>
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Dashboard</NavigationMenuTrigger>
+                  <NavigationMenuContent className="flex flex-col w-[180px] gap-3 p-4 md:w-[180px] md:grid-cols-2 lg:w-[180px] ">
+                    <Link
+                      href={`/user/${user.uid}/dashboard/admin`}
+                    >
+                      Voir mes articles
+                    </Link>
+                    <Link
+                      href={`/user/${user.uid}/dashboard/admin`}
+                    >
+                      Ajoutez un article
+                    </Link>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           )}
 
           <Button
