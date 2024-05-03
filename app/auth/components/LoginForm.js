@@ -47,12 +47,12 @@ export default function LoginForm({ change }) {
 
   return (
     <>
-      <div className="container mx-auto space-y-5 mt-10 p-8 shadow-2xl rounded w-96">
+      <div className="container mx-auto space-y-5 mt-10 p-8 shadow-2xl rounded w-2/6">
         <h2 className="text-center text-xl">Se connecter</h2>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onFormSubmit)}
-            className="space-y-4 w-80"
+            className="space-y-4"
           >
             <FormField
               control={form.control}

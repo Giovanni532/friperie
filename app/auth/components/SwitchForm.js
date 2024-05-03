@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import LoginForm from "./LoginForm";
-import Signup from "./Signup";
+import SignupForm from "./SignupForm";
 
 const SwitchForm = () => {
 
@@ -17,7 +17,7 @@ const SwitchForm = () => {
             {switchForm ?
                 <LoginForm change={handleSwitch} />
                 :
-                <Signup change={handleSwitch}/>
+                <SignupForm change={handleSwitch}/>
             }
         </>
     )

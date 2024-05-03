@@ -1,0 +1,143 @@
+import React, { useState } from "react";
+import signup from "@/app/db/auth/signup";
+import addData from "@/app/db/request/addData";
+import { useRouter } from "next/navigation";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+const formSchema = z.object({
+  prenom: z.string().min(3, {
+    message: "Entrer votre prenom.",
+  }),
+  nom: z.string().min(3, {
+    message: "Entre votre nom.",
+  }),
+  email: z.string().email({
+    message: "Email invalide, veuillez entrer un mail valide.",
+  }),
+  password: z.string().min(8, {
+    message: "Votre mot de passe doit contenir au moins 8 caractere.",
+  }),
+});
+
+export default function SignupForm({ change }) {
+  const [emailAlreadyExist, setEmailAlreadyExist] = useState(false);
+  const router = useRouter();
+
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      prenom: "",
+      nom: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  const onFormSubmit = async (data) => {
+    const { prenom, nom, email, password } = data;
+    const { resultSignup, errorSignup } = await signup(email, password);
+    if (errorSignup) {
+      setEmailAlreadyExist(true);
+    }
+
+    const uid = resultSignup.user.uid;
+    const user = {
+      prenom,
+      nom,
+      email,
+      uid,
+    };
+
+    await addData("user", uid, user);
+    return router.push(`/user/${uid}/profile`);
+  };
+
+  return (
+    <>
+      <div className="container mx-auto space-y-5 mt-10 p-8 shadow-2xl rounded w-2/6">
+        <h2 className="text-center text-xl">S'inscrire</h2>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onFormSubmit)}
+            className="space-y-4"
+          >
+            <FormField
+              control={form.control}
+              name="prenom"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Votre prénom</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="nom"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Votre nom</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Doe" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Votre email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="exemple@gmail.com" {...field} />
+                  </FormControl>
+                  {emailAlreadyExist && (
+                    <FormDescription>Email deja existant</FormDescription>
+                  )}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Votre mot de passe</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="text-center mt-2">
+              <Button type="submit">S'inscrire</Button>
+            </div>
+          </form>
+        </Form>
+        <div className="text-center">
+          <Button onClick={change}>Vous avez deja un compte ?</Button>
+        </div>
+      </div>
+    </>
+  );
+}
