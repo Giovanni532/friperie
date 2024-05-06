@@ -26,7 +26,6 @@ const DataTable = ({ columns, data }) => {
 
   return (
     <div className="rounded-md border">
-      <p>Coucou</p>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

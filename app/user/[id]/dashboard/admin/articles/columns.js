@@ -20,6 +20,10 @@ const columns = [
     header: "Marque",
   },
   {
+    accessorKey: "categorie",
+    header: "Catégorie",
+  },
+  {
     accessorKey: "couleur",
     header: "Couleur",
   },

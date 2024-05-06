@@ -15,8 +15,7 @@ export async function getData() {
 const Page = async () => {
     const data = await getData();
     return (
-        <div className="container mx-auto py-10">
-            <p>coucou</p>
+        <div className="container mx-auto py-10 ">
             <DataTable columns={columns} data={data} />
         </div>
     )

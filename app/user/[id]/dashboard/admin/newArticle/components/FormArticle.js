@@ -15,44 +15,49 @@ import { Input } from "@/components/ui/input";
 import addData from '@/app/db/request/addData';
 
 const formSchema = z.object({
-    titre: z.string().min(1,{
-      message: "Ajoutez un titre",
-    }),
-    prix: z.string().min(1, {
-        message: "Ajoutez un prix qui est un chiffre entier",
-    }),
-    taille: z.string().min(1, {
-        message: "Ajoutez une taille",
-    }),
-    etat: z.string().min(1, {
-        message: "Ajoutez un état",
-    }),
-    marque: z.string().min(1, {
-        message: "Ajoutez une marque",
-    }),
-    couleur: z.string().min(1, {
-        message: "Ajoutez une couleur",
-    })
-  });
-  
+  titre: z.string().min(1, {
+    message: "Ajoutez un titre",
+  }),
+  prix: z.string().min(1, {
+    message: "Ajoutez un prix qui est un chiffre entier",
+  }),
+  taille: z.string().min(1, {
+    message: "Ajoutez une taille",
+  }),
+  etat: z.string().min(1, {
+    message: "Ajoutez un état",
+  }),
+  marque: z.string().min(1, {
+    message: "Ajoutez une marque",
+  }),
+  categorie: z.string().min(1, {
+    message: "Ajoutez une catégorie",
+  }),
+  couleur: z.string().min(1, {
+    message: "Ajoutez une couleur",
+  })
+});
+
 
 export default function FormArticle() {
-    const form = useForm({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          titre: "",
-          prix: "0",
-          taille: "",
-          etat: "",
-          marque: "",
-          couleur: ""
-        },
-      });
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      titre: "",
+      prix: "0",
+      taille: "",
+      etat: "",
+      marque: "",
+      categorie: "",
+      couleur: ""
+    },
+  });
 
-      const onFormSubmit = async (data) => {
-        console.log(data)
-        await addData(data)
-      };
+  const onFormSubmit = async (data) => {
+    console.log(data)
+    await addData(data)
+  };
+
   return (
     <>
       <div className="container mx-auto space-y-5 mt-10 p-8 shadow-2xl rounded w-2/6">
@@ -88,7 +93,7 @@ export default function FormArticle() {
                 </FormItem>
               )}
             />
-                        <FormField
+            <FormField
               control={form.control}
               name="taille"
               render={({ field }) => (
@@ -101,7 +106,7 @@ export default function FormArticle() {
                 </FormItem>
               )}
             />
-                        <FormField
+            <FormField
               control={form.control}
               name="etat"
               render={({ field }) => (
@@ -114,7 +119,7 @@ export default function FormArticle() {
                 </FormItem>
               )}
             />
-                        <FormField
+            <FormField
               control={form.control}
               name="marque"
               render={({ field }) => (
@@ -127,7 +132,20 @@ export default function FormArticle() {
                 </FormItem>
               )}
             />
-                        <FormField
+            <FormField
+              control={form.control}
+              name="categorie"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Catégorie</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Haut, Pull, Bas" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
               control={form.control}
               name="couleur"
               render={({ field }) => (
