@@ -1,26 +1,25 @@
-'use client'
+import getMultipleData from "@/app/db/request/getMultipleData"
+import columns from "./articles/columns"
+import DataTable from "./articles/data-table"
 
-import React, { useEffect, useState } from 'react';
-import { useAuthContext } from '@/app/providers/AuthProvider';
-import { redirect } from 'next/navigation';
-import getMultipleData from '@/app/db/request/getMultipleData';
+export async function getData() {
+    const data = [];
+    const { resultGetMultipleData } = await getMultipleData("article");
 
-export default function Page() {
-    const { user, isAdmin } = useAuthContext();
-    const [articles, setArticles] = useState([]);
-
-    useEffect(() => {
-        if(!isAdmin){
-            return redirect('/')
-        } else {
-            getMultipleData("article")
-            .then(result => {
-                const { resultGetMultipleData } = result;
-                setArticles(resultGetMultipleData)
-            })
-        }
-    }, [])
-
-    console.log(articles)
-    return <h1> Bienvenue {user.email}</h1>
+    resultGetMultipleData.map(article => 
+        data.push(article.data)
+    )
+    return data;
 }
+
+const Page = async () => {
+    const data = await getData();
+    return (
+        <div className="container mx-auto py-10">
+            <p>coucou</p>
+            <DataTable columns={columns} data={data} />
+        </div>
+    )
+}
+
+export default Page;
