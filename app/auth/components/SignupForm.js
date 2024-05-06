@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import signup from "@/app/db/auth/signup";
-import addData from "@/app/db/request/addData";
+import addUser from "@/app/db/request/addUser";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   prenom: z.string().min(3, {
@@ -28,9 +29,19 @@ const formSchema = z.object({
     message: "Email invalide, veuillez entrer un mail valide.",
   }),
   password: z.string().min(8, {
-    message: "Votre mot de passe doit contenir au moins 8 caractere.",
+    message: "Votre mot de passe doit contenir au moins 8 caractères.",
+  }),
+  adresse: z.string().min(10, {
+    message: "Adresse invalide, veuillez entrer une adresse valide."
+  }),
+  codePostal: z.string().min(4, {
+    message: "Code postal invalide, veuillez entrer un code postal valide.",
+  }),
+  ville: z.string().min(2, {
+    message: "Nom de la ville invalide, veuillez entrer un nom de ville valide.",
   }),
 });
+
 
 export default function SignupForm({ change }) {
   const [emailAlreadyExist, setEmailAlreadyExist] = useState(false);
@@ -41,28 +52,33 @@ export default function SignupForm({ change }) {
     defaultValues: {
       prenom: "",
       nom: "",
+      adresse: "",
+      codePostal: "",
+      ville: "",
       email: "",
-      password: "",
+      password: ""
     },
   });
 
   const onFormSubmit = async (data) => {
-    const { prenom, nom, email, password } = data;
+    const { prenom, nom, email, password, adresse, codePostal, ville } = data;
     const { resultSignup, errorSignup } = await signup(email, password);
     if (errorSignup) {
       setEmailAlreadyExist(true);
+    } else {
+      const uid = resultSignup.user.uid;
+      const user = {
+        prenom,
+        nom,
+        email,
+        adresse,
+        codePostal,
+        ville,
+        uid,
+      };
+      await addUser("user", uid, user);
+      return router.push(`/user/${uid}/profile`);
     }
-
-    const uid = resultSignup.user.uid;
-    const user = {
-      prenom,
-      nom,
-      email,
-      uid,
-    };
-
-    await addData("user", uid, user);
-    return router.push(`/user/${uid}/profile`);
   };
 
   return (
@@ -102,6 +118,45 @@ export default function SignupForm({ change }) {
             />
             <FormField
               control={form.control}
+              name="adresse"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Votre adresse</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Avenue de ..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="codePostal"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Code postal</FormLabel>
+                  <FormControl>
+                    <Input placeholder="1201" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="ville"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Ville</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Genève" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
@@ -110,7 +165,7 @@ export default function SignupForm({ change }) {
                     <Input placeholder="exemple@gmail.com" {...field} />
                   </FormControl>
                   {emailAlreadyExist && (
-                    <FormDescription>Email deja existant</FormDescription>
+                    <FormDescription className={cn("text-sm font-medium text-destructive")}>Email deja existant</FormDescription>
                   )}
                   <FormMessage />
                 </FormItem>
