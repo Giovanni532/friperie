@@ -3,18 +3,18 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const db = getFirestore(firebaseDb)
 export default async function addUser(colllection, id, data) {
-    let resultAddData = null;
-    let errorAddData = null;
+    let resultAddUser = null;
+    let errorAddUser = null;
 
     try {
-        resultAddData = await setDoc(doc(db, colllection, id), data, {
+        resultAddUser = await setDoc(doc(db, colllection, id), data, {
             merge: true,
         });
     } catch (e) {
-        errorAddData = e;
+        errorAddUser = e;
     }
 
-    return { resultAddData, errorAddData };
+    return { resultAddUser, errorAddUser };
 }
 
 /* COMMENT APPELER LA FONCTION */

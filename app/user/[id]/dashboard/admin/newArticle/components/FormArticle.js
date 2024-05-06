@@ -12,24 +12,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import addData from '@/app/db/request/addData';
 
 const formSchema = z.object({
-    titre: z.string().min(0,{
+    titre: z.string().min(1,{
       message: "Ajoutez un titre",
     }),
-    prix: z.number().int(0, {
+    prix: z.string().min(1, {
         message: "Ajoutez un prix qui est un chiffre entier",
     }),
     taille: z.string().min(1, {
         message: "Ajoutez une taille",
     }),
-    etat: z.string().min(0, {
+    etat: z.string().min(1, {
         message: "Ajoutez un état",
     }),
-    marque: z.string().min(0, {
+    marque: z.string().min(1, {
         message: "Ajoutez une marque",
     }),
-    couleur: z.string().min(0, {
+    couleur: z.string().min(1, {
         message: "Ajoutez une couleur",
     })
   });
@@ -40,7 +41,7 @@ export default function FormArticle() {
         resolver: zodResolver(formSchema),
         defaultValues: {
           titre: "",
-          prix: 0,
+          prix: "0",
           taille: "",
           etat: "",
           marque: "",
@@ -50,6 +51,7 @@ export default function FormArticle() {
 
       const onFormSubmit = async (data) => {
         console.log(data)
+        await addData(data)
       };
   return (
     <>
@@ -80,7 +82,7 @@ export default function FormArticle() {
                 <FormItem>
                   <FormLabel>Prix de l'article</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input placeholder="25" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -127,7 +129,7 @@ export default function FormArticle() {
             />
                         <FormField
               control={form.control}
-              name="Couleur"
+              name="couleur"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Couleur de l'article</FormLabel>
