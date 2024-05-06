@@ -1,29 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { IsAdmin } from "@/app/utils/(server)/isAdmin";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
 
-export default function RightSection({ user, handleLogout }) {
-  const [admin, setAdmin] = useState(false);
-
-  useEffect(() => {
-    if (user) {
-      IsAdmin(user.email).then((result) => {
-        setAdmin(result);
-      });
-    }
-  }, [user]);
-
+export default function RightSection({ admin, user, handleLogout }) {
   return (
     <div className="flex items-center">
       {user ? (

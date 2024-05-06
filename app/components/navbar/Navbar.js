@@ -10,11 +10,13 @@ import RightSection from './RightSection';
 
 const Navbar = () => {
     const router = useRouter();
-    const { user } = useAuthContext();
+    const { user, isAdmin } = useAuthContext();
 
     const handleLogout = async () => {
         router.push('/')
-        await logout()
+        setTimeout(() => {
+            logout()
+        }, 500)
     }
 
     return (
@@ -26,7 +28,7 @@ const Navbar = () => {
                     {/* Middle section */}
                     <MidSection/>
                     {/* Right section */}
-                    <RightSection user={user} handleLogout={handleLogout}/>
+                    <RightSection admin={isAdmin} user={user} handleLogout={handleLogout}/>
                 </div>
             </div>
         </nav>
