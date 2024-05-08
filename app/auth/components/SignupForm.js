@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
+import { setCookie } from "cookies-next";
 
 const formSchema = z.object({
   prenom: z.string().min(3, {
@@ -77,6 +78,9 @@ export default function SignupForm({ change }) {
         uid,
       };
       await addUser("user", uid, user);
+
+      setCookie("admin", false)
+
       return router.push(`/user/${uid}/profile`);
     }
   };

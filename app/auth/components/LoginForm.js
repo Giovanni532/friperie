@@ -14,6 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { IsAdmin } from "@/app/utils/(server)/isAdmin";
+import { setCookie } from "cookies-next";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -40,9 +42,12 @@ export default function LoginForm({ change }) {
       return console.log(error);
     }
 
-    const uid = result.user.uid;
+    const user = result.user;
+    const admin = await IsAdmin(user.email)
 
-    return router.push(`/user/${uid}/profile`);
+    setCookie('admin', admin)
+
+    return router.push(`/user/${user.uid}/profile`);
   };
 
   return (
