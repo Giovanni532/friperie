@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import FormArticle from './components/FormArticle';
 
 export default function Page() {
-    const { user, isAdmin } = useAuthContext();
+    const { isAdmin } = useAuthContext();
 
     useEffect(() => {
         if(!isAdmin){

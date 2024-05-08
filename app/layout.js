@@ -4,6 +4,7 @@ import { AuthContextProvider } from "./providers/AuthProvider";
 
 import { cn } from "@/lib/utils"
 import NavBar from "./components/navbar/Navbar";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
         <AuthContextProvider>
           <NavBar />
           {children}
+          <Toaster/>
         </AuthContextProvider>
       </body>
     </html>

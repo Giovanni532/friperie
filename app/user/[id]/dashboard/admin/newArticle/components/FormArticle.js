@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import addData from '@/app/db/request/addData';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   titre: z.string().min(1, {
@@ -53,9 +54,23 @@ export default function FormArticle() {
     },
   });
 
+  const { toast } = useToast();
+
   const onFormSubmit = async (data) => {
-    console.log(data)
+    form.reset({
+      titre: "",
+      prix: "0",
+      taille: "",
+      etat: "",
+      marque: "",
+      categorie: "",
+      couleur: ""
+    })
     await addData(data)
+    toast({
+      title: data.titre,
+      description: "Votre article à bien été ajouter."
+    })
   };
 
   return (
