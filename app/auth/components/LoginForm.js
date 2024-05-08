@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import login from "@/app/db/auth/login";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
@@ -12,10 +12,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { IsAdmin } from "@/app/utils/(server)/isAdmin";
 import { setCookie } from "cookies-next";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -26,6 +28,7 @@ const formSchema = z.object({
 
 export default function LoginForm({ change }) {
   const router = useRouter();
+  const [error, setError] = useState(false)
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -39,7 +42,7 @@ export default function LoginForm({ change }) {
     const { email, password } = data;
     const { result, error } = await login(email, password);
     if (error) {
-      return console.log(error);
+      return setError(true)
     }
 
     const user = result.user;
@@ -81,6 +84,11 @@ export default function LoginForm({ change }) {
                   <FormControl>
                     <Input type="password" {...field} />
                   </FormControl>
+                  {error && (
+                    <FormDescription className={cn("text-sm font-medium text-destructive")}>
+                      Probleme avec le mail ou le mot de passe
+                    </FormDescription>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}
