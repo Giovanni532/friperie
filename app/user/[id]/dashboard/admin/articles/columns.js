@@ -27,5 +27,9 @@ const columns = [
     accessorKey: "couleur",
     header: "Couleur",
   },
+  {
+    accessorKey: "statut",
+    header: "Statut",
+  },
 ]
  export default columns;
