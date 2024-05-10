@@ -49,6 +49,7 @@ export default function LoginForm({ change }) {
     const admin = await IsAdmin(user.email)
 
     setCookie('admin', admin)
+    setCookie('user', true)
 
     return router.push(`/user/${user.uid}/profile`);
   };

@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import addData from '@/app/db/request/addData';
 import { useToast } from '@/components/ui/use-toast';
+import { revalidate } from '../../action/action';
 
 const formSchema = z.object({
   titre: z.string().min(1, {
@@ -36,6 +37,9 @@ const formSchema = z.object({
   }),
   couleur: z.string().min(1, {
     message: "Ajoutez une couleur",
+  }),
+  statut: z.string().min(1, {
+    message: "Ajoutez un statut",
   })
 });
 
@@ -50,7 +54,8 @@ export default function FormArticle() {
       etat: "",
       marque: "",
       categorie: "",
-      couleur: ""
+      couleur: "",
+      statut: "En vente"
     },
   });
 
@@ -64,13 +69,15 @@ export default function FormArticle() {
       etat: "",
       marque: "",
       categorie: "",
-      couleur: ""
-    })
-    await addData(data)
+      couleur: "",
+      statut: "En vente"
+    });
+    await addData("article",data);
+    await revalidate();
     toast({
       title: data.titre,
       description: "Votre article à bien été ajouter."
-    })
+    });
   };
 
   return (

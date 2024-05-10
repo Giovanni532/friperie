@@ -80,6 +80,7 @@ export default function SignupForm({ change }) {
       await addUser("user", uid, user);
 
       setCookie("admin", false)
+      setCookie("user", true)
 
       return router.push(`/user/${uid}/profile`);
     }
