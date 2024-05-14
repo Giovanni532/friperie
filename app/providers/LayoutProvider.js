@@ -9,6 +9,7 @@ import Navbar from "../components/navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { AuthContextProvider } from "./AuthProvider";
+import NavbarAdmin from "../components/navbar/NavbarAdmin";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function LayoutProvider({ children }) {
                 )}
             >
                 <AuthContextProvider>
+                    <NavbarAdmin/>
                     {children}
                     <Toaster />
                 </AuthContextProvider>
