@@ -1,8 +1,12 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
+import { useAuthContext } from "@/app/providers/AuthProvider"
 
 export default function NavbarAdmin() {
+  const {user} = useAuthContext()
   return (
     <>
       <header className="flex h-16 w-full items-center justify-between px-4 md:px-6">
@@ -27,15 +31,15 @@ export default function NavbarAdmin() {
               </Link>
               <Link
                 className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                href="#"
+                href={`/admin/${user.uid}/dashboard/newArticle`}
               >
-                About
+                Creer un formulaire
               </Link>
               <Link
                 className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                href="#"
+                href={`/admin/${user.uid}/dashboard`}
               >
-                Services
+                Mes articles
               </Link>
               <Link
                 className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
@@ -50,11 +54,11 @@ export default function NavbarAdmin() {
           <Link className="text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50" href="/">
             Home
           </Link>
-          <Link className="text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50" href="#">
-            About
+          <Link className="text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50" href={`/admin/${user.uid}/dashboard`}>
+            Voir mes articles
           </Link>
-          <Link className="text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50" href="#">
-            Services
+          <Link className="text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50" href={`/admin/${user.uid}/dashboard/newArticle`}>
+            Ajouter un article
           </Link>
           <Link className="text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50" href="#">
             Contact
