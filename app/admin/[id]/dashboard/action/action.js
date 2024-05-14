@@ -8,9 +8,7 @@ export const revalidate = async () => {
 }
 
 export async function getData(path) {
-    const data = [];
-    const { resultGetMultipleData } = await getMultipleData(path, {});
+    const { resultGetMultipleData } = await getMultipleData(path);
 
-    resultGetMultipleData.map((article) => data.push(article.data));
-    return data;
+    return resultGetMultipleData;
 }

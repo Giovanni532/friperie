@@ -27,12 +27,12 @@ export default function RightSection({ admin, user, handleLogout }) {
                   <NavigationMenuTrigger>Dashboard</NavigationMenuTrigger>
                   <NavigationMenuContent className="flex flex-col w-[180px] gap-3 p-4 md:w-[180px] md:grid-cols-2 lg:w-[180px] ">
                     <Link
-                      href={`/user/${user.uid}/dashboard/admin`}
+                      href={`/admin/${user.uid}/dashboard`}
                     >
                       Voir mes articles
                     </Link>
                     <Link
-                      href={`/user/${user.uid}/dashboard/admin/newArticle`}
+                      href={`/admin/${user.uid}/dashboard/newArticle`}
                     >
                       Ajoutez un article
                     </Link>

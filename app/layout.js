@@ -1,16 +1,5 @@
-import { Inter as FontSans } from "next/font/google"
 import "./globals.css";
-import { AuthContextProvider } from "./providers/AuthProvider";
-
-import { cn } from "@/lib/utils"
-import NavBar from "./components/navbar/Navbar";
-import { Toaster } from "@/components/ui/toaster";
-
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-})
-
+import LayoutProvider from "./providers/LayoutProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -21,18 +10,9 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <AuthContextProvider>
-          <NavBar />
-          {children}
-          <Toaster/>
-        </AuthContextProvider>
-      </body>
+      <LayoutProvider>
+        {children}
+      </LayoutProvider>
     </html>
   );
 }
