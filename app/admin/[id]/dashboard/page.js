@@ -1,14 +1,15 @@
 import { getData } from "./action/action";
+import ColumnsArticle from "./articles/ColumnsArticle";
+import DataTableArticle from "./articles/DataTableArticle";
 
 
 const Page = async () => {
     const article= await getData("article");
 
-    console.log(article)
- 
     return (
         <div className="container mx-auto py-10 ">
-            <p>Page admin</p>
+            <h1>Page admin</h1>
+            <DataTableArticle columns={ColumnsArticle} data={article}/>
         </div>
     );
 };
