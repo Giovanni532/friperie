@@ -3,13 +3,15 @@
 import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table";
-import { PaginationPrevious, PaginationItem, PaginationLink, PaginationEllipsis, PaginationNext, PaginationContent, Pagination } from "@/components/ui/pagination";
+import { PaginationPrevious, PaginationItem, PaginationLink, PaginationNext, PaginationContent, Pagination } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
+import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
+
 
 export default function DataTableArticle({ columns, articles }) {
   // État pour suivre l'index de la page actuelle
   const [currentPage, setCurrentPage] = useState(1);
-  const articlesPerPage = 10;
+  const articlesPerPage = 5;
 
   // Calcul de l'index du premier et du dernier article sur la page actuelle
   const indexOfLastArticle = currentPage * articlesPerPage;
@@ -29,10 +31,21 @@ export default function DataTableArticle({ columns, articles }) {
             placeholder="Search..."
             type="search"
           />
-          <Button size="sm" variant="outline">
-            <FilterIcon className="w-4 h-4" />
-            Filtrer
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button size="sm" variant="outline">
+                <FilterIcon className="w-4 h-4 mr-4" />
+                Filtrer
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-[200px]">
+              <DropdownMenuLabel>Filtrer par</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem>Statut</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem>Categorie</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem>Prix</DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
       <div className="overflow-x-auto rounded-lg shadow-md">
@@ -58,7 +71,7 @@ export default function DataTableArticle({ columns, articles }) {
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <Button size="icon" variant="ghost">
-                      <DeleteIcon className="w-4 h-4" />
+                      <ImageUpIcon className="w-4 h-4" />
                     </Button>
                     <Button size="icon" variant="ghost">
                       <TrashIcon className="w-4 h-4" />
@@ -116,7 +129,7 @@ function FilterIcon(props) {
   )
 }
 
-function DeleteIcon(props) {
+function ImageUpIcon(props) {
   return (
     <svg
       {...props}
@@ -125,17 +138,19 @@ function DeleteIcon(props) {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
+      stroke="blue"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M20 5H9l-7 7 7 7h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Z" />
-      <line x1="18" x2="12" y1="9" y2="15" />
-      <line x1="12" x2="18" y1="9" y2="15" />
+      <path d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L6 21" />
+      <path d="m14 19.5 3-3 3 3" />
+      <path d="M17 22v-5.5" />
+      <circle cx="9" cy="9" r="2" />
     </svg>
   )
 }
+
 
 function TrashIcon(props) {
   return (
@@ -146,7 +161,7 @@ function TrashIcon(props) {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
+      stroke="red"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"

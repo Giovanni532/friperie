@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import signup from "@/app/db/auth/signup";
-import addUser from "@/app/db/request/addUser";
+import addDataWithId from "@/app/db/request/addDataWithId";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -77,7 +77,7 @@ export default function SignupForm({ change }) {
         ville,
         uid,
       };
-      await addUser("user", uid, user);
+      await addDataWithId("user", uid, user);
 
       setCookie("admin", false)
       setCookie("user", true)

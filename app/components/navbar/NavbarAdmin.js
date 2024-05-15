@@ -31,7 +31,7 @@ export default function NavbarAdmin() {
               </Link>
               <Link
                 className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                href={`/admin/${user.uid}/dashboard/newArticle`}
+                href={`/admin/${user.uid}/dashboard`}
               >
                 Creer un formulaire
               </Link>
@@ -57,7 +57,7 @@ export default function NavbarAdmin() {
           <Link className="text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50" href={`/admin/${user.uid}/dashboard`}>
             Voir mes articles
           </Link>
-          <Link className="text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50" href={`/admin/${user.uid}/dashboard/newArticle`}>
+          <Link className="text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50" href={`/admin/${user.uid}/dashboard`}>
             Ajouter un article
           </Link>
           <Link className="text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50" href="#">

@@ -9,7 +9,6 @@ const Page = async () => {
 
     return (
         <div className="container mx-auto py-10 ">
-            <h1>Page admin</h1>
             <ModalArticle/>
             <DataTableArticle columns={ColumnsArticle} articles={articles}/>
         </div>
