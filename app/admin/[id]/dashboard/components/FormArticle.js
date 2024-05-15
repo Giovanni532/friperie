@@ -158,6 +158,7 @@ export default function FormArticle() {
                             <SelectItem value="M">M</SelectItem>
                             <SelectItem value="L">L</SelectItem>
                             <SelectItem value="XL">XL</SelectItem>
+                            <SelectItem value="U">U</SelectItem>
                         </SelectContent>
                     </Select>
                     <input type="hidden" {...register("taille")} />

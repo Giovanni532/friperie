@@ -12,6 +12,10 @@ const ColumnsArticle = [
         header: "Catégorie",
     },
     {
+        key: "sousCategorie",
+        header: "Sous-Catégorie",
+    },
+    {
         key: "taille",
         header: "Taille",
     },
