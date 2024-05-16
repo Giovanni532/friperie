@@ -57,14 +57,14 @@ export default function Navbar() {
               </li>
               :
               null
-              }
+            }
           </ul>
         </nav>
         <div className="flex items-center space-x-4">
           {user ?
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Avatar style={{cursor:"pointer"}} className="h-9 w-9">
+                <Avatar style={{ cursor: "pointer" }} className="h-9 w-9 hidden lg:flex">
                   <AvatarImage alt="Profil utilisateur" />
                   <AvatarFallback>GS</AvatarFallback>
                   <span className="sr-only">Toggle user menu</span>
@@ -122,22 +122,6 @@ export default function Navbar() {
               >
                 Contact
               </Link>
-              {user ?
-                <Link
-                  className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                  href={`/user/${user.uid}/profile`}
-                >
-                  Mon profil
-                </Link>
-
-                :
-                <Link
-                  className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                  href="/auth"
-                >
-                  Connexion
-                </Link>
-              }
               {admin === "true" && user ? (
                 <>
                   <Link
@@ -148,9 +132,31 @@ export default function Navbar() {
                   </Link>
                 </>
               )
-            :
-            null
-            }
+                :
+                null
+              }
+              {user ?
+                <>
+                  <Link
+                    className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href={`/user/${user.uid}/profile`}
+                  >
+                    Mon profil
+                  </Link>
+                  <Button
+                    onClick={handleLogout}
+                  >
+                    Deconnexion
+                  </Button>
+                </>
+                :
+                <Link
+                  className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                  href="/auth"
+                >
+                  Connexion
+                </Link>
+              }
             </nav>
           </SheetContent>
         </Sheet>
