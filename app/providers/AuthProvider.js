@@ -6,7 +6,6 @@ import {
     getAuth,
 } from 'firebase/auth';
 import firebaseDb from '../db/config';
-import Navbar from '../components/navbar/Navbar';
 import { IsAdmin } from '../utils/(server)/isAdmin';
 
 const auth = getAuth(firebaseDb);
@@ -15,40 +14,33 @@ export const AuthContext = createContext({});
 
 export const useAuthContext = () => useContext(AuthContext);
 
-export const AuthContextProvider = ({
-    children,
-}) => {
-
+export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
-
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            setIsLoading(true);
             if (user) {
                 setUser(user);
-                IsAdmin(user.email)
-                .then(result => {
+                try {
+                    const result = await IsAdmin(user.email);
                     setIsAdmin(result);
-                })
-                setIsLoading(false);
+                } catch (error) {
+                    console.error("Erreur lors de la vérification de l'administrateur :", error);
+                }
             } else {
                 setUser(null);
-                setIsLoading(false);
             }
+            setIsLoading(false);
         });
 
         return () => unsubscribe();
     }, []);
 
-    if (isLoading){
-        return (
-            <div>
-            <Navbar/>
-            <p>En attente de données ...</p>
-            </div>
-        );
+    if (isLoading) {
+        return <p>En attente de données ...</p>;
     }
 
     return (

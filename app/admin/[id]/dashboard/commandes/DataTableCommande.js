@@ -189,7 +189,7 @@ export default function DataTableCommande({ columns, commandes }) {
                             )}
                             {filteredCommandes.length === 0 && (
                                 <TableRow>
-                                    <p className="text-center text-gray-500">Aucun résultat trouvé.</p>
+                                    <span className="text-center text-gray-500">Aucun résultat trouvé.</span>
                                 </TableRow>
                             )}
                         </div>

@@ -86,7 +86,7 @@ export default function DataTableArticle({ columns, articles }) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold p-3">Article du site</h1>
+      <h1 className="text-2xl font-bold p-3">Articles</h1>
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6">
         <div className="flex flex-col lg:flex-row lg:items-center gap-4">
           <Input
@@ -217,7 +217,7 @@ export default function DataTableArticle({ columns, articles }) {
               )}
               {filteredArticles.length === 0 && (
                 <TableRow>
-                  <p className="text-center text-gray-500">Aucun résultat trouvé.</p>
+                  <span className="text-center text-gray-500">Aucun résultat trouvé.</span>
                 </TableRow>
               )}
             </div>

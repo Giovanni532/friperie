@@ -4,12 +4,12 @@ import { Inter as FontSans } from "next/font/google"
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import { getCookie } from "cookies-next";
 import Navbar from "../components/navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { AuthContextProvider } from "./AuthProvider";
 import NavbarAdmin from "../components/navbar/NavbarAdmin";
+import { getCookie } from "cookies-next";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -18,26 +18,10 @@ const fontSans = FontSans({
 
 
 export default function LayoutProvider({ children }) {
-    const admin = getCookie("admin");
+    const isAdmin = getCookie("admin")
+    console.log(isAdmin)
     const url = usePathname();
-    const urlAdmin = url.startsWith("/admin")
-
-    if (admin && urlAdmin) {
-        return (
-            <body
-                className={cn(
-                    "min-h-screen bg-background font-sans antialiased",
-                    fontSans.variable
-                )}
-            >
-                <AuthContextProvider>
-                    <NavbarAdmin/>
-                    {children}
-                    <Toaster />
-                </AuthContextProvider>
-            </body>
-        )
-    }
+    const urlAdmin = url.startsWith("/admin");
 
     return (
         <body
@@ -47,11 +31,10 @@ export default function LayoutProvider({ children }) {
             )}
         >
             <AuthContextProvider>
-                <Navbar />
+                {isAdmin && urlAdmin ? <NavbarAdmin /> : <Navbar />}
                 {children}
                 <Toaster />
             </AuthContextProvider>
         </body>
-    )
-
+    );
 }
