@@ -6,7 +6,6 @@ const db = getFirestore(firebaseDb)
 async function getArticles() {
   const querySnapshot = await getDocs(collection(db, "article"));
   const result = querySnapshot.docs.map(doc => ({
-    id: doc.idArticle,
     ...doc.data(),
   }));
   return { result };
@@ -20,7 +19,7 @@ export default async function getNextArticleId() {
     }
   
     // Convertir les IDs en nombres et trier
-    const sortedArticles = articles.sort((a, b) => a.id - b.id);
+    const sortedArticles = articles.sort((a, b) => a.idArticle - b.idArticle);
     const lastArticle = sortedArticles[sortedArticles.length - 1];
   
     // Récupérer le prochain ID

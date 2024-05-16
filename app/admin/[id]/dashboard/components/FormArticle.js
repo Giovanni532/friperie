@@ -13,13 +13,17 @@ import {
 } from "@/components/ui/select";
 import { articleSchema } from "@/app/utils/formSchema";
 import { toast } from "@/components/ui/use-toast";
-import { addArticle } from "../action/action";
+import { revalidate } from "../action/action";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/app/db/config";
 import getNextArticleId from "@/app/db/utils/getNextArticleId";
+import { useState } from "react";
+import Spinner from "@/app/components/Spinner";
+import addDataWithId from "@/app/db/request/addDataWithId";
 
 
 export default function FormArticle() {
+    const [loading, setLoading] = useState(false);
     const {
         register, handleSubmit, setValue, reset, formState: { errors },
     } = useForm({
@@ -27,9 +31,9 @@ export default function FormArticle() {
     });
 
     const onSubmit = async (data) => {
+        setLoading(true);
         // Recuperation de l'id de l'article
         const idArticle = await getNextArticleId();
-
         // Telechargement de l'image sur le storage
         const fileUploadPromises = Array.from(data.images).map(async (file) => {
             const storageRef = ref(
@@ -44,7 +48,10 @@ export default function FormArticle() {
 
         const article = { ...data, idArticle, images: filesUrls };
 
-        await addArticle(idArticle, article);
+        await addDataWithId("article", idArticle.toString(), article);
+
+        revalidate();
+
 
         toast({
             title: data.nomArticle,
@@ -52,7 +59,12 @@ export default function FormArticle() {
         });
 
         reset();
+        setLoading(false);
     };
+
+    if(loading){
+        return <Spinner message="Ajout de votre article en cours ..."/>
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
@@ -245,7 +257,7 @@ export default function FormArticle() {
                 )}
             </div>
             <DialogFooter>
-                <Button type="submit">Enregistrer</Button>
+                <Button type="submit">Ajouter l'article</Button>
             </DialogFooter>
         </form>
     );
