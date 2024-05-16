@@ -9,14 +9,21 @@ import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, Dropdown
 
 
 export default function DataTableArticle({ columns, articles }) {
+  // Etat pour rechercher par nom d'article
+  const [query, setQuery] = useState("")
   // État pour suivre l'index de la page actuelle
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 5;
 
+    // Filtrer les articles en fonction de la recherche
+    const filteredArticles = articles.filter(article => 
+      article.nomArticle.toLowerCase().includes(query.toLowerCase())
+    );
+
   // Calcul de l'index du premier et du dernier article sur la page actuelle
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
-  const currentArticles = articles.slice(indexOfFirstArticle, indexOfLastArticle);
+  const currentArticles = filteredArticles.slice(indexOfFirstArticle, indexOfLastArticle);
 
   // Fonction pour changer de page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -27,9 +34,13 @@ export default function DataTableArticle({ columns, articles }) {
         <h1 className="text-2xl font-bold">Article du site</h1>
         <div className="flex items-center gap-4">
           <Input
-            className="max-w-xs bg-gray-100 dark:bg-gray-800 border-none shadow-none"
-            placeholder="Search..."
+            className="max-w-lg bg-gray-100 dark:bg-gray-800 border-none shadow-none"
+            placeholder="Chercher par articles ..."
             type="search"
+            onChange={e => {
+              setQuery(e.target.value);
+              setCurrentPage(1);
+            }}
           />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -12,13 +12,11 @@ import {
     Select,
 } from "@/components/ui/select";
 import { articleSchema } from "@/app/utils/formSchema";
-import getMultipleData from "@/app/db/request/getMultipleData";
 import { toast } from "@/components/ui/use-toast";
 import { addArticle } from "../action/action";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/app/db/config";
-import firebaseDb from "@/app/db/config";
-import getNextArticleId from "@/app/db/utils/genNextArticleId";
+import getNextArticleId from "@/app/db/utils/getNextArticleId";
 
 export default function FormArticle() {
     const {
