@@ -1,5 +1,6 @@
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
+import ErrorPage from "@/app/utils/(client)/ErrorPage";
 
 export const metadata = {
     title: "Dashboard admin",
@@ -11,10 +12,7 @@ export default function LayoutDashboard({ children }) {
 
     if (admin === "false") {
         return (
-            <div>
-                <h1>Ooppss</h1>
-                <p>Il semblerait que cette page n'existe pas !</p>
-            </div>
+            <ErrorPage/>
         );
     }
 
