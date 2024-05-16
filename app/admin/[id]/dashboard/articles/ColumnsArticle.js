@@ -38,6 +38,10 @@ const ColumnsArticle = [
     {
         key: "statut",
         header: "Statut",
+    },
+    {
+        key: "action",
+        header: "Actions",
     }
 ]
 

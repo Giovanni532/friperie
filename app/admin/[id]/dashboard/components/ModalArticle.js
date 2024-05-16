@@ -17,7 +17,7 @@ export default function ModalArticle() {
             Remplissez les informations ci-dessous pour ajouter un nouvel article à votre inventaire.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-4 py-4 h-1/2">
           <FormArticle/>
         </div>
       </DialogContent>

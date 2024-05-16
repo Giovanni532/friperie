@@ -10,6 +10,7 @@ import { FaTrash } from "react-icons/fa";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { IoFilter } from "react-icons/io5";
 import { MdOutlineFilterListOff } from "react-icons/md";
+import DeleteButton from '../components/DeleteButton';
 
 
 
@@ -163,7 +164,6 @@ export default function DataTableArticle({ columns, articles }) {
                   {col.header}
                 </TableHead>
               ))}
-              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -171,23 +171,26 @@ export default function DataTableArticle({ columns, articles }) {
               <TableRow key={index}>
                 {columns.map(col => (
                   <TableCell key={col.key}>
-                    {col.key === "prix" ?
-                      article[col.key] + ".-"
-                      :
-                      article[col.key]
-                    }
+                    {col.key !== "action" ? (
+                      col.key === "prix" ? (
+                        article[col.key] + ".-"
+                      ) : (
+                        article[col.key]
+                      )
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <Button size="icon" variant="ghost">
+                          <GrDocumentUpdate className="w-4 h-4" style={{ color: "blue" }} />
+                        </Button>
+                        <DeleteButton
+                          documentId={article.idArticle}
+                          collectionName="article"
+                          nameArticle={article.nomArticle}
+                        />
+                      </div>
+                    )}
                   </TableCell>
                 ))}
-                <TableCell>
-                  <div className="flex items-center gap-2">
-                    <Button size="icon" variant="ghost">
-                      <GrDocumentUpdate className="w-4 h-4" style={{ color: "blue" }} />
-                    </Button>
-                    <Button size="icon" variant="ghost">
-                      <FaTrash className='w-4 h-4' style={{ color: "red" }} />
-                    </Button>
-                  </div>
-                </TableCell>
               </TableRow>
             ))}
           </TableBody>

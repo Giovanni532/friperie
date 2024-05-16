@@ -76,7 +76,7 @@ export default function FormArticle() {
                     placeholder="Entrez le nom de l'article"
                     {...register("nomArticle")} />
                 {errors.nomArticle && (
-                    <p className="text-red-500">{errors.nomArticle.message}</p>
+                    <p className="text-red-500 text-xs">{errors.nomArticle.message}</p>
                 )}
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -100,7 +100,7 @@ export default function FormArticle() {
                     </Select>
                     <input type="hidden" {...register("categorie")} />
                     {errors.categorie && (
-                        <p className="text-red-500">{errors.categorie.message}</p>
+                        <p className="text-red-500 text-xs">{errors.categorie.message}</p>
                     )}
                 </div>
                 <div className="grid gap-2">
@@ -129,7 +129,7 @@ export default function FormArticle() {
                     </Select>
                     <input type="hidden" {...register("sousCategorie")} />
                     {errors.sousCategorie && (
-                        <p className="text-red-500">{errors.sousCategorie.message}</p>
+                        <p className="text-red-500 text-xs">{errors.sousCategorie.message}</p>
                     )}
                 </div>
             </div>
@@ -159,7 +159,7 @@ export default function FormArticle() {
                     </Select>
                     <input type="hidden" {...register("couleur")} />
                     {errors.couleur && (
-                        <p className="text-red-500">{errors.couleur.message}</p>
+                        <p className="text-red-500 text-xs">{errors.couleur.message}</p>
                     )}
                 </div>
                 <div className="grid gap-2">
@@ -176,7 +176,7 @@ export default function FormArticle() {
                     </Select>
                     <input type="hidden" {...register("etat")} />
                     {errors.etat && (
-                        <p className="text-red-500">{errors.etat.message}</p>
+                        <p className="text-red-500 text-xs">{errors.etat.message}</p>
                     )}
                 </div>
             </div>
@@ -188,7 +188,7 @@ export default function FormArticle() {
                         placeholder="Entrez la marque"
                         {...register("marque")} />
                     {errors.marque && (
-                        <p className="text-red-500">{errors.marque.message}</p>
+                        <p className="text-red-500 text-xs">{errors.marque.message}</p>
                     )}
                 </div>
                 <div className="grid gap-2">
@@ -199,7 +199,7 @@ export default function FormArticle() {
                         type="number"
                         {...register("prix")} />
                     {errors.prix && (
-                        <p className="text-red-500">{errors.prix.message}</p>
+                        <p className="text-red-500 text-xs">{errors.prix.message}</p>
                     )}
                 </div>
             </div>
@@ -221,7 +221,7 @@ export default function FormArticle() {
                     </Select>
                     <input type="hidden" {...register("statut")} />
                     {errors.statut && (
-                        <p className="text-red-500">{errors.statut.message}</p>
+                        <p className="text-red-500 text-xs">{errors.statut.message}</p>
                     )}
                 </div>
                 <div className="grid gap-2">
@@ -245,7 +245,7 @@ export default function FormArticle() {
                     </Select>
                     <input type="hidden" {...register("taille")} />
                     {errors.taille && (
-                        <p className="text-red-500">{errors.taille.message}</p>
+                        <p className="text-red-500 text-xs">{errors.taille.message}</p>
                     )}
                 </div>
             </div>
@@ -253,7 +253,7 @@ export default function FormArticle() {
                 <Label htmlFor="images">Images</Label>
                 <Input id="images" multiple type="file" {...register("images")} />
                 {errors.images && (
-                    <p className="text-red-500">{errors.images.message}</p>
+                    <p className="text-red-500 text-xs">{errors.images.message}</p>
                 )}
             </div>
             <DialogFooter>
