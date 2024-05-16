@@ -9,7 +9,7 @@ import { articleSchema } from "@/app/utils/formSchema";
 import getMultipleData from "@/app/db/request/getMultipleData";
 import addDataWithId from "@/app/db/request/addDataWithId";
 import { toast } from "@/components/ui/use-toast";
-import { revalidate } from "../action/action";
+import { addArticle, revalidate } from "../action/action";
 
 export default function FormArticle() {
     const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm({
@@ -17,11 +17,11 @@ export default function FormArticle() {
     });
 
     const onSubmit = async (data) => {
-        const idArticle = (await getMultipleData("article")).resultGetMultipleData.length + 1;
+        const lastArticle = (await getMultipleData("article")).resultGetMultipleData.slice(-1);
 
-        const article = { ...data, idArticle };
+        console.log(lastArticle[0].idArticle)
 
-        await addDataWithId("article", idArticle.toString(), article);
+        await  addArticle(lastArticle[0].idArticle, data)
 
         revalidate();
 
