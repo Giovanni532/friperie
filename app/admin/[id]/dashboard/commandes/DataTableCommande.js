@@ -5,7 +5,11 @@ import { Input } from "@/components/ui/input";
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table";
 import { PaginationPrevious, PaginationItem, PaginationLink, PaginationNext, PaginationContent, Pagination } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
-import { DropdownMenuTrigger, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
+import { DropdownMenuTrigger, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu";
+import { FaTrash } from "react-icons/fa";
+import { GrDocumentUpdate } from "react-icons/gr";
+import { IoFilter } from "react-icons/io5";
+import { MdOutlineFilterListOff } from "react-icons/md";
 
 
 export default function DataTableCommande({ columns, commandes }) {
@@ -87,7 +91,7 @@ export default function DataTableCommande({ columns, commandes }) {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button size="sm" variant="outline">
-                                <FilterIcon className="w-4 h-4 mr-4" />
+                                <IoFilter className="w-4 h-4 mr-4" />
                                 Filtrer par prix
                             </Button>
                         </DropdownMenuTrigger>
@@ -99,7 +103,7 @@ export default function DataTableCommande({ columns, commandes }) {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button size="sm" variant="outline">
-                                <FilterIcon className="w-4 h-4 mr-4" />
+                                <IoFilter className="w-4 h-4 mr-4" />
                                 Filtrer par statut
                             </Button>
                         </DropdownMenuTrigger>
@@ -112,7 +116,7 @@ export default function DataTableCommande({ columns, commandes }) {
                     {priceOrder || statusFilter ?
                         (
                             <Button size="sm" variant="outline" onClick={resetFilter}>
-                                <FilterIcon className="w-4 h-4 mr-4" />
+                                <MdOutlineFilterListOff className="w-4 h-4 mr-4" />
                                 Enlever les filtres
                             </Button>
                         )
@@ -139,7 +143,7 @@ export default function DataTableCommande({ columns, commandes }) {
                                 {columns.map(col => (
                                     <TableCell key={col.key}>
                                         {col.key === "prixCommande" ?
-                                            commande[col.key]+".-"
+                                            commande[col.key] + ".-"
                                             :
                                             commande[col.key]
                                         }
@@ -148,10 +152,10 @@ export default function DataTableCommande({ columns, commandes }) {
                                 <TableCell>
                                     <div className="flex items-center gap-2">
                                         <Button size="icon" variant="ghost">
-                                            <ImageUpIcon className="w-4 h-4" />
+                                            <GrDocumentUpdate className="w-4 h-4" style={{ color: "blue" }} />
                                         </Button>
                                         <Button size="icon" variant="ghost">
-                                            <TrashIcon className="w-4 h-4" />
+                                            <FaTrash className='w-4 h-4' style={{ color: "red" }} />
                                         </Button>
                                     </div>
                                 </TableCell>
@@ -188,9 +192,9 @@ export default function DataTableCommande({ columns, commandes }) {
                                 </Pagination>
                             )}
                             {filteredCommandes.length === 0 && (
-                                <TableRow>
+                                <div>
                                     <span className="text-center text-gray-500">Aucun résultat trouvé.</span>
-                                </TableRow>
+                                </div>
                             )}
                         </div>
                     </PaginationContent>

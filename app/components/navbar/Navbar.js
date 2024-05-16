@@ -1,14 +1,17 @@
 "use client"
 
-import Link from "next/link"
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
-import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
-import { useAuthContext } from "@/app/providers/AuthProvider"
-import { getCookie } from "cookies-next"
-import logout from "@/app/db/auth/logout"
-import { useRouter } from "next/navigation"
+import Link from "next/link";
+import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
+import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { SheetTrigger, SheetContent, Sheet, SheetClose } from "@/components/ui/sheet";
+import { useAuthContext } from "@/app/providers/AuthProvider";
+import { getCookie } from "cookies-next";
+import logout from "@/app/db/auth/logout";
+import { useRouter } from "next/navigation";
+import { RiMenu4Line } from "react-icons/ri";
+import { Separator } from "@/components/ui/separator";
+
 
 export default function Navbar() {
   const router = useRouter();
@@ -92,70 +95,85 @@ export default function Navbar() {
         <Sheet>
           <SheetTrigger asChild>
             <Button className="lg:hidden" size="icon" variant="outline">
-              <MenuIcon className="h-6 w-6" />
+              <RiMenu4Line className="h-6 w-6" />
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="right">
             <nav className="grid gap-4 p-6">
-              <Link
-                className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                href="#"
-              >
-                Habits
-              </Link>
-              <Link
-                className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                href="#"
-              >
-                Chaussures
-              </Link>
-              <Link
-                className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                href="#"
-              >
-                Sacs
-              </Link>
-              <Link
-                className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                href="#"
-              >
-                Contact
-              </Link>
+              <SheetClose asChild>
+                <Link
+                  className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                  href="#"
+                >
+                  Habits
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                  href="#"
+                >
+                  Chaussures
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                  href="#"
+                >
+                  Sacs
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                  href="#"
+                >
+                  Contact
+                </Link>
+              </SheetClose>
               {admin === "true" && user ? (
-                <>
+                <SheetClose asChild>
                   <Link
                     className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href={`/admin/${user.uid}/dashboard`}
                   >
                     Dashboard
                   </Link>
-                </>
+                </SheetClose>
               )
                 :
                 null
               }
               {user ?
                 <>
-                  <Link
-                    className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href={`/user/${user.uid}/profile`}
-                  >
-                    Mon profil
-                  </Link>
-                  <Button
-                    onClick={handleLogout}
-                  >
-                    Deconnexion
-                  </Button>
+                  <SheetClose asChild>
+                    <Link
+                      className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                      href={`/user/${user.uid}/profile`}
+                    >
+                      Mon profil
+                    </Link>
+                  </SheetClose>
+                  <Separator className="my-4" />
+                  <SheetClose asChild>
+                    <Button
+                      onClick={handleLogout}
+                    >
+                      Deconnexion
+                    </Button>
+                  </SheetClose>
                 </>
                 :
-                <Link
-                  className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                  href="/auth"
-                >
-                  Connexion
-                </Link>
+                <SheetClose asChild>
+                  <Link
+                    className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href="/auth"
+                  >
+                    Connexion
+                  </Link>
+                </SheetClose>
               }
             </nav>
           </SheetContent>
@@ -163,27 +181,6 @@ export default function Navbar() {
       </header>
       <div className="border-t border-gray-200 dark:border-gray-800" />
     </>
-  )
-}
-
-function MenuIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="4" x2="20" y1="12" y2="12" />
-      <line x1="4" x2="20" y1="6" y2="6" />
-      <line x1="4" x2="20" y1="18" y2="18" />
-    </svg>
   )
 }
 

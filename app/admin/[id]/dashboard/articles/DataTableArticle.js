@@ -5,7 +5,12 @@ import { Input } from "@/components/ui/input";
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table";
 import { PaginationPrevious, PaginationItem, PaginationLink, PaginationNext, PaginationContent, Pagination } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
-import { DropdownMenuTrigger, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
+import { DropdownMenuTrigger, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu";
+import { FaTrash } from "react-icons/fa";
+import { GrDocumentUpdate } from "react-icons/gr";
+import { IoFilter } from "react-icons/io5";
+import { MdOutlineFilterListOff } from "react-icons/md";
+
 
 
 export default function DataTableArticle({ columns, articles }) {
@@ -102,7 +107,7 @@ export default function DataTableArticle({ columns, articles }) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button size="sm" variant="outline">
-                <FilterIcon className="w-4 h-4 mr-4" />
+                <IoFilter className="w-4 h-4 mr-4" />
                 Filtrer par prix
               </Button>
             </DropdownMenuTrigger>
@@ -114,7 +119,7 @@ export default function DataTableArticle({ columns, articles }) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button size="sm" variant="outline">
-                <FilterIcon className="w-4 h-4 mr-4" />
+                <IoFilter className="w-4 h-4 mr-4" />
                 Filtrer par statut
               </Button>
             </DropdownMenuTrigger>
@@ -126,7 +131,7 @@ export default function DataTableArticle({ columns, articles }) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button size="sm" variant="outline">
-                <FilterIcon className="w-4 h-4 mr-4" />
+                <IoFilter className="w-4 h-4 mr-4" />
                 Filtrer par categorie
               </Button>
             </DropdownMenuTrigger>
@@ -140,7 +145,7 @@ export default function DataTableArticle({ columns, articles }) {
           {priceOrder || categoryFilter || statusFilter ?
             (
               <Button size="sm" variant="outline" onClick={resetFilter}>
-                <FilterIcon className="w-4 h-4 mr-4" />
+                <MdOutlineFilterListOff className="w-4 h-4 mr-4" />
                 Enlever les filtres
               </Button>
             )
@@ -176,10 +181,10 @@ export default function DataTableArticle({ columns, articles }) {
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <Button size="icon" variant="ghost">
-                      <ImageUpIcon className="w-4 h-4" />
+                      <GrDocumentUpdate className="w-4 h-4" style={{ color: "blue" }} />
                     </Button>
                     <Button size="icon" variant="ghost">
-                      <TrashIcon className="w-4 h-4" />
+                      <FaTrash className='w-4 h-4' style={{ color: "red" }} />
                     </Button>
                   </div>
                 </TableCell>
@@ -216,9 +221,9 @@ export default function DataTableArticle({ columns, articles }) {
                 </Pagination>
               )}
               {filteredArticles.length === 0 && (
-                <TableRow>
+                <div>
                   <span className="text-center text-gray-500">Aucun résultat trouvé.</span>
-                </TableRow>
+                </div>
               )}
             </div>
           </PaginationContent>
@@ -226,67 +231,4 @@ export default function DataTableArticle({ columns, articles }) {
       </div>
     </div>
   );
-}
-
-function FilterIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-    </svg>
-  )
-}
-
-function ImageUpIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="blue"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L6 21" />
-      <path d="m14 19.5 3-3 3 3" />
-      <path d="M17 22v-5.5" />
-      <circle cx="9" cy="9" r="2" />
-    </svg>
-  )
-}
-
-
-function TrashIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="red"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 6h18" />
-      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-    </svg>
-  )
 }
