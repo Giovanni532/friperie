@@ -12,9 +12,9 @@ export default function LayoutDashboard({ children }) {
 
     if (admin === "false") {
         return (
-            <ErrorPage/>
+            <ErrorPage />
         );
     }
 
-    return children;
+    return children
 }

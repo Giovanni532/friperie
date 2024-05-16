@@ -1,38 +1,196 @@
 "use client"
 
-import React from 'react';
-import { useAuthContext } from '../../providers/AuthProvider';
-import logout from '../../db/auth/logout';
-import { useRouter } from 'next/navigation';
-import LeftSection from './LeftSection';
-import MidSection from './MidSection';
-import RightSection from './RightSection';
+import Link from "next/link"
+import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
+import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
+import { useAuthContext } from "@/app/providers/AuthProvider"
+import { getCookie } from "cookies-next"
+import logout from "@/app/db/auth/logout"
+import { useRouter } from "next/navigation"
 
-const Navbar = () => {
-    const router = useRouter();
-    const { user, isAdmin } = useAuthContext();
+export default function Navbar() {
+  const router = useRouter();
+  const admin = getCookie("admin");
+  const { user } = useAuthContext();
 
-    const handleLogout = async () => {
-        router.push('/')
-        setTimeout(() => {
-            logout()
-        }, 500)
-    }
+  const handleLogout = async () => {
+    router.push('/')
+    await logout()
+  }
 
-    return (
-        <nav className="bg-gray-800">
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="flex justify-between h-16">
-                    {/* Left section */}
-                    <LeftSection/>
-                    {/* Middle section */}
-                    <MidSection/>
-                    {/* Right section */}
-                    <RightSection admin={isAdmin} user={user} handleLogout={handleLogout}/>
-                </div>
-            </div>
+  return (
+    <>
+      <header className="flex h-16 w-full items-center justify-between px-4 md:px-6">
+        <Link className="flex items-center gap-2" href="/">
+          <MountainIcon className="h-6 w-6" />
+          <span className="font-semibold">Friperie</span>
+        </Link>
+        <nav className="hidden lg:flex">
+          <ul className="flex items-center space-x-6">
+            <li>
+              <Link className="text-sm font-medium hover:underline hover:underline-offset-4" href="#">
+                Habits
+              </Link>
+            </li>
+            <li>
+              <Link className="text-sm font-medium hover:underline hover:underline-offset-4" href="#">
+                Chaussures
+              </Link>
+            </li>
+            <li>
+              <Link className="text-sm font-medium hover:underline hover:underline-offset-4" href="#">
+                Sacs
+              </Link>
+            </li>
+            <li>
+              <Link className="text-sm font-medium hover:underline hover:underline-offset-4" href="#">
+                Contact
+              </Link>
+            </li>
+            {admin && user &&
+              <li>
+                <Link className="text-sm font-medium hover:underline hover:underline-offset-4" href={`/admin/${user.uid}/dashboard`}>
+                  Dashboard
+                </Link>
+              </li>}
+          </ul>
         </nav>
-    );
+        <div className="flex items-center space-x-4">
+          {user ?
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar style={{cursor:"pointer"}} className="h-9 w-9">
+                  <AvatarImage alt="Profil utilisateur" />
+                  <AvatarFallback>GS</AvatarFallback>
+                  <span className="sr-only">Toggle user menu</span>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>
+                  <Link href={`/user/${user.uid}/profile`}>
+                    Mon profil
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout}>Déconnexion</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            :
+            <Link
+              className="text-sm font-medium hover:underline hover:underline-offset-4 hidden sm:block"
+              href="/auth"
+            >
+              Connexion
+            </Link>
+          }
+        </div>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button className="lg:hidden" size="icon" variant="outline">
+              <MenuIcon className="h-6 w-6" />
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right">
+            <nav className="grid gap-4 p-6">
+              <Link
+                className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                href="#"
+              >
+                Habits
+              </Link>
+              <Link
+                className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                href="#"
+              >
+                Chaussures
+              </Link>
+              <Link
+                className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                href="#"
+              >
+                Sacs
+              </Link>
+              <Link
+                className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                href="#"
+              >
+                Contact
+              </Link>
+              {user ?
+                <Link
+                  className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                  href={`/user/${user.uid}/profile`}
+                >
+                  Mon profil
+                </Link>
+
+                :
+                <Link
+                  className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                  href="/auth"
+                >
+                  Connexion
+                </Link>
+              }
+              {admin && user && (
+                <>
+                  <Link
+                    className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href={`/admin/${user.uid}/dashboard`}
+                  >
+                    Dashboard
+                  </Link>
+                </>
+              )}
+            </nav>
+          </SheetContent>
+        </Sheet>
+      </header>
+      <div className="border-t border-gray-200 dark:border-gray-800" />
+    </>
+  )
 }
 
-export default Navbar;
+function MenuIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="4" x2="20" y1="12" y2="12" />
+      <line x1="4" x2="20" y1="6" y2="6" />
+      <line x1="4" x2="20" y1="18" y2="18" />
+    </svg>
+  )
+}
+
+
+function MountainIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+    </svg>
+  )
+}

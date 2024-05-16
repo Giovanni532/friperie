@@ -1,3 +1,4 @@
+import ErrorPage from "@/app/utils/(client)/ErrorPage";
 import { getCookie, hasCookie } from "cookies-next";
 import { cookies } from "next/headers";
 
@@ -11,10 +12,7 @@ export default function LayoutDashboard({ children }) {
 
     if (user === undefined || user === "false") {
         return (
-            <div>
-                <h1>Ooppss</h1>
-                <p>Il semblerait que cette page n'existe pas !</p>
-            </div>
+            <ErrorPage/>
         );
     }
 

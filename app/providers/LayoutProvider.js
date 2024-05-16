@@ -1,15 +1,12 @@
-"use client"
+
 import { Inter as FontSans } from "next/font/google"
 
 
 import React from "react";
-import { usePathname } from "next/navigation";
-import Navbar from "../components/navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { AuthContextProvider } from "./AuthProvider";
-import NavbarAdmin from "../components/navbar/NavbarAdmin";
-import { getCookie } from "cookies-next";
+import Navbar from "../components/navbar/Navbar";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -18,10 +15,6 @@ const fontSans = FontSans({
 
 
 export default function LayoutProvider({ children }) {
-    const isAdmin = getCookie("admin")
-    console.log(isAdmin)
-    const url = usePathname();
-    const urlAdmin = url.startsWith("/admin");
 
     return (
         <body
@@ -31,7 +24,7 @@ export default function LayoutProvider({ children }) {
             )}
         >
             <AuthContextProvider>
-                {isAdmin && urlAdmin ? <NavbarAdmin /> : <Navbar />}
+                <Navbar/>
                 {children}
                 <Toaster />
             </AuthContextProvider>
