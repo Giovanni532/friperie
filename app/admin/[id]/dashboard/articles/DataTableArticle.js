@@ -6,11 +6,10 @@ import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@
 import { PaginationPrevious, PaginationItem, PaginationLink, PaginationNext, PaginationContent, Pagination } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuTrigger, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu";
-import { FaTrash } from "react-icons/fa";
-import { GrDocumentUpdate } from "react-icons/gr";
 import { IoFilter } from "react-icons/io5";
 import { MdOutlineFilterListOff } from "react-icons/md";
 import DeleteButton from '../components/DeleteButton';
+import UpdateButton from '../components/UpdateButton';
 
 
 
@@ -179,9 +178,7 @@ export default function DataTableArticle({ columns, articles }) {
                       )
                     ) : (
                       <div className="flex items-center gap-2">
-                        <Button size="icon" variant="ghost">
-                          <GrDocumentUpdate className="w-4 h-4" style={{ color: "blue" }} />
-                        </Button>
+                        <UpdateButton article={article}/>
                         <DeleteButton
                           documentId={article.idArticle}
                           collectionName="article"

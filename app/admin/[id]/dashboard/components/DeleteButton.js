@@ -17,7 +17,6 @@ import {
 import { revalidate } from '../action/action';
 
 const DeleteButton = ({ collectionName, documentId, nameArticle }) => {
-    console.log(collectionName)
     const handleDelete = async () => {
         await deleteDocument(collectionName, documentId.toString());
         revalidate()
@@ -39,7 +38,7 @@ const DeleteButton = ({ collectionName, documentId, nameArticle }) => {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete}>Continue</AlertDialogAction>
+                    <AlertDialogAction className="bg-red-500" onClick={handleDelete}>Continue</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
