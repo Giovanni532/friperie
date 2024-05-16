@@ -60,11 +60,11 @@ export default function Navbar() {
             }
           </ul>
         </nav>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 hidden lg:flex">
           {user ?
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Avatar style={{ cursor: "pointer" }} className="h-9 w-9 hidden lg:flex">
+                <Avatar style={{ cursor: "pointer" }} className="h-9 w-9">
                   <AvatarImage alt="Profil utilisateur" />
                   <AvatarFallback>GS</AvatarFallback>
                   <span className="sr-only">Toggle user menu</span>
