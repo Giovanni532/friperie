@@ -49,12 +49,15 @@ export default function Navbar() {
                 Contact
               </Link>
             </li>
-            {admin && user &&
+            {admin === "true" && user ?
               <li>
                 <Link className="text-sm font-medium hover:underline hover:underline-offset-4" href={`/admin/${user.uid}/dashboard`}>
                   Dashboard
                 </Link>
-              </li>}
+              </li>
+              :
+              null
+              }
           </ul>
         </nav>
         <div className="flex items-center space-x-4">
@@ -135,7 +138,7 @@ export default function Navbar() {
                   Connexion
                 </Link>
               }
-              {admin && user && (
+              {admin === "true" && user ? (
                 <>
                   <Link
                     className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
@@ -144,7 +147,10 @@ export default function Navbar() {
                     Dashboard
                   </Link>
                 </>
-              )}
+              )
+            :
+            null
+            }
             </nav>
           </SheetContent>
         </Sheet>
