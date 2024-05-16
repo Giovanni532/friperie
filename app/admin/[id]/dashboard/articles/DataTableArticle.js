@@ -45,7 +45,10 @@ export default function DataTableArticle({ columns, articles }) {
   // Filtrer les articles en fonction de la demande
   const filteredArticles = articles.filter(article => {
     // Filtre de recherche
-    if (query && !article.nomArticle.toLowerCase().includes(query.toLowerCase())) {
+    if (query && !(
+      article.nomArticle.toLowerCase().includes(query.toLowerCase()) || // Recherche par nomArticle
+      article.idArticle.toString().toLowerCase().includes(query.toLowerCase()) // Recherche par idArticle
+    )) {
       return false;
     }
 
@@ -88,7 +91,7 @@ export default function DataTableArticle({ columns, articles }) {
         <div className="flex flex-col lg:flex-row lg:items-center gap-4">
           <Input
             className="flex-1 max-w-lg bg-gray-100 dark:bg-gray-800 border-none shadow-none mb-4 lg:mb-0"
-            placeholder="Chercher par articles ..."
+            placeholder="Chercher un article .."
             type="search"
             name="query"
             onChange={e => {
@@ -163,7 +166,11 @@ export default function DataTableArticle({ columns, articles }) {
               <TableRow key={index}>
                 {columns.map(col => (
                   <TableCell key={col.key}>
-                    {article[col.key]}
+                    {col.key === "prix" ?
+                      article[col.key] + ".-"
+                      :
+                      article[col.key]
+                    }
                   </TableCell>
                 ))}
                 <TableCell>
