@@ -9,7 +9,7 @@ import {
     SelectTrigger,
     SelectItem,
     SelectContent,
-    Select,
+    Select
 } from "@/components/ui/select";
 import { articleSchema } from "@/app/utils/formSchema";
 import { toast } from "@/components/ui/use-toast";
@@ -18,20 +18,19 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/app/db/config";
 import getNextArticleId from "@/app/db/utils/getNextArticleId";
 
+
 export default function FormArticle() {
     const {
-        register,
-        handleSubmit,
-        setValue,
-        reset,
-        formState: { errors },
+        register, handleSubmit, setValue, reset, formState: { errors },
     } = useForm({
         resolver: zodResolver(articleSchema),
     });
 
     const onSubmit = async (data) => {
+        // Recuperation de l'id de l'article
         const idArticle = await getNextArticleId();
 
+        // Telechargement de l'image sur le storage
         const fileUploadPromises = Array.from(data.images).map(async (file) => {
             const storageRef = ref(
                 storage,
@@ -40,7 +39,7 @@ export default function FormArticle() {
             const snapshot = await uploadBytesResumable(storageRef, file);
             return await getDownloadURL(snapshot.ref);
         });
-
+        // Recuperation des urls
         const filesUrls = await Promise.all(fileUploadPromises);
 
         const article = { ...data, idArticle, images: filesUrls };
@@ -58,14 +57,14 @@ export default function FormArticle() {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
             <div className="grid gap-2">
-                <Label htmlFor="nomArticle">Nom de l'article</Label>
+                <Label htmlFor="nomArticle" name="nomArticle">Nom de l'article</Label>
                 <Input
                     id="nomArticle"
+                    name="nomArticle"
                     placeholder="Entrez le nom de l'article"
-                    {...register("nomArticle")}
-                />
+                    {...register("nomArticle")} />
                 {errors.nomArticle && (
-                    <span className="text-red-500">{errors.nomArticle.message}</span>
+                    <p className="text-red-500">{errors.nomArticle.message}</p>
                 )}
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -73,12 +72,14 @@ export default function FormArticle() {
                     <Label htmlFor="categorie">Catégorie</Label>
                     <Select
                         id="categorie"
+                        name="categorie"
                         onValueChange={(value) => setValue("categorie", value)}
                     >
                         <SelectTrigger>
                             <SelectValue placeholder="Sélectionnez une catégorie" />
                         </SelectTrigger>
                         <SelectContent>
+                            <SelectItem value="Robe">Robe</SelectItem>
                             <SelectItem value="Haut">Haut</SelectItem>
                             <SelectItem value="Bas">Bas</SelectItem>
                             <SelectItem value="Chaussure">Chaussure</SelectItem>
@@ -87,13 +88,14 @@ export default function FormArticle() {
                     </Select>
                     <input type="hidden" {...register("categorie")} />
                     {errors.categorie && (
-                        <span className="text-red-500">{errors.categorie.message}</span>
+                        <p className="text-red-500">{errors.categorie.message}</p>
                     )}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="sousCategorie">Sous-catégorie</Label>
                     <Select
                         id="sousCategorie"
+                        name="sousCategorie"
                         onValueChange={(value) => setValue("sousCategorie", value)}
                     >
                         <SelectTrigger>
@@ -115,7 +117,7 @@ export default function FormArticle() {
                     </Select>
                     <input type="hidden" {...register("sousCategorie")} />
                     {errors.sousCategorie && (
-                        <span className="text-red-500">{errors.sousCategorie.message}</span>
+                        <p className="text-red-500">{errors.sousCategorie.message}</p>
                     )}
                 </div>
             </div>
@@ -124,6 +126,7 @@ export default function FormArticle() {
                     <Label htmlFor="couleur">Couleur</Label>
                     <Select
                         id="couleur"
+                        name="couleur"
                         onValueChange={(value) => setValue("couleur", value)}
                     >
                         <SelectTrigger>
@@ -144,23 +147,24 @@ export default function FormArticle() {
                     </Select>
                     <input type="hidden" {...register("couleur")} />
                     {errors.couleur && (
-                        <span className="text-red-500">{errors.couleur.message}</span>
+                        <p className="text-red-500">{errors.couleur.message}</p>
                     )}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="etat">Etat</Label>
-                    <Select id="etat" onValueChange={(value) => setValue("etat", value)}>
+                    <Select id="etat" name="etat" onValueChange={(value) => setValue("etat", value)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Sélectionnez l'état" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="Neuf">Neuf</SelectItem>
+                            <SelectItem value="Comme neuf">Comme neuf</SelectItem>
                             <SelectItem value="Bonne état">Bonne état</SelectItem>
                         </SelectContent>
                     </Select>
                     <input type="hidden" {...register("etat")} />
                     {errors.etat && (
-                        <span className="text-red-500">{errors.etat.message}</span>
+                        <p className="text-red-500">{errors.etat.message}</p>
                     )}
                 </div>
             </div>
@@ -170,10 +174,9 @@ export default function FormArticle() {
                     <Input
                         id="marque"
                         placeholder="Entrez la marque"
-                        {...register("marque")}
-                    />
+                        {...register("marque")} />
                     {errors.marque && (
-                        <span className="text-red-500">{errors.marque.message}</span>
+                        <p className="text-red-500">{errors.marque.message}</p>
                     )}
                 </div>
                 <div className="grid gap-2">
@@ -182,10 +185,9 @@ export default function FormArticle() {
                         id="prix"
                         placeholder="Entrez le prix"
                         type="number"
-                        {...register("prix")}
-                    />
+                        {...register("prix")} />
                     {errors.prix && (
-                        <span className="text-red-500">{errors.prix.message}</span>
+                        <p className="text-red-500">{errors.prix.message}</p>
                     )}
                 </div>
             </div>
@@ -194,6 +196,7 @@ export default function FormArticle() {
                     <Label htmlFor="statut">Statut</Label>
                     <Select
                         id="statut"
+                        name="statut"
                         onValueChange={(value) => setValue("statut", value)}
                     >
                         <SelectTrigger>
@@ -206,13 +209,14 @@ export default function FormArticle() {
                     </Select>
                     <input type="hidden" {...register("statut")} />
                     {errors.statut && (
-                        <span className="text-red-500">{errors.statut.message}</span>
+                        <p className="text-red-500">{errors.statut.message}</p>
                     )}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="taille">Taille</Label>
                     <Select
                         id="taille"
+                        name="taille"
                         onValueChange={(value) => setValue("taille", value)}
                     >
                         <SelectTrigger>
@@ -229,7 +233,7 @@ export default function FormArticle() {
                     </Select>
                     <input type="hidden" {...register("taille")} />
                     {errors.taille && (
-                        <span className="text-red-500">{errors.taille.message}</span>
+                        <p className="text-red-500">{errors.taille.message}</p>
                     )}
                 </div>
             </div>
@@ -237,7 +241,7 @@ export default function FormArticle() {
                 <Label htmlFor="images">Images</Label>
                 <Input id="images" multiple type="file" {...register("images")} />
                 {errors.images && (
-                    <span className="text-red-500">{errors.images.message}</span>
+                    <p className="text-red-500">{errors.images.message}</p>
                 )}
             </div>
             <DialogFooter>

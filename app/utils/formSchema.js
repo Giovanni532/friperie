@@ -10,5 +10,5 @@ export const articleSchema = z.object({
   prix: z.string().transform((val) => parseFloat(val)).refine((val) => !isNaN(val) && val > 0, { message: "Le prix doit être un nombre positif" }),
   statut: z.string().min(1,{ message: "Le statut est requis" }),
   taille: z.string().min(1,{ message: "La taille est requise" }),
-  images: z.any().refine((files) => files.length > 0, { message: "Au moins une image est requise" }),
+  images: z.any().refine((files) => files.length > 0, { message: "Une image est requise pour un article" }),
 });
