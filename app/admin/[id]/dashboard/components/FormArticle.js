@@ -4,26 +4,50 @@ import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select";
+import {
+    SelectValue,
+    SelectTrigger,
+    SelectItem,
+    SelectContent,
+    Select,
+} from "@/components/ui/select";
 import { articleSchema } from "@/app/utils/formSchema";
 import getMultipleData from "@/app/db/request/getMultipleData";
-import addDataWithId from "@/app/db/request/addDataWithId";
 import { toast } from "@/components/ui/use-toast";
-import { addArticle, revalidate } from "../action/action";
+import { addArticle } from "../action/action";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { storage } from "@/app/db/config";
+import firebaseDb from "@/app/db/config";
+import getNextArticleId from "@/app/db/utils/genNextArticleId";
 
 export default function FormArticle() {
-    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm({
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        reset,
+        formState: { errors },
+    } = useForm({
         resolver: zodResolver(articleSchema),
     });
 
     const onSubmit = async (data) => {
-        const lastArticle = (await getMultipleData("article")).resultGetMultipleData.slice(-1);
+        const idArticle = await getNextArticleId();
 
-        console.log(lastArticle[0].idArticle)
+        const fileUploadPromises = Array.from(data.images).map(async (file) => {
+            const storageRef = ref(
+                storage,
+                `images/article/${idArticle}/${file.name}`
+            );
+            const snapshot = await uploadBytesResumable(storageRef, file);
+            return await getDownloadURL(snapshot.ref);
+        });
 
-        await  addArticle(lastArticle[0].idArticle, data)
+        const filesUrls = await Promise.all(fileUploadPromises);
 
-        revalidate();
+        const article = { ...data, idArticle, images: filesUrls };
+
+        await addArticle(idArticle, article);
 
         toast({
             title: data.nomArticle,
@@ -37,13 +61,22 @@ export default function FormArticle() {
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
             <div className="grid gap-2">
                 <Label htmlFor="nomArticle">Nom de l'article</Label>
-                <Input id="nomArticle" placeholder="Entrez le nom de l'article" {...register("nomArticle")} />
-                {errors.nomArticle && <span className="text-red-500">{errors.nomArticle.message}</span>}
+                <Input
+                    id="nomArticle"
+                    placeholder="Entrez le nom de l'article"
+                    {...register("nomArticle")}
+                />
+                {errors.nomArticle && (
+                    <span className="text-red-500">{errors.nomArticle.message}</span>
+                )}
             </div>
             <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                     <Label htmlFor="categorie">Catégorie</Label>
-                    <Select id="categorie" onValueChange={(value) => setValue("categorie", value)}>
+                    <Select
+                        id="categorie"
+                        onValueChange={(value) => setValue("categorie", value)}
+                    >
                         <SelectTrigger>
                             <SelectValue placeholder="Sélectionnez une catégorie" />
                         </SelectTrigger>
@@ -55,11 +88,16 @@ export default function FormArticle() {
                         </SelectContent>
                     </Select>
                     <input type="hidden" {...register("categorie")} />
-                    {errors.categorie && <span className="text-red-500">{errors.categorie.message}</span>}
+                    {errors.categorie && (
+                        <span className="text-red-500">{errors.categorie.message}</span>
+                    )}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="sousCategorie">Sous-catégorie</Label>
-                    <Select id="sousCategorie" onValueChange={(value) => setValue("sousCategorie", value)}>
+                    <Select
+                        id="sousCategorie"
+                        onValueChange={(value) => setValue("sousCategorie", value)}
+                    >
                         <SelectTrigger>
                             <SelectValue placeholder="Sélectionnez une sous-catégorie" />
                         </SelectTrigger>
@@ -78,13 +116,18 @@ export default function FormArticle() {
                         </SelectContent>
                     </Select>
                     <input type="hidden" {...register("sousCategorie")} />
-                    {errors.sousCategorie && <span className="text-red-500">{errors.sousCategorie.message}</span>}
+                    {errors.sousCategorie && (
+                        <span className="text-red-500">{errors.sousCategorie.message}</span>
+                    )}
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                     <Label htmlFor="couleur">Couleur</Label>
-                    <Select id="couleur" onValueChange={(value) => setValue("couleur", value)}>
+                    <Select
+                        id="couleur"
+                        onValueChange={(value) => setValue("couleur", value)}
+                    >
                         <SelectTrigger>
                             <SelectValue placeholder="Sélectionnez une couleur" />
                         </SelectTrigger>
@@ -102,7 +145,9 @@ export default function FormArticle() {
                         </SelectContent>
                     </Select>
                     <input type="hidden" {...register("couleur")} />
-                    {errors.couleur && <span className="text-red-500">{errors.couleur.message}</span>}
+                    {errors.couleur && (
+                        <span className="text-red-500">{errors.couleur.message}</span>
+                    )}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="etat">Etat</Label>
@@ -116,25 +161,43 @@ export default function FormArticle() {
                         </SelectContent>
                     </Select>
                     <input type="hidden" {...register("etat")} />
-                    {errors.etat && <span className="text-red-500">{errors.etat.message}</span>}
+                    {errors.etat && (
+                        <span className="text-red-500">{errors.etat.message}</span>
+                    )}
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                     <Label htmlFor="marque">Marque</Label>
-                    <Input id="marque" placeholder="Entrez la marque" {...register("marque")} />
-                    {errors.marque && <span className="text-red-500">{errors.marque.message}</span>}
+                    <Input
+                        id="marque"
+                        placeholder="Entrez la marque"
+                        {...register("marque")}
+                    />
+                    {errors.marque && (
+                        <span className="text-red-500">{errors.marque.message}</span>
+                    )}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="prix">Prix</Label>
-                    <Input id="prix" placeholder="Entrez le prix" type="number" {...register("prix")} />
-                    {errors.prix && <span className="text-red-500">{errors.prix.message}</span>}
+                    <Input
+                        id="prix"
+                        placeholder="Entrez le prix"
+                        type="number"
+                        {...register("prix")}
+                    />
+                    {errors.prix && (
+                        <span className="text-red-500">{errors.prix.message}</span>
+                    )}
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                     <Label htmlFor="statut">Statut</Label>
-                    <Select id="statut" onValueChange={(value) => setValue("statut", value)}>
+                    <Select
+                        id="statut"
+                        onValueChange={(value) => setValue("statut", value)}
+                    >
                         <SelectTrigger>
                             <SelectValue placeholder="Sélectionnez le statut" />
                         </SelectTrigger>
@@ -144,11 +207,16 @@ export default function FormArticle() {
                         </SelectContent>
                     </Select>
                     <input type="hidden" {...register("statut")} />
-                    {errors.statut && <span className="text-red-500">{errors.statut.message}</span>}
+                    {errors.statut && (
+                        <span className="text-red-500">{errors.statut.message}</span>
+                    )}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="taille">Taille</Label>
-                    <Select id="taille" onValueChange={(value) => setValue("taille", value)}>
+                    <Select
+                        id="taille"
+                        onValueChange={(value) => setValue("taille", value)}
+                    >
                         <SelectTrigger>
                             <SelectValue placeholder="Sélectionnez la taille" />
                         </SelectTrigger>
@@ -162,12 +230,17 @@ export default function FormArticle() {
                         </SelectContent>
                     </Select>
                     <input type="hidden" {...register("taille")} />
-                    {errors.taille && <span className="text-red-500">{errors.taille.message}</span>}
+                    {errors.taille && (
+                        <span className="text-red-500">{errors.taille.message}</span>
+                    )}
                 </div>
             </div>
             <div className="grid gap-4">
                 <Label htmlFor="images">Images</Label>
-                <Input id="images" multiple type="file" />
+                <Input id="images" multiple type="file" {...register("images")} />
+                {errors.images && (
+                    <span className="text-red-500">{errors.images.message}</span>
+                )}
             </div>
             <DialogFooter>
                 <Button type="submit">Enregistrer</Button>
