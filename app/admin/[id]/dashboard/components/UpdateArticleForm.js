@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { DialogClose, DialogFooter } from "@/components/ui/dialog";
+import { DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,7 +18,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/app/db/config";
 import { useState, useEffect } from "react";
 import Spinner from "@/app/components/Spinner";
-import { updateArticle } from "@/app/db/request/updateDoc";
+import { updateData } from "@/app/db/request/updateDoc";
 
 
 export default function UpdateArticleForm({ article }) {
@@ -58,7 +58,7 @@ export default function UpdateArticleForm({ article }) {
 
         const articleData = { ...data, images: filesUrls };
 
-        await updateArticle(article.idArticle.toString(), "article", articleData);
+        await updateData(article.idArticle.toString(), "article", articleData);
 
         revalidate();
 

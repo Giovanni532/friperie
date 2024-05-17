@@ -26,3 +26,7 @@ export const articleUpdateSchema = z.object({
   taille: z.string().min(1,{ message: "La taille est requise" }),
   images: z.any().refine((files) => files.length >= 0, { message: "Une image est requise pour un article" }),
 });
+
+export const commandeSchema = z.object({
+  statut: z.string().min(1, {message:"Le statut est requis"}),
+});

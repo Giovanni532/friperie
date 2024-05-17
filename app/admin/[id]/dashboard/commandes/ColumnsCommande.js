@@ -26,6 +26,10 @@ const ColumnsCommandes = [
     {
         key: "statutCommande",
         header: "Statut de la commande",
+    },
+    {
+        key: "action",
+        header: "Actions",
     }
 ]
 

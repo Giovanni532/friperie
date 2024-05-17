@@ -1,19 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { DialogTrigger, DialogTitle, DialogDescription, DialogHeader, DialogContent, Dialog } from "@/components/ui/dialog"
-import { updateArticle } from '@/app/db/request/updateDoc';
 import { GrDocumentUpdate } from "react-icons/gr";
-import UpdateArticleForm from './UpdateArticleForm';
+import UpdateCommandeForm from './UpdateCommandeForm';
 
 
-const UpdateButton = ({ article }) => {
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await updateArticle(article.idArticle, formData);
-        closeModal();
-    };
-
+const UpdateButtonCommande = ({ commande }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -23,17 +15,17 @@ const UpdateButton = ({ article }) => {
             </DialogTrigger>
             <DialogContent className="sm:max-w-[600px]">
                 <DialogHeader>
-                    <DialogTitle>Modifier l'article {article.nomArticle}</DialogTitle>
+                    <DialogTitle>Modifier la commande {commande.idCommande}</DialogTitle>
                     <DialogDescription>
-                        Remplissez les informations ci-dessous pour modifier votre article.
+                        Remplissez les informations ci-dessous pour modifier votre commande.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4 h-1/2">
-                    <UpdateArticleForm article={article}/>
+                    <UpdateCommandeForm commande={commande}/>
                 </div>
             </DialogContent>
         </Dialog>
     )
 };
 
-export default UpdateButton;
+export default UpdateButtonCommande;

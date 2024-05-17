@@ -10,6 +10,7 @@ import { FaTrash } from "react-icons/fa";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { IoFilter } from "react-icons/io5";
 import { MdOutlineFilterListOff } from "react-icons/md";
+import UpdateButtonCommande from '../components/UpdateButtonCommande';
 
 
 export default function DataTableCommande({ columns, commandes }) {
@@ -134,7 +135,6 @@ export default function DataTableCommande({ columns, commandes }) {
                                     {col.header}
                                 </TableHead>
                             ))}
-                            <TableHead>Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -142,23 +142,19 @@ export default function DataTableCommande({ columns, commandes }) {
                             <TableRow key={index}>
                                 {columns.map(col => (
                                     <TableCell key={col.key}>
-                                        {col.key === "prixCommande" ?
-                                            commande[col.key] + ".-"
-                                            :
-                                            commande[col.key]
-                                        }
+                                        {col.key !== "action" ? (
+                                            col.key === "prix" ? (
+                                                commande[col.key] + ".-"
+                                            ) : (
+                                                commande[col.key]
+                                            )
+                                        ) : (
+                                            <div className="flex items-center gap-2">
+                                                <UpdateButtonCommande commande={commande}/>
+                                            </div>
+                                        )}
                                     </TableCell>
                                 ))}
-                                <TableCell>
-                                    <div className="flex items-center gap-2">
-                                        <Button size="icon" variant="ghost">
-                                            <GrDocumentUpdate className="w-4 h-4" style={{ color: "blue" }} />
-                                        </Button>
-                                        <Button size="icon" variant="ghost">
-                                            <FaTrash className='w-4 h-4' style={{ color: "red" }} />
-                                        </Button>
-                                    </div>
-                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

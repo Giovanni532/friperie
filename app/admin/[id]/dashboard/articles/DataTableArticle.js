@@ -9,7 +9,7 @@ import { DropdownMenuTrigger, DropdownMenuCheckboxItem, DropdownMenuContent, Dro
 import { IoFilter } from "react-icons/io5";
 import { MdOutlineFilterListOff } from "react-icons/md";
 import DeleteButton from '../components/DeleteButton';
-import UpdateButton from '../components/UpdateButton';
+import UpdateButtonArticle from '../components/UpdateButtonArticle';
 
 
 
@@ -178,7 +178,7 @@ export default function DataTableArticle({ columns, articles }) {
                       )
                     ) : (
                       <div className="flex items-center gap-2">
-                        <UpdateButton article={article}/>
+                        <UpdateButtonArticle article={article}/>
                         <DeleteButton
                           documentId={article.idArticle}
                           collectionName="article"

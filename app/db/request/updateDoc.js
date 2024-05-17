@@ -3,7 +3,7 @@ import firebaseDb from '../config'; // Assurez-vous que cela pointe vers votre c
 
 const db = getFirestore(firebaseDb);
 
-export const updateArticle = async (id, path, data) => {
-    const articleDoc = doc(db, path, id);
-    await updateDoc(articleDoc, data);
+export const updateData = async (id, path, data) => {
+    const dataDoc = doc(db, path, id);
+    await updateDoc(dataDoc, data);
   };
