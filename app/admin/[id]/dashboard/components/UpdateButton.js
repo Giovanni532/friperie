@@ -3,17 +3,10 @@ import { Button } from "@/components/ui/button";
 import { DialogTrigger, DialogTitle, DialogDescription, DialogHeader, DialogContent, Dialog } from "@/components/ui/dialog"
 import { updateArticle } from '@/app/db/request/updateDoc';
 import { GrDocumentUpdate } from "react-icons/gr";
+import UpdateArticleForm from './UpdateArticleForm';
 
 
 const UpdateButton = ({ article }) => {
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,12 +23,13 @@ const UpdateButton = ({ article }) => {
             </DialogTrigger>
             <DialogContent className="sm:max-w-[600px]">
                 <DialogHeader>
-                    <DialogTitle>Modifier l'article ...</DialogTitle>
+                    <DialogTitle>Modifier l'article {article.nomArticle}</DialogTitle>
                     <DialogDescription>
-                        ......
+                        Remplissez les informations ci-dessous pour modifier votre article.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4 h-1/2">
+                    <UpdateArticleForm article={article}/>
                 </div>
             </DialogContent>
         </Dialog>
