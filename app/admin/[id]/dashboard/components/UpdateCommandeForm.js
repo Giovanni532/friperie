@@ -31,6 +31,7 @@ export default function UpdateCommandeForm({ commande }) {
         toast({
             title: "Commande mise à jour",
             description: `Le statut de la commande ${commande.idCommande} a été mis à jour en ${data.statut}`,
+            variant: "success"
         });
 
         revalidate();

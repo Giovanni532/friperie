@@ -56,6 +56,7 @@ export default function FormArticle() {
         toast({
             title: data.nomArticle,
             description: `Votre article ${data.nomArticle} à bien été ajouter`,
+            variant: "succes"
         });
 
         reset();

@@ -10,7 +10,7 @@ export const metadata = {
 export default function LayoutDashboard({ children }) {
     const admin = getCookie("admin", { cookies });
 
-    if (admin === "false") {
+    if (admin === "false" || admin === undefined) {
         return (
             <ErrorPage />
         );
