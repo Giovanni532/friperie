@@ -11,7 +11,7 @@ import {
     SelectContent,
     Select
 } from "@/components/ui/select";
-import { articleSchema } from "@/app/utils/formSchema";
+import { articleUpdateSchema } from "@/app/utils/formSchema";
 import { toast } from "@/components/ui/use-toast";
 import { revalidate } from "../action/action";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
@@ -26,7 +26,7 @@ export default function UpdateArticleForm({ article }) {
     const {
         register, handleSubmit, setValue, reset, formState: { errors },
     } = useForm({
-        resolver: zodResolver(articleSchema),
+        resolver: zodResolver(articleUpdateSchema),
     });
 
     useEffect(() => {
