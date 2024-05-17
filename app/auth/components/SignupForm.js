@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { setCookie } from "cookies-next";
+import getFormattedDate from "@/app/utils/(client)/getFormatedData";
 
 const formSchema = z.object({
   prenom: z.string().min(3, {
@@ -62,20 +63,17 @@ export default function SignupForm({ change }) {
   });
 
   const onFormSubmit = async (data) => {
-    const { prenom, nom, email, password, adresse, codePostal, ville } = data;
-    const { resultSignup, errorSignup } = await signup(email, password);
+    const now = new Date();
+    const today = new Date(now.getDay());
+    const { resultSignup, errorSignup } = await signup(data.email, data.password);
     if (errorSignup) {
       setEmailAlreadyExist(true);
     } else {
       const uid = resultSignup.user.uid;
       const user = {
-        prenom,
-        nom,
-        email,
-        adresse,
-        codePostal,
-        ville,
-        uid,
+        ...data,
+        createdAt: today,
+        createdUserAt: getFormattedDate()
       };
       await addDataWithId("user", uid, user);
 

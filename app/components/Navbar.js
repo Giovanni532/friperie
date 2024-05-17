@@ -16,7 +16,7 @@ import { Separator } from "@/components/ui/separator";
 export default function Navbar() {
   const router = useRouter();
   const admin = getCookie("admin");
-  const { user } = useAuthContext();
+  const { user, isAdmin } = useAuthContext();
 
   const handleLogout = async () => {
     router.push('/')
@@ -52,7 +52,7 @@ export default function Navbar() {
                 Contact
               </Link>
             </li>
-            {admin === "true" && user ?
+            {isAdmin && user || admin === "true" && user ?
               <li>
                 <Link className="text-sm font-medium hover:underline hover:underline-offset-4" href={`/admin/${user.uid}/dashboard`}>
                   Dashboard
@@ -133,7 +133,7 @@ export default function Navbar() {
                   Contact
                 </Link>
               </SheetClose>
-              {admin === "true" && user ? (
+              {isAdmin && user || admin === "true" && user ? (
                 <SheetClose asChild>
                   <Link
                     className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"

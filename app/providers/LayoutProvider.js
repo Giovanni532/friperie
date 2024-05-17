@@ -6,7 +6,7 @@ import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { AuthContextProvider } from "./AuthProvider";
-import Navbar from "../components/navbar/Navbar";
+import Navbar from "../components/Navbar";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -15,7 +15,6 @@ const fontSans = FontSans({
 
 
 export default function LayoutProvider({ children }) {
-
     return (
         <body
             className={cn(
