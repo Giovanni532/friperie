@@ -24,6 +24,14 @@ const ColumnsCommandes = [
         header: "Prix de la commande",
     },
     {
+        key: "date",
+        header: "Date de la commande"
+    },
+    {
+        key: "dateDeLivraison",
+        header: "Date de livraison"
+    },
+    {
         key: "statutCommande",
         header: "Statut de la commande",
     },

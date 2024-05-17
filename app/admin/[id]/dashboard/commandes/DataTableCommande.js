@@ -143,7 +143,7 @@ export default function DataTableCommande({ columns, commandes }) {
                                 {columns.map(col => (
                                     <TableCell key={col.key}>
                                         {col.key !== "action" ? (
-                                            col.key === "prix" ? (
+                                            col.key === "prixCommande" ? (
                                                 commande[col.key] + ".-"
                                             ) : (
                                                 commande[col.key]
