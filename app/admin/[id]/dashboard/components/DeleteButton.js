@@ -15,10 +15,16 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { revalidate } from '../action/action';
+import { toast } from '@/components/ui/use-toast';
 
 const DeleteButton = ({ collectionName, documentId, nameArticle }) => {
     const handleDelete = async () => {
         await deleteDocument(collectionName, documentId.toString());
+        toast({
+            title: "Article supprimer",
+            description: `Votre article ${nameArticle} à bien été supprimer`,
+            variant: "success"
+        });
         revalidate()
     };
 

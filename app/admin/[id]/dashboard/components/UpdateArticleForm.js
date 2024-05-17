@@ -63,6 +63,7 @@ export default function UpdateArticleForm({ article }) {
         revalidate();
 
         toast({
+            variant: "success",
             title: data.nomArticle,
             description: `Votre article ${data.nomArticle} à bien été modifier`,
         });
