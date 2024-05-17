@@ -109,9 +109,10 @@ export default function DataTableCommande({ columns, commandes }) {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-[200px]">
-                            <DropdownMenuCheckboxItem onClick={() => handleStatusFilter("Payer")}>Payer</DropdownMenuCheckboxItem>
-                            <DropdownMenuCheckboxItem onClick={() => handleStatusFilter("En cours de livraison")}>En cours de livraison</DropdownMenuCheckboxItem>
-                            <DropdownMenuCheckboxItem onClick={() => handleStatusFilter("Livrer")}>Livrer</DropdownMenuCheckboxItem>
+                            <DropdownMenuCheckboxItem onClick={() => handleStatusFilter("En traitement")}>En traitement</DropdownMenuCheckboxItem>
+                            <DropdownMenuCheckboxItem onClick={() => handleStatusFilter("Expédiée")}>Expédiée</DropdownMenuCheckboxItem>
+                            <DropdownMenuCheckboxItem onClick={() => handleStatusFilter("Livrée")}>Livrée</DropdownMenuCheckboxItem>
+                            <DropdownMenuCheckboxItem onClick={() => handleStatusFilter("Annulée")}>Annulée</DropdownMenuCheckboxItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                     {priceOrder || statusFilter ?
