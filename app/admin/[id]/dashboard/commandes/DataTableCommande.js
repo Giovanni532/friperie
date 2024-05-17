@@ -75,7 +75,7 @@ export default function DataTableCommande({ columns, commandes }) {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-1 py-2">
             <h1 className="text-2xl font-bold p-3">Commandes</h1>
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6">
                 <div className="flex flex-col lg:flex-row lg:items-center gap-4">
