@@ -11,6 +11,7 @@ import logout from "@/app/db/auth/logout";
 import { useRouter } from "next/navigation";
 import { RiMenu4Line } from "react-icons/ri";
 import { Separator } from "@/components/ui/separator";
+import { MdOutlineShoppingCart } from "react-icons/md";
 
 
 export default function Navbar() {
@@ -93,6 +94,13 @@ export default function Navbar() {
           }
         </div>
         <Sheet>
+          <Button className="relative absolute right-20" size="icon" variant="outline">
+            <MdOutlineShoppingCart className="h-6 w-6" />
+            <span className="absolute -top-2 -right-2 bg-primary text-white rounded-full px-2 py-0.5 text-xs font-medium">
+              3
+            </span>
+            <span className="sr-only">Cart</span>
+          </Button>
           <SheetTrigger asChild>
             <Button className="lg:hidden" size="icon" variant="outline">
               <RiMenu4Line className="h-6 w-6" />
