@@ -8,6 +8,10 @@ const ColumnsCommandes = [
         header: "Références article",
     },
     {
+        key: "usernameUser",
+        header: "Utilisateur"
+    },
+    {
         key: "adresse",
         header: "Adresse de livraison",
     },
@@ -29,7 +33,7 @@ const ColumnsCommandes = [
     },
     {
         key: "dateDeLivraison",
-        header: "Date de livraison"
+        header: "Livraison prévue le"
     },
     {
         key: "statutCommande",

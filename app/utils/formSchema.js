@@ -1,5 +1,29 @@
 import { z } from "zod";
 
+export const signupFormSchema = z.object({
+  prenom: z.string().min(3, {
+    message: "Entrer votre prenom.",
+  }),
+  nom: z.string().min(3, {
+    message: "Entre votre nom.",
+  }),
+  email: z.string().email({
+    message: "Email invalide, veuillez entrer un mail valide.",
+  }),
+  password: z.string().min(8, {
+    message: "Votre mot de passe doit contenir au moins 8 caractères.",
+  })
+});
+
+export const loginFormSchema = z.object({
+  email: z.string().email({
+    message: "Email invalide, veuillez entrer un mail valide.",
+  }),
+  password: z.string().min(8, {
+    message: "Votre mot de passe doit contenir au moins 8 caractères.",
+  })
+});
+
 export const articleSchema = z.object({
   nomArticle: z.string().min(1,{ message: "Le nom de l'article est requis" }),
   categorie: z.string().min(1,{ message: "La catégorie est requise" }),

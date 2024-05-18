@@ -148,10 +148,17 @@ export default function DataTableCommande({ columns, commandes }) {
                                                 commande[col.key] + ".-"
                                             ) : (
                                                 commande[col.key]
+                                            ) &&
+                                                col.key === "idCommande" ? (
+                                                "#" + commande[col.key]
                                             )
+                                                :
+                                                (
+                                                    commande[col.key]
+                                                )
                                         ) : (
                                             <div className="flex items-center gap-2">
-                                                <UpdateButtonCommande commande={commande}/>
+                                                <UpdateButtonCommande commande={commande} />
                                             </div>
                                         )}
                                     </TableCell>

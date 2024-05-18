@@ -1,201 +1,174 @@
-import React, { useState } from "react";
-import signup from "@/app/db/auth/signup";
-import addDataWithId from "@/app/db/request/addDataWithId";
-import { useRouter } from "next/navigation";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupFormSchema } from "@/app/utils/formSchema";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from "@/components/ui/form";
-import { cn } from "@/lib/utils";
-import { setCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
+import signup from "@/app/db/auth/signup";
 import getFormattedDate from "@/app/utils/(client)/getFormatedData";
-
-const formSchema = z.object({
-  prenom: z.string().min(3, {
-    message: "Entrer votre prenom.",
-  }),
-  nom: z.string().min(3, {
-    message: "Entre votre nom.",
-  }),
-  email: z.string().email({
-    message: "Email invalide, veuillez entrer un mail valide.",
-  }),
-  password: z.string().min(8, {
-    message: "Votre mot de passe doit contenir au moins 8 caractères.",
-  }),
-  adresse: z.string().min(10, {
-    message: "Adresse invalide, veuillez entrer une adresse valide."
-  }),
-  codePostal: z.string().min(4, {
-    message: "Code postal invalide, veuillez entrer un code postal valide.",
-  }),
-  ville: z.string().min(2, {
-    message: "Nom de la ville invalide, veuillez entrer un nom de ville valide.",
-  }),
-});
-
+import { cn } from "@/lib/utils";
+import addDataWithId from "@/app/db/request/addDataWithId";
+import { setCookie } from "cookies-next";
+import { loginWithGoogle } from "@/app/db/auth/loginWithGoogle";
+import Spinner from "@/app/components/Spinner";
 
 export default function SignupForm({ change }) {
-  const [emailAlreadyExist, setEmailAlreadyExist] = useState(false);
-  const router = useRouter();
+    const [loading, setLoading] = useState(false);
+    const [emailAlreadyExist, setEmailAlreadyExist] = useState(false);
+    const router = useRouter();
 
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      prenom: "",
-      nom: "",
-      adresse: "",
-      codePostal: "",
-      ville: "",
-      email: "",
-      password: ""
-    },
-  });
+    const form = useForm({
+        resolver: zodResolver(signupFormSchema),
+        defaultValues: {
+            prenom: "",
+            nom: "",
+            email: "",
+            password: ""
+        },
+    });
 
-  const onFormSubmit = async (data) => {
-    const now = new Date();
-    const today = new Date(now.getDay());
-    const { resultSignup, errorSignup } = await signup(data.email, data.password);
-    if (errorSignup) {
-      setEmailAlreadyExist(true);
-    } else {
-      const uid = resultSignup.user.uid;
-      const user = {
-        ...data,
-        createdAt: today,
-        createdUserAt: getFormattedDate()
-      };
-      await addDataWithId("user", uid, user);
+    const onFormSubmit = async (data) => {
+        setLoading(true)
+        const now = new Date();
+        const today = new Date(now.getDay());
+        const { resultSignup, errorSignup } = await signup(data.email, data.password);
+        if (errorSignup) {
+            setEmailAlreadyExist(true);
+            setLoading(false)
+        }
+        const uid = resultSignup.user.uid;
+        const user = {
+            ...data,
+            username: data.prenom + " " + data.nom,
+            createdAt: today,
+            createdUserAt: getFormattedDate()
+        };
+        await addDataWithId("user", uid, user);
+        router.push(`/user/${uid}/profile`);
+        setCookie("admin", false)
+        setCookie("user", true)
+    };
 
-      setCookie("admin", false)
-      setCookie("user", true)
-
-      return router.push(`/user/${uid}/profile`);
+    const googleSubmit = async () => {
+        setLoading(true);
+        const now = new Date();
+        const today = new Date(now.getDay());
+        await loginWithGoogle(today, getFormattedDate())
+            .then((result) => {
+                setCookie("admin", false)
+                setCookie("user", true)
+                router.push(`/user/${result}/profile`);
+            })
     }
-  };
 
-  return (
-    <>
-      <div className="container mx-auto space-y-5 mt-10 p-8 shadow-2xl rounded w-2/6">
-        <h2 className="text-center text-xl">S'inscrire</h2>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onFormSubmit)}
-            className="space-y-4"
-          >
-            <FormField
-              control={form.control}
-              name="prenom"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Votre prénom</FormLabel>
-                  <FormControl>
-                    <Input placeholder="John" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="nom"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Votre nom</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Doe" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="adresse"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Votre adresse</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Avenue de ..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="codePostal"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Code postal</FormLabel>
-                  <FormControl>
-                    <Input placeholder="1201" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="ville"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Ville</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Genève" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Votre email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="exemple@gmail.com" {...field} />
-                  </FormControl>
-                  {emailAlreadyExist && (
-                    <FormDescription className={cn("text-sm font-medium text-destructive")}>Email deja existant</FormDescription>
-                  )}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Votre mot de passe</FormLabel>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="text-center mt-2">
-              <Button type="submit">S'inscrire</Button>
+    return (
+        <div className="mx-auto max-w-md space-y-8 border rounded-lg p-8">
+            <div className="space-y-2 text-center">
+                <h1 className="text-3xl font-bold">Inscription</h1>
+                <p className="text-gray-500 dark:text-gray-400">Entrez vos informations pour créer un compte</p>
             </div>
-          </form>
-        </Form>
-        <div className="text-center">
-          <Button onClick={change}>Vous avez deja un compte ?</Button>
+            {loading ?
+                <Spinner message={"Inscription en cours ..."} />
+                :
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onFormSubmit)}>
+                        <div className="space-y-4">
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="prenom"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Prénom</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Jean" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="nom"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Nom</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Dupont" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Votre email</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="exemple@gmail.com" {...field} />
+                                            </FormControl>
+                                            {emailAlreadyExist && (
+                                                <FormDescription className={cn("text-sm font-medium text-destructive")}>Email deja existant</FormDescription>
+                                            )}
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Votre mot de passe</FormLabel>
+                                            <FormControl>
+                                                <Input type="password" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <Button className="w-full" type="submit">
+                                S'inscrire
+                            </Button>
+                            <Button className="w-full" variant="outline" onClick={googleSubmit}>
+                                <FcGoogle className="h-5 w-5 mr-2" />
+                                S'inscrire avec Google
+                            </Button>
+                        </div>
+                        <Separator className="my-3" />
+                        <div className="text-center text-sm">
+                            Déjà un compte ? {" "}
+                            <Link className="underline" href="#" onClick={change}>
+                                Se connecter
+                            </Link>
+                        </div>
+                    </form>
+                </Form>
+            }
         </div>
-      </div>
-    </>
-  );
+    )
 }
