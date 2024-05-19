@@ -1,0 +1,313 @@
+import React from 'react'
+
+export default function component() {
+    return (
+        <main className='flex flex-col'>
+            <section className="bg-white dark:bg-gray-800 py-20 md:py-32 lg:py-40">
+                <div className="container px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div className="space-y-6">
+                        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+                            Discover the perfect home decor for your space
+                        </h1>
+                        <p className="text-gray-500 dark:text-gray-400 text-lg md:text-xl">
+                            Elevate your living environment with our curated collection of high-quality, stylish home furnishings.
+                        </p>
+                        <div>
+                            <Link
+                                className="inline-flex items-center justify-center h-10 px-6 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300"
+                                href="#"
+                            >
+                                Shop Now
+                            </Link>
+                        </div>
+                    </div>
+                    <div className="bg-[url('/hero-image.jpg')] bg-cover bg-center h-[450px] rounded-xl" />
+                </div>
+            </section>
+            <section className="py-16 md:py-24 lg:py-32">
+                <div className="container px-4 md:px-6">
+                    <div className="flex flex-col items-center text-center space-y-4 mb-12">
+                        <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Featured Products</h2>
+                        <p className="text-gray-500 dark:text-gray-400 max-w-md">
+                            Discover our curated selection of the latest and greatest home decor items.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+                        <div className="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
+                            <Link className="block" href="#">
+                                <img
+                                    alt="Product 1"
+                                    className="w-full h-64 object-cover"
+                                    height={400}
+                                    src="/placeholder.svg"
+                                    style={{
+                                        aspectRatio: "400/400",
+                                        objectFit: "cover",
+                                    }}
+                                    width={400}
+                                />
+                                <div className="bg-white dark:bg-gray-950 p-4">
+                                    <h3 className="text-lg font-semibold">Minimalist Vase</h3>
+                                    <p className="text-gray-500 dark:text-gray-400 text-sm">$49.99</p>
+                                    <div className="flex justify-between items-center mt-4">
+                                        <Button className="w-1/2 mr-2" variant="outline">
+                                            Add to Cart
+                                        </Button>
+                                        <Link
+                                            className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2"
+                                            href="#"
+                                        >
+                                            View More
+                                        </Link>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
+                            <Link className="block" href="#">
+                                <img
+                                    alt="Product 2"
+                                    className="w-full h-64 object-cover"
+                                    height={400}
+                                    src="/placeholder.svg"
+                                    style={{
+                                        aspectRatio: "400/400",
+                                        objectFit: "cover",
+                                    }}
+                                    width={400}
+                                />
+                                <div className="bg-white dark:bg-gray-950 p-4">
+                                    <h3 className="text-lg font-semibold">Cozy Throw Blanket</h3>
+                                    <p className="text-gray-500 dark:text-gray-400 text-sm">$79.99</p>
+                                    <div className="flex justify-between items-center mt-4">
+                                        <Button className="w-1/2 mr-2" variant="outline">
+                                            Add to Cart
+                                        </Button>
+                                        <Link
+                                            className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2"
+                                            href="#"
+                                        >
+                                            View More
+                                        </Link>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
+                            <Link className="block" href="#">
+                                <img
+                                    alt="Product 3"
+                                    className="w-full h-64 object-cover"
+                                    height={400}
+                                    src="/placeholder.svg"
+                                    style={{
+                                        aspectRatio: "400/400",
+                                        objectFit: "cover",
+                                    }}
+                                    width={400}
+                                />
+                                <div className="bg-white dark:bg-gray-950 p-4">
+                                    <h3 className="text-lg font-semibold">Wooden Bookshelf</h3>
+                                    <p className="text-gray-500 dark:text-gray-400 text-sm">$199.99</p>
+                                    <div className="flex justify-between items-center mt-4">
+                                        <Button className="w-1/2 mr-2" variant="outline">
+                                            Add to Cart
+                                        </Button>
+                                        <Link
+                                            className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2"
+                                            href="#"
+                                        >
+                                            View More
+                                        </Link>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
+                            <Link className="block" href="#">
+                                <img
+                                    alt="Product 4"
+                                    className="w-full h-64 object-cover"
+                                    height={400}
+                                    src="/placeholder.svg"
+                                    style={{
+                                        aspectRatio: "400/400",
+                                        objectFit: "cover",
+                                    }}
+                                    width={400}
+                                />
+                                <div className="bg-white dark:bg-gray-950 p-4">
+                                    <h3 className="text-lg font-semibold">Ceramic Planter</h3>
+                                    <p className="text-gray-500 dark:text-gray-400 text-sm">$29.99</p>
+                                    <div className="flex justify-between items-center mt-4">
+                                        <Button className="w-1/2 mr-2" variant="outline">
+                                            Add to Cart
+                                        </Button>
+                                        <Link
+                                            className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2"
+                                            href="#"
+                                        >
+                                            View More
+                                        </Link>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+                <div className="container px-4 md:px-6">
+                    <div className="text-center space-y-4">
+                        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Quality You Can Count On</h2>
+                        <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                            Our products are designed with the highest standards of quality and craftsmanship, ensuring you get the best
+                            experience.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+                        <div className="flex flex-col items-center text-center space-y-3">
+                            <div className="bg-white p-3 rounded-full dark:bg-gray-950">
+                                <GaugeIcon className="w-8 h-8 text-primary" />
+                            </div>
+                            <h3 className="text-lg font-semibold">Durable Construction</h3>
+                            <p className="text-gray-500 dark:text-gray-400">
+                                Built to last with premium materials and rigorous testing.
+                            </p>
+                        </div>
+                        <div className="flex flex-col items-center text-center space-y-3">
+                            <div className="bg-white p-3 rounded-full dark:bg-gray-950">
+                                <BoltIcon className="w-8 h-8 text-primary" />
+                            </div>
+                            <h3 className="text-lg font-semibold">Reliable Performance</h3>
+                            <p className="text-gray-500 dark:text-gray-400">
+                                Consistent and dependable, delivering exceptional results.
+                            </p>
+                        </div>
+                        <div className="flex flex-col items-center text-center space-y-3">
+                            <div className="bg-white p-3 rounded-full dark:bg-gray-950">
+                                <SettingsIcon className="w-8 h-8 text-primary" />
+                            </div>
+                            <h3 className="text-lg font-semibold">Customizable Options</h3>
+                            <p className="text-gray-500 dark:text-gray-400">
+                                Tailor your experience with a range of personalization choices.
+                            </p>
+                        </div>
+                        <div className="flex flex-col items-center text-center space-y-3">
+                            <div className="bg-white p-3 rounded-full dark:bg-gray-950">
+                                <ShieldCheckIcon className="w-8 h-8 text-primary" />
+                            </div>
+                            <h3 className="text-lg font-semibold">Trusted Warranty</h3>
+                            <p className="text-gray-500 dark:text-gray-400">
+                                Enjoy peace of mind with our comprehensive warranty coverage.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="mx-auto max-w-2xl py-12 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                <div className="mb-8">
+                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">What Our Customers Say</h2>
+                    <p className="mt-4 text-gray-500 dark:text-gray-400">Hear from real people who love our products.</p>
+                </div>
+                <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+                    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                        <div className="flex items-start">
+                            <div className="flex-shrink-0">
+                                <div className="inline-block h-12 w-12 overflow-hidden rounded-full">
+                                    <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" />
+                                </div>
+                            </div>
+                            <div className="ml-4">
+                                <h3 className="text-base font-medium text-gray-900 dark:text-gray-100">Jane Doe</h3>
+                                <div className="flex items-center">
+                                    <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <p className="mt-4 text-gray-500 dark:text-gray-400">
+                            "I love the quality and design of this product. It's been a game-changer for my business."
+                        </p>
+                    </div>
+                    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                        <div className="flex items-start">
+                            <div className="flex-shrink-0">
+                                <div className="inline-block h-12 w-12 overflow-hidden rounded-full">
+                                    <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" />
+                                </div>
+                            </div>
+                            <div className="ml-4">
+                                <h3 className="text-base font-medium text-gray-900 dark:text-gray-100">John Smith</h3>
+                                <div className="flex items-center">
+                                    <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <p className="mt-4 text-gray-500 dark:text-gray-400">
+                            "This product has exceeded all my expectations. The customer service is also top-notch."
+                        </p>
+                    </div>
+                    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                        <div className="flex items-start">
+                            <div className="flex-shrink-0">
+                                <div className="inline-block h-12 w-12 overflow-hidden rounded-full">
+                                    <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" />
+                                </div>
+                            </div>
+                            <div className="ml-4">
+                                <h3 className="text-base font-medium text-gray-900 dark:text-gray-100">Sarah Lee</h3>
+                                <div className="flex items-center">
+                                    <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+                <div className="container px-4 md:px-6 text-center">
+                    <div className="max-w-xl mx-auto space-y-4">
+                        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                            Stay up-to-date with our newsletter
+                        </h2>
+                        <p className="text-gray-500 md:text-xl dark:text-gray-400">
+                            Subscribe to our newsletter to receive the latest updates and exclusive content.
+                        </p>
+                        <form className="flex space-x-2 max-w-md mx-auto">
+                            <Input className="flex-1" placeholder="Enter your email" type="email" />
+                            <Button type="submit">Subscribe</Button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    )
+}
