@@ -6,7 +6,7 @@ export default function DetailView({article}) {
   return (
     <div className="flex justify-center py-10 w-h">
       <div className="flex">
-        <div className="flex flex-col items-center justify-center p-4 border rounded-lg">
+        <div className="w-96 flex flex-col items-center justify-center p-6 border rounded-lg">
           <Carousel className="w-full max-w-md">
             <CarouselContent>
               <CarouselItem>
@@ -53,7 +53,7 @@ export default function DetailView({article}) {
             <CarouselNext />
           </Carousel>
         </div>
-        <div className="p-4">
+        <div className="w-96 p-10">
           <h1 className="text-3xl font-bold">Titre de l'article</h1>
           <p className="text-xl">Prix</p>
           <p className="text-right">Ref: 643456</p>
