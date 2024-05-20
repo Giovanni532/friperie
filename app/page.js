@@ -1,13 +1,18 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import { CardContent, Card } from "@/components/ui/card";
-import { IoIosRocket } from "react-icons/io";
-import { LuRefreshCcw } from "react-icons/lu";
-import { TbTruckDelivery } from "react-icons/tb";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
+import { getData } from "./action/action";
+import Image from "next/image";
+
+export async function getArticles() {
+  const result = await getData("article")
+  return result
+}
 
 export default async function Home() {
+  const articles = await getArticles()
+
   return (
     <main className='flex flex-col'>
       <section className="bg-white dark:bg-gray-800 py-20 md:py-32 lg:py-40">
@@ -34,193 +39,42 @@ export default async function Home() {
       <section className="py-16 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center text-center space-y-4 mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Featured Products</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Nos articles</h2>
             <p className="text-gray-500 dark:text-gray-400 max-w-md">
               Discover our curated selection of the latest and greatest home decor items.
             </p>
           </div>
           <ScrollArea className="w-h whitespace-nowrap rounded-md">
             <div className="flex w-max space-x-4 p-4">
-              <div className="w-80 group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
-                <div className="block" href="#">
-                  <img
-                    alt="Product 1"
-                    className="w-full h-64 object-cover"
-                    height={400}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "400/400",
-                      objectFit: "cover",
-                    }}
-                    width={400}
-                  />
-                  <div className="bg-white dark:bg-gray-950 p-4">
-                    <h3 className="text-lg font-semibold">Minimalist Vase</h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">$49.99</p>
-                    <div className="flex justify-between items-center mt-4">
-                      <Button className="w-1/2 mr-2" variant="outline">
-                        Add to Cart
-                      </Button>
-                      <Link
-                        className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2"
-                        href="#"
-                      >
-                        View More
-                      </Link>
+              {articles.map(article => (
+                <div key={article.idArticle} className="w-80 group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
+                  <div className="block" href="#">
+                    <Image
+                      className="w-full h-64 object-cover"
+                      src={article.images[0]}
+                      alt={article.nomArticle}
+                      width={400}
+                      height={400}
+                    />
+                    <div className="bg-white dark:bg-gray-950 p-4">
+                      <h3 className="text-lg font-semibold">{article.nomArticle}</h3>
+                      <p className="text-gray-500 dark:text-gray-400 text-sm">{article.prix} .-</p>
+                      <div className="flex justify-between items-center mt-4">
+                        <Button className="w-1/2 mr-2" variant="outline">
+                          Ajouter au panier
+                        </Button>
+                        <Link
+                          className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2"
+                          href="#"
+                        >
+                          Voir plus
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div><div className="w-80 group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
-                <div className="block" href="#">
-                  <img
-                    alt="Product 1"
-                    className="w-full h-64 object-cover"
-                    height={400}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "400/400",
-                      objectFit: "cover",
-                    }}
-                    width={400}
-                  />
-                  <div className="bg-white dark:bg-gray-950 p-4">
-                    <h3 className="text-lg font-semibold">Minimalist Vase</h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">$49.99</p>
-                    <div className="flex justify-between items-center mt-4">
-                      <Button className="w-1/2 mr-2" variant="outline">
-                        Add to Cart
-                      </Button>
-                      <Link
-                        className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2"
-                        href="#"
-                      >
-                        View More
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+              ))}
               </div>
-              <div className="w-80 group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
-                <div className="block" href="#">
-                  <img
-                    alt="Product 1"
-                    className="w-full h-64 object-cover"
-                    height={400}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "400/400",
-                      objectFit: "cover",
-                    }}
-                    width={400}
-                  />
-                  <div className="bg-white dark:bg-gray-950 p-4">
-                    <h3 className="text-lg font-semibold">Minimalist Vase</h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">$49.99</p>
-                    <div className="flex justify-between items-center mt-4">
-                      <Button className="w-1/2 mr-2" variant="outline">
-                        Add to Cart
-                      </Button>
-                      <Link
-                        className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2"
-                        href="#"
-                      >
-                        View More
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="w-80 group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
-                <Link className="block" href="#">
-                  <img
-                    alt="Product 2"
-                    className="w-full h-64 object-cover"
-                    height={400}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "400/400",
-                      objectFit: "cover",
-                    }}
-                    width={400}
-                  />
-                  <div className="bg-white dark:bg-gray-950 p-4">
-                    <h3 className="text-lg font-semibold">Cozy Throw Blanket</h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">$79.99</p>
-                    <div className="flex justify-between items-center mt-4">
-                      <Button className="w-1/2 mr-2" variant="outline">
-                        Add to Cart
-                      </Button>
-                      <Link
-                        className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2"
-                        href="#"
-                      >
-                        View More
-                      </Link>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-              <div className="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
-                <Link className="block" href="#">
-                  <img
-                    alt="Product 3"
-                    className="w-full h-64 object-cover"
-                    height={400}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "400/400",
-                      objectFit: "cover",
-                    }}
-                    width={400}
-                  />
-                  <div className="bg-white dark:bg-gray-950 p-4">
-                    <h3 className="text-lg font-semibold">Wooden Bookshelf</h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">$199.99</p>
-                    <div className="flex justify-between items-center mt-4">
-                      <Button className="w-1/2 mr-2" variant="outline">
-                        Add to Cart
-                      </Button>
-                      <Link
-                        className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2"
-                        href="#"
-                      >
-                        View More
-                      </Link>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-              <div className="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
-                <Link className="block" href="#">
-                  <img
-                    alt="Product 4"
-                    className="w-full h-64 object-cover"
-                    height={400}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "400/400",
-                      objectFit: "cover",
-                    }}
-                    width={400}
-                  />
-                  <div className="bg-white dark:bg-gray-950 p-4">
-                    <h3 className="text-lg font-semibold">Ceramic Planter</h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">$29.99</p>
-                    <div className="flex justify-between items-center mt-4">
-                      <Button className="w-1/2 mr-2" variant="outline">
-                        Add to Cart
-                      </Button>
-                      <Link
-                        className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2"
-                        href="#"
-                      >
-                        View More
-                      </Link>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            </div>
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </div>

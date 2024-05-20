@@ -42,8 +42,6 @@ export default function SignupForm({ change }) {
 
     const onFormSubmit = async (data) => {
         setLoading(true)
-        const now = new Date();
-        const today = new Date(now.getDay());
         const { resultSignup, errorSignup } = await signup(data.email, data.password);
         if (errorSignup) {
             setEmailAlreadyExist(true);
@@ -51,9 +49,9 @@ export default function SignupForm({ change }) {
         }
         const uid = resultSignup.user.uid;
         const user = {
-            ...data,
+            email: data.email,
             username: data.prenom + " " + data.nom,
-            createdAt: today,
+            createdAt: new Date().toDateString(),
             createdUserAt: getFormattedDate()
         };
         await addDataWithId("user", uid, user);

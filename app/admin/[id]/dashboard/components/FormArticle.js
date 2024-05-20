@@ -16,7 +16,7 @@ import { toast } from "@/components/ui/use-toast";
 import { revalidate } from "../action/action";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/app/db/config";
-import getNextArticleId from "@/app/db/utils/getNextArticleId";
+import {getNextArticleId} from "@/app/db/utils/getNextArticleId";
 import { useState } from "react";
 import Spinner from "@/app/components/Spinner";
 import addDataWithId from "@/app/db/request/addDataWithId";

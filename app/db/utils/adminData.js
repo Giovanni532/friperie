@@ -1,7 +1,5 @@
 import getMultipleData from "../request/getMultipleData";
 
-// Initialisez Firestore et Auth
-
 // Helper function to get the start and end of the week
 const getStartAndEndOfWeek = () => {
   const now = new Date();

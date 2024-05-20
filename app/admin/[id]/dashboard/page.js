@@ -1,8 +1,8 @@
 import { getSalesData, getWeeklyNewUsers } from "@/app/db/utils/adminData";
-import { getData } from "./action/action";
 import ToggleDisplay from "./components/ToggleDisplay";
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { RxArrowUp } from "react-icons/rx";
+import { getData } from "@/app/action/action";
 
 
 const AdminDashboard = async () => {
