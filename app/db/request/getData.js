@@ -2,7 +2,7 @@ import firebaseDb from "../config";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 const db = getFirestore(firebaseDb)
-export default async function getData(collection, id) {
+export default async function getDataWithId(collection, id) {
     let docRef = doc(db, collection, id);
 
     let resultGetData = null;
@@ -10,6 +10,7 @@ export default async function getData(collection, id) {
 
     try {
         resultGetData = await getDoc(docRef);
+        resultGetData.data()
     } catch (e) {
         errorGetData = e;
     }
