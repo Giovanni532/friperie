@@ -1,17 +1,31 @@
 "use client"
 
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useStore } from "../providers/StoreProvider";
 
-const ButtonAddToWalllet = ({article}) => {
-    const {addArticle} = useStore();
+const ButtonAddToWallet = ({ article }) => {
+  const { articles, addArticle, removeArticle } = useStore();
 
-    const handleAdd = () => {
-        return addArticle(article)
-    }
+  const isInCart = articles.some(existingArticle => existingArticle.idArticle === article.idArticle);
 
-    return <Button  variant="outline" onClick={handleAdd}>Ajouter au panier</Button>
+  const handleAdd = () => {
+    addArticle(article);
+  };
 
-}
+  const handleRemove = () => {
+    removeArticle(article.idArticle);
+  };
 
-export default ButtonAddToWalllet;
+  return (
+    <>
+      {isInCart ? (
+        <Button variant="outline" onClick={handleRemove}>Retirer du panier</Button>
+      ) : (
+        <Button variant="outline" onClick={handleAdd}>Ajouter au panier</Button>
+      )}
+    </>
+  );
+};
+
+export default ButtonAddToWallet;

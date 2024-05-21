@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // Créez le contexte du store
 const StoreContext = createContext({});
@@ -9,13 +9,33 @@ const StoreContext = createContext({});
 export const StoreProvider = ({ children }) => {
   const [articles, setArticles] = useState([]);
 
+  // Charger les articles depuis le localStorage lorsqu'on monte le composant
+  useEffect(() => {
+    const storedArticles = localStorage.getItem('panierArticles');
+    if (storedArticles) {
+      setArticles(JSON.parse(storedArticles));
+    }
+  }, []);
+
   const addArticle = (article) => {
-    setArticles((prevArticles) => [...prevArticles, article]);
+    const articleExists = articles.some(existingArticle => existingArticle.idArticle === article.idArticle);
+    if (!articleExists) {
+      const updatedArticles = [...articles, article];
+      setArticles(updatedArticles);
+      localStorage.setItem('panierArticles', JSON.stringify(updatedArticles));
+    }
+  };
+
+  const removeArticle = (idArticle) => {
+    const updatedArticles = articles.filter(article => article.idArticle !== idArticle);
+    setArticles(updatedArticles);
+    localStorage.setItem('panierArticles', JSON.stringify(updatedArticles));
   };
 
   const store = {
     articles,
     addArticle,
+    removeArticle,
   };
 
   return (
