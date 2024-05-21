@@ -11,7 +11,7 @@ export async function getArticles() {
 }
 
 export default async function Home() {
-  const articles = await getArticles()
+  const articles = await getArticles();
 
   return (
     <main className='flex flex-col'>
@@ -33,7 +33,7 @@ export default async function Home() {
               </Link>
             </div>
           </div>
-          <div className="bg-[url('/hero-image.jpg')] bg-cover bg-center h-[450px] rounded-xl" />
+          {/* <div className="bg-[url('/hero-image.jpg')] bg-cover bg-center h-[450px] rounded-xl" /> */}
         </div>
       </section>
       <section className="py-16 md:py-24 lg:py-32">
@@ -111,7 +111,7 @@ export default async function Home() {
             <div className="flex items-start">
               <div className="flex-shrink-0">
                 <div className="inline-block h-12 w-12 overflow-hidden rounded-full">
-                  <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" />
+                  {/* <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" /> */}
                 </div>
               </div>
               <div className="ml-4">
@@ -143,7 +143,7 @@ export default async function Home() {
             <div className="flex items-start">
               <div className="flex-shrink-0">
                 <div className="inline-block h-12 w-12 overflow-hidden rounded-full">
-                  <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" />
+                  {/* <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" /> */}
                 </div>
               </div>
               <div className="ml-4">
@@ -175,7 +175,7 @@ export default async function Home() {
             <div className="flex items-start">
               <div className="flex-shrink-0">
                 <div className="inline-block h-12 w-12 overflow-hidden rounded-full">
-                  <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" />
+                  {/* <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" /> */}
                 </div>
               </div>
               <div className="ml-4">

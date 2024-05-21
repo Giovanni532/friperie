@@ -2,13 +2,12 @@
 
 import Image from 'next/image'
 import React from 'react'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import ButtonAddToWalllet from './ButtonAddToWallet'
 
 export default function CardArticle({ article }) {
     return (
-        <div key={article.idArticle} className="w-80 group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
+        <div key={article.idArticle} className="z-0 w-80 group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
             <div className="block" href="#">
                 <Image
                     className="w-full h-64"
