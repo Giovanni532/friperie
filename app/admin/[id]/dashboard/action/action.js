@@ -1,7 +1,6 @@
 "use server"
 
 import addDataWithId from "@/app/db/request/addDataWithId";
-import getMultipleData from "@/app/db/request/getMultipleData";
 import { revalidatePath } from "next/cache";
 
 export const revalidate = async () => {

@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { AuthContextProvider } from "./AuthProvider";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { StoreProvider } from "./StoreProvider";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -23,12 +24,14 @@ export default function LayoutProvider({ children }) {
                 fontSans.variable
             )}
         >
-            <AuthContextProvider>
-                <Navbar/>
-                {children}
-                <Toaster />
-                <Footer/>
-            </AuthContextProvider>
+            <StoreProvider>
+                <AuthContextProvider>
+                    <Navbar />
+                    {children}
+                    <Toaster />
+                    <Footer />
+                </AuthContextProvider>
+            </StoreProvider>
         </body>
     );
 }

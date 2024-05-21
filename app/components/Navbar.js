@@ -12,12 +12,15 @@ import { useRouter } from "next/navigation";
 import { RiMenu4Line } from "react-icons/ri";
 import { Separator } from "@/components/ui/separator";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { useStore } from "../providers/StoreProvider";
 
 
 export default function Navbar() {
   const router = useRouter();
   const admin = getCookie("admin");
   const { user, isAdmin } = useAuthContext();
+  const {articles} = useStore();
+  console.log(articles)
 
   const handleLogout = async () => {
     router.push('/')
@@ -26,7 +29,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="flex h-16 w-full items-center justify-between px-4 md:px-6">
+      <header className="fixed flex h-16 w-full items-center justify-between px-4 md:px-6 bg-white">
         <Link className="flex items-center gap-2" href="/">
           <MountainIcon className="h-6 w-6" />
           <span className="font-semibold">Friperie</span>
@@ -70,7 +73,7 @@ export default function Navbar() {
               <Button className="relative" size="icon" variant="outline">
                 <MdOutlineShoppingCart className="h-6 w-6" />
                 <span className="absolute -top-2 -right-2 bg-primary text-white rounded-full px-2 py-0.5 text-xs font-medium">
-                  3
+                  {articles.length}
                 </span>
                 <span className="sr-only">Cart</span>
               </Button>
