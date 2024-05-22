@@ -14,7 +14,7 @@ export default function ToggleDisplay({ articles, commandes }) {
         setToggle(bool)
     }
     return (
-        <div className="container mx-auto py-10 ">
+        <div className="mx-auto py-10 h-screen">
             <div className="p-2">
                 <ToggleGroup type="single">
                     <ToggleGroupItem value="Afficher les articles" onClick={() => handleToggle(true)}>

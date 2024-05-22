@@ -4,8 +4,7 @@ import { CarouselItem, CarouselContent, CarouselPrevious, CarouselNext, Carousel
 import { Button } from "@/components/ui/button"
 import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
-import ButtonAddToWalllet from '@/app/components/ButtonAddToWallet';
-import { FaCircle } from "react-icons/fa";
+import ButtonWallet from '@/app/components/ButtonWallet';
 
 export async function getArticle(id) {
   const { resultGetData } = await getDataWithId("article", id.toString());
@@ -63,7 +62,7 @@ export default async function ArticleDetail({ params }) {
           </div>
           <Separator className="my-6" />
           <div className="flex flex-col space-y-4">
-            <ButtonAddToWalllet article={article} />
+            <ButtonWallet article={article} />
             <Button>Acheter maintenant</Button>
           </div>
         </div>

@@ -21,7 +21,6 @@ export default function Navbar() {
   const admin = getCookie("admin");
   const { user, isAdmin } = useAuthContext();
   const { articles } = useStore();
-  console.log(articles)
 
   const handleLogout = async () => {
     router.push('/')
@@ -87,7 +86,7 @@ export default function Navbar() {
                 :
                 <>
                   <p className="p-2">Votre panier</p>
-                  {articles.map(article => <CardSheetArticle key={article.idArticle} article={article} />)}
+                  {articles.map(article => <CardSheetArticle article={article} />)}
                   <Separator className="my-4" />
                   {user ?
                     <SheetClose asChild>
