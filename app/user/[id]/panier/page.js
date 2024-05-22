@@ -1,4 +1,3 @@
-// app/panier/page.js
 "use client"
 
 import { useStore } from '@/app/providers/StoreProvider'
@@ -10,10 +9,10 @@ import { useAuthContext } from '@/app/providers/AuthProvider';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-export default function Panier({ params }) {
+export default function Panier() {
   const [loading, setLoading] = useState(false);
   const { articles } = useStore();
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
 
   const handlePayment = async () => {
     setLoading(true);
@@ -48,9 +47,9 @@ export default function Panier({ params }) {
   return (
     <div className='my-20 container center'>
       <h1 className="text-2xl font-bold p-3">Mon panier</h1>
-      {articles.map(article => <CardPanier key={article.idArticle} article={article} />)}
+      {articles.map(article => <CardPanier key={article.idArticle} article={article} user={user} />)}
       <Button onClick={handlePayment} disabled={loading}>
-        {loading ? 'Loading...' : 'Acheter les articles'}
+        {loading ? 'Redirection en cours ...' : 'Acheter les articles'}
       </Button>
     </div>
   )

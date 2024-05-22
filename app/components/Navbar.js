@@ -86,7 +86,7 @@ export default function Navbar() {
                 :
                 <div key={articles.length}>
                   <p className="p-2">Votre panier</p>
-                  {articles.map(article => <CardSheetArticle key={article.idArticle} article={article} />)}
+                  {articles.map(article => <CardSheetArticle key={article.idArticle} article={article} user={user}/>)}
                   <Separator className="my-4" />
                   {user ?
                     <SheetClose asChild>

@@ -1,10 +1,9 @@
 "use client"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import ButtonWallet from "./ButtonWallet"
 import ButtonPayment from "./ButtonPayment"
 
-export default function CardSheetArticle({ article }) {
+export default function CardSheetArticle({ article, user }) {
     return (
         <Card className="mb-8">
             <div className="flex gap-6">
@@ -20,7 +19,7 @@ export default function CardSheetArticle({ article }) {
                     </p>
                     <div className='flex flex-col md:flex-row '>
                         <ButtonWallet article={article} />
-                        <ButtonPayment article={article} />
+                        <ButtonPayment articles={article} user={user} />
                     </div>
                 </div>
             </div>

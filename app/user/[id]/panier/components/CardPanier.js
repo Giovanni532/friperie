@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card'
 import ButtonWallet from '@/app/components/ButtonWallet'
 import ButtonPayment from '@/app/components/ButtonPayment'
 
-export default function CardPanier({article}) {
+export default function CardPanier({article, user}) {
     return (
         <Card className="mb-8">
           <div className="flex gap-6">
@@ -28,7 +28,7 @@ export default function CardPanier({article}) {
               </p>
               <div className='flex flex-col md:flex-row'>
                 <ButtonWallet article={article}/>
-                <ButtonPayment article={article} />
+                <ButtonPayment articles={article} user={user}/>
               </div>
             </div>
           </div>
