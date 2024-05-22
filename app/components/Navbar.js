@@ -84,15 +84,15 @@ export default function Navbar() {
               {articles.length === 0 ?
                 <p>Votre panier est vide.</p>
                 :
-                <>
+                <div key={articles.length}>
                   <p className="p-2">Votre panier</p>
-                  {articles.map(article => <CardSheetArticle article={article} />)}
+                  {articles.map(article => <CardSheetArticle key={article.idArticle} article={article} />)}
                   <Separator className="my-4" />
                   {user ?
                     <SheetClose asChild>
                         <Link className="text-md font-medium hover:underline hover:underline-offset-4"
                           href={`/user/${user.uid}/panier`}>
-                          Achetez mes articles
+                          Voir mon panier
                         </Link>
                     </SheetClose>
                     :
@@ -105,7 +105,7 @@ export default function Navbar() {
                     </SheetClose>
                   }
 
-                </>
+                </div>
               }
 
             </SheetContent>

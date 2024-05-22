@@ -11,6 +11,7 @@ export default function CardPanier({article}) {
             <div>
             <Image
                     className="h-64 w-64"
+                    priority
                     src={article.images[0]} 
                     alt={article.nomArticle}
                     width={300}
