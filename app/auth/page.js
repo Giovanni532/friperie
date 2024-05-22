@@ -12,7 +12,7 @@ export default function Auth() {
     setSwitchForm(!switchForm)
   }
   return (
-    <div className='mt-10'>
+    <div className='my-20'>
       {switchForm ?
         <LoginForm change={handleSwitch} />
         :

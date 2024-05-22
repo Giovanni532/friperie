@@ -7,7 +7,7 @@ import ButtonAddToWalllet from './ButtonAddToWallet'
 
 export default function CardArticle({ article }) {
     return (
-        <div key={article.idArticle} className="z-0 w-80 group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
+        <div key={article.idArticle} className="z-0 w-72 group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
             <div className="block" href="#">
                 <Image
                     className="w-full h-64"
@@ -23,7 +23,7 @@ export default function CardArticle({ article }) {
                         <ButtonAddToWalllet article={article} />
                         <Link
                             className="inline-flex items-center justify-center h-10 px-4 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300 w-1/2 mx-2"
-                            href={`/article/${article.idArticle}`}
+                            href={`/articles/${article.idArticle}`}
                         >
                             Voir plus
                         </Link>

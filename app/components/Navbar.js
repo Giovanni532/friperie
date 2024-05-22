@@ -13,13 +13,14 @@ import { RiMenu4Line } from "react-icons/ri";
 import { Separator } from "@/components/ui/separator";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useStore } from "../providers/StoreProvider";
+import CardSheetArticle from "./CardSheetArticle";
 
 
 export default function Navbar() {
   const router = useRouter();
   const admin = getCookie("admin");
   const { user, isAdmin } = useAuthContext();
-  const {articles} = useStore();
+  const { articles } = useStore();
   console.log(articles)
 
   const handleLogout = async () => {
@@ -37,8 +38,8 @@ export default function Navbar() {
         <nav className="hidden lg:flex">
           <ul className="flex items-center space-x-6">
             <li>
-              <Link className="text-sm font-medium hover:underline hover:underline-offset-4" href="#">
-                Habits
+              <Link className="text-sm font-medium hover:underline hover:underline-offset-4" href="/articles">
+                Articles
               </Link>
             </li>
             <li>
@@ -72,14 +73,42 @@ export default function Navbar() {
             <SheetTrigger asChild>
               <Button className="relative" size="icon" variant="outline">
                 <MdOutlineShoppingCart className="h-6 w-6" />
-                <span className="absolute -top-2 -right-2 bg-primary text-white rounded-full px-2 py-0.5 text-xs font-medium">
-                  {articles.length}
-                </span>
+                {articles.length === 0 ? null :
+                  <span className="absolute -top-2 -right-2 bg-primary text-white rounded-full px-2 py-0.5 text-xs font-medium">
+                    {articles.length}
+                  </span>
+                }
                 <span className="sr-only">Cart</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
-              <p>Votre panier</p>
+              {articles.length === 0 ?
+                <p>Votre panier est vide.</p>
+                :
+                <>
+                  <p className="p-2">Votre panier</p>
+                  {articles.map(article => <CardSheetArticle key={article.idArticle} article={article} />)}
+                  <Separator className="my-4" />
+                  {user ?
+                    <SheetClose asChild>
+                        <Link className="text-md font-medium hover:underline hover:underline-offset-4"
+                          href={`/user/${user.uid}/panier`}>
+                          Achetez mes articles
+                        </Link>
+                    </SheetClose>
+                    :
+                    <SheetClose asChild>
+                      <p className="text-md">Pour acceder a votre panier vous devez être connecter.</p>
+                      <Link className="text-md font-medium hover:underline hover:underline-offset-4"
+                        href={`/auth`}>
+                        Me connecter
+                      </Link>
+                    </SheetClose>
+                  }
+
+                </>
+              }
+
             </SheetContent>
           </Sheet>
           {user ?
@@ -122,9 +151,9 @@ export default function Navbar() {
               <SheetClose asChild>
                 <Link
                   className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                  href="#"
+                  href="/articles"
                 >
-                  Habits
+                  Articles
                 </Link>
               </SheetClose>
               <SheetClose asChild>

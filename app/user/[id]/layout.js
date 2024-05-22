@@ -7,7 +7,7 @@ export const metadata = {
     description: "Page de l'utilisateur",
 };
 
-export default function LayoutDashboard({ children }) {
+export default function LayoutUser({ children }) {
     const user = getCookie("user", { cookies });
 
     if (user === undefined || user === "false") {

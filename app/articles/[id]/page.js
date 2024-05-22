@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
 import ButtonAddToWalllet from '@/app/components/ButtonAddToWallet';
+import { FaCircle } from "react-icons/fa";
 
 export async function getArticle(id) {
   const { resultGetData } = await getDataWithId("article", id.toString());
@@ -20,45 +21,21 @@ export default async function ArticleDetail({ params }) {
         <div className="w-96 flex flex-col items-center justify-center p-6 rounded-lg">
           <Carousel className="w-full max-w-md">
             <CarouselContent>
-              <CarouselItem>
+              {article.images.map(image => (
+                <CarouselItem>
                 <Image
                   alt={article.nomArticle}
                   className="w-full h-auto object-cover rounded-md"
                   height={350}
                   width={350}
-                  src={article.images[0]}
+                  src={image}
                   style={{
                     aspectRatio: "350/350",
                     objectFit: "cover",
                   }}
                 />
               </CarouselItem>
-              <CarouselItem>
-              <Image
-                  alt={article.nomArticle}
-                  className="w-full h-auto object-cover rounded-md"
-                  height={350}
-                  width={350}
-                  src={article.images[0]}
-                  style={{
-                    aspectRatio: "350/350",
-                    objectFit: "cover",
-                  }}
-                />
-              </CarouselItem>
-              <CarouselItem>
-              <Image
-                  alt={article.nomArticle}
-                  className="w-full h-auto object-cover rounded-md"
-                  height={350}
-                  width={350}
-                  src={article.images[0]}
-                  style={{
-                    aspectRatio: "350/350",
-                    objectFit: "cover",
-                  }}
-                />
-              </CarouselItem>
+              ))}
             </CarouselContent>
             <CarouselPrevious />
             <CarouselNext />
@@ -70,21 +47,21 @@ export default async function ArticleDetail({ params }) {
           <p className="text-right">Ref: {article.idArticle}</p>
           <hr className="my-4" />
           <div className="flex justify-between">
-            <Button variant="outline">
+            <p className="border p-3 rounded">
               Taille : {article.taille}
-            </Button>
-            <Button variant="outline">
+            </p>
+            <p className="border p-3 rounded">
               Etat : {article.etat}
-            </Button>
+            </p>
           </div>
           <div className="flex items-center justify-between my-4">
             <div className="flex items-center">
-              <CircleIcon className="text-black mr-2" />
-              <span>Couleur</span>
+            <span>Couleur :</span>
+            <div class="mx-2 my-2 w-4 h-4 border rounded-full circle" style={{backgroundColor: article.couleur}}></div>
             </div>
             <p>Marque : {article.marque}</p>
           </div>
-          <Separator className="my-6"/>
+          <Separator className="my-6" />
           <div className="flex flex-col space-y-4">
             <ButtonAddToWalllet article={article} />
             <Button>Acheter maintenant</Button>
@@ -92,24 +69,5 @@ export default async function ArticleDetail({ params }) {
         </div>
       </div>
     </div>
-  )
-}
-
-function CircleIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-    </svg>
   )
 }
