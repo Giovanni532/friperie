@@ -9,7 +9,6 @@ export default function AddCommande() {
 
     const createCommande = async () => {
         const id = await getNextCommandeId();
-        console.log(id)
         const data = {
           adresse: "42 rue de la Prulay",
           createdAt: new Date().toDateString(),
@@ -19,7 +18,7 @@ export default function AddCommande() {
           idCommande: id,
           nip: 1217,
           prixCommande: 15,
-          statutCommande: "Expediée",
+          statutCommande: "En traitement",
           usernameUser: "Giovanni Salcuni",
           ville: "Meyrin"
         }

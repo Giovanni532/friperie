@@ -12,6 +12,10 @@ const ColumnsCommandes = [
         header: "Utilisateur"
     },
     {
+        key: "emailUser",
+        header: "Email utilisateur"
+    },
+    {
         key: "adresse",
         header: "Adresse de livraison",
     },

@@ -1,21 +1,30 @@
 'use client';
 
+import addDataWithId from '@/app/db/request/addDataWithId';
+import { updateData } from '@/app/db/request/updateDoc';
+import { getNextCommandeId } from '@/app/db/utils/getNextArticleId';
+import { useAuthContext } from '@/app/providers/AuthProvider';
+import getFormattedDate, { getFormattedDateWithOffset } from '@/app/utils/(client)/getFormatedData';
+import { Separator } from '@/components/ui/separator';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const PaymentsForm = ({ articles }) => {
   const stripe = useStripe();
+  const router = useRouter();
+  const { user } = useAuthContext();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    address: '',
-    city: '',
-    postalCode: '',
+    prenom: user.username.split(" ")[0],
+    nom: user.username.split(" ")[1],
+    email: user.email,
+    adresse: user.adresse,
+    ville: user.ville,
+    nip: user.nip,
   });
 
   useEffect(() => {
@@ -52,12 +61,12 @@ const PaymentsForm = ({ articles }) => {
         payment_method: {
           card: elements.getElement(CardElement),
           billing_details: {
-            name: `${formData.firstName} ${formData.lastName}`,
+            name: `${formData.prenom} ${formData.nom}`,
             email: formData.email,
             address: {
-              line1: formData.address,
-              city: formData.city,
-              postal_code: formData.postalCode,
+              line1: formData.adresse,
+              city: formData.ville,
+              postal_code: formData.nip,
             },
           },
         },
@@ -69,6 +78,32 @@ const PaymentsForm = ({ articles }) => {
         if (result.paymentIntent.status === 'succeeded') {
           // Payment succeeded
           console.log('Payment succeeded');
+          let idArticle = []
+          articles.map(article => {
+            idArticle.push(article.idArticle)
+            updateData(article.idArticle.toString(), "article", { statut: "Vendu" })
+          })
+
+          const idCommande = await getNextCommandeId();
+
+          const commande = {
+            adresse: formData.adresse,
+            createdAt: new Date().toDateString(),
+            date: getFormattedDate(),
+            dateDeLivraison: getFormattedDateWithOffset(14),
+            idArticle,
+            idCommande,
+            nip: formData.nip,
+            prixCommande: totalPrice,
+            statutCommande: "En traitement",
+            emailUser: formData.email,
+            usernameUser: formData.prenom + " " + formData.nom,
+            ville: formData.ville
+          }
+
+          await addDataWithId("commande", idCommande.toString(), commande)
+
+          router.push(`/user/${user.uid}/panier/livraison/payments/success`)
         }
       }
     } catch (error) {
@@ -105,12 +140,16 @@ const PaymentsForm = ({ articles }) => {
         <h2 className="text-lg font-semibold mb-4">Articles achetés</h2>
         <ul className="space-y-4">
           {articles.map((article) => (
-            <li key={article.idArticle} className="flex justify-between">
-              <span className="font-medium">{article.nomArticle}</span>
-              <span className="font-medium">{article.prix} CHF</span>
-            </li>
+            <div key={article.idArticle}>
+              <li className="flex justify-between">
+                <span className="font-medium">{article.nomArticle}</span>
+                <span className="font-medium">{article.prix} CHF</span>
+              </li>
+              <Separator className="my-4" />
+            </div>
           ))}
         </ul>
+        <span className="font-medium">Total : {totalPrice} CHF</span>
       </div>
       <form onSubmit={handleSubmit} className="w-full md:w-1/2 p-8 bg-white rounded-lg shadow-md space-y-4">
         <h2 className="text-lg font-semibold mb-4">Paiement</h2>
@@ -118,8 +157,8 @@ const PaymentsForm = ({ articles }) => {
           <div className="flex space-x-4">
             <input
               type="text"
-              name="firstName"
-              value={formData.firstName}
+              name="prenom"
+              value={formData.prenom}
               onChange={handleInputChange}
               placeholder="First Name"
               className="w-1/2 p-3 border border-gray-300 rounded-md"
@@ -127,8 +166,8 @@ const PaymentsForm = ({ articles }) => {
             />
             <input
               type="text"
-              name="lastName"
-              value={formData.lastName}
+              name="nom"
+              value={formData.nom}
               onChange={handleInputChange}
               placeholder="Last Name"
               className="w-1/2 p-3 border border-gray-300 rounded-md"
@@ -146,8 +185,8 @@ const PaymentsForm = ({ articles }) => {
           />
           <input
             type="text"
-            name="address"
-            value={formData.address}
+            name="adresse"
+            value={formData.adresse}
             onChange={handleInputChange}
             placeholder="Address"
             className="w-full p-3 border border-gray-300 rounded-md"
@@ -156,8 +195,8 @@ const PaymentsForm = ({ articles }) => {
           <div className="flex space-x-4">
             <input
               type="text"
-              name="city"
-              value={formData.city}
+              name="ville"
+              value={formData.ville}
               onChange={handleInputChange}
               placeholder="City"
               className="w-2/3 p-3 border border-gray-300 rounded-md"
@@ -165,8 +204,8 @@ const PaymentsForm = ({ articles }) => {
             />
             <input
               type="text"
-              name="postalCode"
-              value={formData.postalCode}
+              name="nip"
+              value={formData.nip}
               onChange={handleInputChange}
               placeholder="Postal Code"
               className="w-1/3 p-3 border border-gray-300 rounded-md"
@@ -179,9 +218,9 @@ const PaymentsForm = ({ articles }) => {
           type="submit"
           disabled={!stripe || loading}
           className={`w-full bg-blue-500 text-white py-3 px-4 rounded-md 
-            ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600 transition-colors'}`}
+            ${loading ? 'opaville-50 cursor-not-allowed' : 'hover:bg-blue-600 transition-colors'}`}
         >
-          {loading ? 'Processing...' : `Pay ${totalPrice} CHF`}
+          {loading ? 'En cours de paiements ...' : `Payer ${totalPrice} CHF`}
         </button>
         {error && <div className="mt-4 text-red-500">{error}</div>}
       </form>
