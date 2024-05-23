@@ -24,8 +24,10 @@ import addDataWithId from "@/app/db/request/addDataWithId";
 import { setCookie } from "cookies-next";
 import { loginWithGoogle } from "@/app/db/auth/loginWithGoogle";
 import Spinner from "@/app/components/Spinner";
+import { useAuthContext } from "@/app/providers/AuthProvider";
 
 export default function SignupForm({ change }) {
+    const {userLogged} = useAuthContext();
     const [loading, setLoading] = useState(false);
     const [emailAlreadyExist, setEmailAlreadyExist] = useState(false);
     const router = useRouter();
@@ -52,12 +54,13 @@ export default function SignupForm({ change }) {
             email: data.email,
             username: data.prenom + " " + data.nom,
             createdAt: new Date().toDateString(),
-            createdUserAt: getFormattedDate()
+            createdUserAt: getFormattedDate(),
+            uid
         };
         await addDataWithId("user", uid, user);
-        router.push(`/user/${uid}/profile`);
         setCookie("admin", false)
-        setCookie("user", true)
+        userLogged(user)
+        router.push(`/user/${uid}/profile`);
     };
 
     const googleSubmit = async () => {
@@ -68,7 +71,8 @@ export default function SignupForm({ change }) {
             .then((result) => {
                 setCookie("admin", false)
                 setCookie("user", true)
-                router.push(`/user/${result}/profile`);
+                userLogged(result)
+                return router.push(`/user/${result.uid}/profile`);
             })
     }
 

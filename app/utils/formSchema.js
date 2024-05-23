@@ -24,6 +24,16 @@ export const loginFormSchema = z.object({
   })
 });
 
+export const livraisonFormSchema = z.object({
+  nip: z.string().min(4,{message: "Entrer votre code postal"}).transform((val) => parseFloat(val)).refine((val) => !isNaN(val) && val > 0, { message: "Entrer votre code postal" }),
+  ville: z.string().min(3, {
+    message: "Entrer une ville s'il vous plait",
+  }),
+  adresse: z.string().min(5, {
+    message: "Entrer une adresse s'il vous plait",
+  })
+});
+
 export const articleSchema = z.object({
   nomArticle: z.string().min(1,{ message: "Le nom de l'article est requis" }),
   categorie: z.string().min(1,{ message: "La catégorie est requise" }),

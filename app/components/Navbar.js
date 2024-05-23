@@ -19,10 +19,11 @@ import CardSheetArticle from "./CardSheetArticle";
 export default function Navbar() {
   const router = useRouter();
   const admin = getCookie("admin");
-  const { user, isAdmin } = useAuthContext();
+  const { user, isAdmin, userLogged } = useAuthContext();
   const { articles } = useStore();
 
   const handleLogout = async () => {
+    userLogged([])
     router.push('/')
     await logout()
   }
@@ -56,7 +57,7 @@ export default function Navbar() {
                 Contact
               </Link>
             </li>
-            {isAdmin && user || admin === "true" && user ?
+            {isAdmin && user.length != 0 || admin === "true" && user.length != 0 ?
               <li>
                 <Link className="text-sm font-medium hover:underline hover:underline-offset-4" href={`/admin/${user.uid}/dashboard`}>
                   Dashboard
@@ -88,7 +89,7 @@ export default function Navbar() {
                   <p className="p-2">Votre panier</p>
                   {articles.map(article => <CardSheetArticle key={article.idArticle} article={article} user={user}/>)}
                   <Separator className="my-4" />
-                  {user ?
+                  {user.length != 0?
                     <SheetClose asChild>
                         <Link className="text-md font-medium hover:underline hover:underline-offset-4"
                           href={`/user/${user.uid}/panier`}>
@@ -110,7 +111,7 @@ export default function Navbar() {
 
             </SheetContent>
           </Sheet>
-          {user ?
+          {user.length != 0?
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar style={{ cursor: "pointer" }} className="h-9 w-9">
@@ -179,7 +180,7 @@ export default function Navbar() {
                   Contact
                 </Link>
               </SheetClose>
-              {isAdmin && user || admin === "true" && user ? (
+              {isAdmin && user.length != 0|| admin === "true" && user.length != 0? (
                 <SheetClose asChild>
                   <Link
                     className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
@@ -192,7 +193,7 @@ export default function Navbar() {
                 :
                 null
               }
-              {user ?
+              {user.length != 0?
                 <>
                   <SheetClose asChild>
                     <Link

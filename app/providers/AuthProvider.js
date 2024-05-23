@@ -1,42 +1,31 @@
 'use client'
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import {
-    onAuthStateChanged,
-    getAuth,
-} from 'firebase/auth';
-import firebaseDb from '../db/config';
-import { IsAdmin } from '../utils/(server)/isAdmin';
+import { getCookie, setCookie } from 'cookies-next';
 
-const auth = getAuth(firebaseDb);
 
 export const AuthContext = createContext({});
 
 export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            setIsLoading(true);
-            if (user) {
-                setUser(user);
-                try {
-                    const result = await IsAdmin(user.email);
-                    setIsAdmin(result);
-                } catch (error) {
-                    console.error("Erreur lors de la vérification de l'administrateur :", error);
-                }
-            } else {
-                setUser(null);
-            }
-            setIsLoading(false);
-        });
+    const userLogged = (data) => {
+        setUser(data)
+        setCookie("user", data)
+    }
 
-        return () => unsubscribe();
+
+    useEffect(() => {
+        setIsLoading(true);
+        const userStored = getCookie('user');
+        if (userStored) {
+            userLogged(JSON.parse(userStored))
+        };
+        setIsLoading(false);
     }, []);
 
     if (isLoading) {
@@ -44,7 +33,7 @@ export const AuthContextProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, isAdmin }}>
+        <AuthContext.Provider value={{ user, isAdmin, userLogged }}>
             {children}
         </AuthContext.Provider>
     );

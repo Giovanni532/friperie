@@ -1,5 +1,5 @@
 import ErrorPage from "@/app/utils/(client)/ErrorPage";
-import { getCookie, hasCookie } from "cookies-next";
+import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 
 export const metadata = {
@@ -10,7 +10,7 @@ export const metadata = {
 export default function LayoutUser({ children }) {
     const user = getCookie("user", { cookies });
 
-    if (user === undefined || user === "false") {
+    if (user.length === 0) {
         return (
             <ErrorPage/>
         );

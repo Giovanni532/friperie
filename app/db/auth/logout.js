@@ -8,7 +8,7 @@ export default async function logout() {
     try {
         await auth.signOut()
         setCookie("admin", false)
-        setCookie("user", false)
+        setCookie("user", [])
     } catch (e) {
         console.log(e);
     }

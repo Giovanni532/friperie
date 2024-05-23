@@ -1,4 +1,4 @@
-import getDataWithId from '@/app/db/request/getData'
+import getDataWithId from '@/app/db/request/getDataWithId'
 import React from 'react'
 import { CarouselItem, CarouselContent, CarouselPrevious, CarouselNext, Carousel } from "@/components/ui/carousel"
 import { Button } from "@/components/ui/button"

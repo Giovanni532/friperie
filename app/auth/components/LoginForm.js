@@ -22,8 +22,11 @@ import { loginWithGoogle } from "@/app/db/auth/loginWithGoogle";
 import Spinner from "@/app/components/Spinner";
 import login from "@/app/db/auth/login";
 import { IsAdmin } from "@/app/utils/(server)/isAdmin";
+import { useAuthContext } from "@/app/providers/AuthProvider";
+import getDataWithId from "@/app/db/request/getDataWithId";
 
 export default function LoginForm({ change }) {
+    const { userLogged } = useAuthContext()
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false)
@@ -44,14 +47,22 @@ export default function LoginForm({ change }) {
         if (error) {
             setError(true)
             setLoading(false)
-          }
-          const user = result.user;
-          const admin = await IsAdmin(user.email)
+        }
 
-          setCookie('admin', admin)
-          setCookie('user', true)
+        if (result === null) {
+            setError(true)
+            setLoading(false)
+        } else {
+            const userCred = result.user
+            const admin = await IsAdmin(userCred.email)
+            const res = await getDataWithId("user", userCred.uid)
 
-          return router.push(`/user/${user.uid}/profile`);
+            setCookie("admin", admin)
+            userLogged(res.resultGetData.data())
+
+            router.push(`/user/${userCred.uid}/profile`);
+        }
+
     };
 
     const googleSubmit = async () => {
@@ -61,9 +72,10 @@ export default function LoginForm({ change }) {
         await loginWithGoogle(today, getFormattedDate())
             .then((result) => {
                 setCookie("admin", false)
-                setCookie("user", true)
-                return router.push(`/user/${result}/profile`);
+                userLogged(result)
+                return router.push(`/user/${result.uid}/profile`);
             })
+        setLoading(false)
     }
 
     return (
@@ -103,6 +115,7 @@ export default function LoginForm({ change }) {
                                             <FormControl>
                                                 <Input type="password" {...field} />
                                             </FormControl>
+                                            <p className="text-center text-red-500">{error ? "Email ou mot de passe incorrect" : ""}</p>
                                             <FormMessage />
                                         </FormItem>
                                     )}

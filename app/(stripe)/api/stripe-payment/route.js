@@ -1,9 +1,10 @@
+// app/api/stripe-payment/route.js
 import { NextResponse } from 'next/server';
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
   try {
-    const { articles, user } = await req.json();
+    const { articles } = await req.json();
 
     // Normaliser les articles pour qu'ils soient toujours un tableau
     const normalizedArticles = Array.isArray(articles) ? articles : [articles];
@@ -24,18 +25,21 @@ export async function POST(req) {
       quantity: 1,
     }));
 
+    console.log('Line items:', line_items);
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items,
-      mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_DOMAIN}/user/${user.uid}/panier/checkout/success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_DOMAIN}/user/${user.uid}/panier/checkout/cancel`,
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: normalizedArticles.reduce((total, article) => total + article.prix * 100, 0),
+      currency: 'chf',
+      automatic_payment_methods: {
+        enabled: true,
+      },
     });
 
+    console.log('PaymentIntent created:', paymentIntent.id);
 
-    return NextResponse.json({ sessionId: session.id }, { status: 200 });
+    return NextResponse.json({ clientSecret: paymentIntent.client_secret }, { status: 200 });
   } catch (error) {
+    console.error('Error creating Stripe PaymentIntent:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
