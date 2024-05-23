@@ -4,6 +4,7 @@ import addDataWithId from '@/app/db/request/addDataWithId';
 import { updateData } from '@/app/db/request/updateDoc';
 import { getNextCommandeId } from '@/app/db/utils/getNextArticleId';
 import { useAuthContext } from '@/app/providers/AuthProvider';
+import { useStore } from '@/app/providers/StoreProvider';
 import getFormattedDate, { getFormattedDateWithOffset } from '@/app/utils/(client)/getFormatedData';
 import { Separator } from '@/components/ui/separator';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
@@ -11,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const PaymentsForm = ({ articles }) => {
+  const {removeArticle} = useStore();
   const stripe = useStripe();
   const router = useRouter();
   const { user } = useAuthContext();
@@ -102,6 +104,8 @@ const PaymentsForm = ({ articles }) => {
           }
 
           await addDataWithId("commande", idCommande.toString(), commande)
+
+          articles.map(article => removeArticle(article.idArticle))
 
           router.push(`/user/${user.uid}/panier/livraison/payments/success`)
         }

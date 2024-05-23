@@ -2,6 +2,7 @@
 import { Card } from "@/components/ui/card"
 import ButtonWallet from "./ButtonWallet"
 import ButtonPayment from "./ButtonPayment"
+import { SheetClose } from "@/components/ui/sheet"
 
 export default function CardSheetArticle({ article }) {
     return (
@@ -19,7 +20,9 @@ export default function CardSheetArticle({ article }) {
                     </p>
                     <div className='flex flex-col md:flex-row '>
                         <ButtonWallet article={article} />
-                        <ButtonPayment articles={article} />
+                        <SheetClose>
+                            <ButtonPayment article={article} />
+                        </SheetClose>
                     </div>
                 </div>
             </div>

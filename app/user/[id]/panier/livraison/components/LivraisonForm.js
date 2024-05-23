@@ -18,11 +18,12 @@ import { useRouter } from "next/navigation";
 import Spinner from "@/app/components/Spinner";
 import { useAuthContext } from "@/app/providers/AuthProvider";
 import { updateData } from "@/app/db/request/updateDoc";
+import getDataWithId from "@/app/db/request/getDataWithId";
 
 export default function LivraisonForm() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const {user} = useAuthContext();
+    const {user, userLogged} = useAuthContext();
 
     const form = useForm({
         resolver: zodResolver(livraisonFormSchema),
@@ -36,9 +37,10 @@ export default function LivraisonForm() {
     const onFormSubmit = async (data) => {
         setLoading(true)
         await updateData(user.uid, "user", data)
-        .then(() => {
-            router.push(`/user/${user.uid}/panier/livraison/payments`);
-        })
+        const res = await getDataWithId("user", user.uid)
+
+        userLogged(res.resultGetData.data())
+        router.push(`/user/${user.uid}/panier/livraison/payments`);
         setLoading(false)
     };
 

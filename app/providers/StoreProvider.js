@@ -32,10 +32,17 @@ export const StoreProvider = ({ children }) => {
     localStorage.setItem('panierArticles', JSON.stringify(updatedArticles));
   };
 
+  const removeAllExcept = (idArticle) => {
+    const updatedArticles = articles.filter(article => article.idArticle === idArticle);
+    setArticles(updatedArticles);
+    localStorage.setItem('panierArticles', JSON.stringify(updatedArticles));
+  };
+
   const store = {
     articles,
     addArticle,
     removeArticle,
+    removeAllExcept,
   };
 
   return (
