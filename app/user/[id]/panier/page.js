@@ -15,7 +15,7 @@ export default function Panier() {
 
 
   const pushToLivraison = () => {
-    router.push(`/user/${user.uid}/panier/livraison`)
+    user.adresse ? router.push(`/user/${user.uid}/panier/livraison/payments`) : router.push(`/user/${user.uid}/panier/livraison`)
   }
 
   return (

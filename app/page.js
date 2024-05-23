@@ -13,6 +13,8 @@ export async function getArticles() {
 export default async function Home() {
   const articles = await getArticles();
 
+  const articlesNotSolded = articles.filter(article => article.statut != "Vendu")
+
   return (
     <main className='flex flex-col'>
       <section className="bg-white dark:bg-gray-800 py-20 md:py-32 lg:py-40">
@@ -46,7 +48,7 @@ export default async function Home() {
           </div>
           <ScrollArea className="w-h whitespace-nowrap rounded-md">
             <div className="flex w-max space-x-4 p-4">
-              {articles.map(article => <CardArticle key={article.idArticle} article={article}/>)}
+              {articlesNotSolded.map(article => <CardArticle key={article.idArticle} article={article}/>)}
               </div>
             <ScrollBar orientation="horizontal" />
           </ScrollArea>

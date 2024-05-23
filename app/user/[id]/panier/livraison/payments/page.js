@@ -1,13 +1,14 @@
 "use client";
 
 import { useStore } from '@/app/providers/StoreProvider';
-import React from 'react';
+import React, { useState } from 'react';
 import PaymentsForm from './components/PaymentsForm';
 import StripeProvider from '@/app/providers/StripeProvider';
 import Link from 'next/link';
 
 export default function Payments() {
     const { articles } = useStore();
+    const [loadingPayments, setLoadingPayments] = useState(false);
 
     return (
         <StripeProvider>
@@ -20,7 +21,7 @@ export default function Payments() {
                         </Link>
                     </div>
                 ) : (
-                    <PaymentsForm articles={articles} />
+                    <PaymentsForm articles={articles} setLoadingPayments={setLoadingPayments}/>
                 )}
             </div>
         </StripeProvider>

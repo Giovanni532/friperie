@@ -1,5 +1,6 @@
 'use client';
 
+import { revalidateWebSite } from '@/app/action/action';
 import addDataWithId from '@/app/db/request/addDataWithId';
 import { updateData } from '@/app/db/request/updateDoc';
 import { getNextCommandeId } from '@/app/db/utils/getNextArticleId';
@@ -11,8 +12,8 @@ import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-const PaymentsForm = ({ articles }) => {
-  const {removeArticle} = useStore();
+const PaymentsForm = ({ articles, setLoadingPayments }) => {
+  const {removeAllArticles} = useStore();
   const stripe = useStripe();
   const router = useRouter();
   const { user } = useAuthContext();
@@ -38,6 +39,7 @@ const PaymentsForm = ({ articles }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    setLoadingPayments(true);
     setError(null);
 
     try {
@@ -78,13 +80,14 @@ const PaymentsForm = ({ articles }) => {
         setError(result.error.message);
       } else {
         if (result.paymentIntent.status === 'succeeded') {
-          // Payment succeeded
-          console.log('Payment succeeded');
+
           let idArticle = []
           articles.map(article => {
             idArticle.push(article.idArticle)
             updateData(article.idArticle.toString(), "article", { statut: "Vendu" })
           })
+
+          idArticle = idArticle.join(', ');
 
           const idCommande = await getNextCommandeId();
 
@@ -103,7 +106,11 @@ const PaymentsForm = ({ articles }) => {
             ville: formData.ville
           }
 
-          await addDataWithId("commande", idCommande.toString(), commande)
+          await addDataWithId("commande", idCommande.toString(), commande);
+
+          removeAllArticles();
+
+          await revalidateWebSite();
 
           router.push(`/user/${user.uid}/panier/livraison/payments/success`)
         }
@@ -111,8 +118,8 @@ const PaymentsForm = ({ articles }) => {
     } catch (error) {
       setError(error.message);
     }
-
     setLoading(false);
+    setLoadingPayments(true);
   };
 
   const handleInputChange = (e) => {

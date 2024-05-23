@@ -2,14 +2,11 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Créez le contexte du store
 const StoreContext = createContext({});
 
-// Créez un fournisseur pour partager le store à travers toute l'application
 export const StoreProvider = ({ children }) => {
   const [articles, setArticles] = useState([]);
 
-  // Charger les articles depuis le localStorage lorsqu'on monte le composant
   useEffect(() => {
     const storedArticles = localStorage.getItem('panierArticles');
     if (storedArticles) {
@@ -46,11 +43,17 @@ export const StoreProvider = ({ children }) => {
     localStorage.setItem('panierArticles', JSON.stringify(updatedArticles));
   };
 
+  const removeAllArticles = () => {
+    setArticles([]);
+    localStorage.setItem('panierArticles', JSON.stringify([]));
+  };
+
   const store = {
     articles,
     addArticle,
     removeArticle,
     removeAllExcept,
+    removeAllArticles
   };
 
   return (
@@ -60,11 +63,7 @@ export const StoreProvider = ({ children }) => {
   );
 };
 
-// Créez un consommateur pour être appelé dans vos composants
 export const useStore = () => {
   const store = useContext(StoreContext);
   return store;
 };
-
-/* comment utiliser le store */
-/* const articles, addArticles = useSTore(); */
