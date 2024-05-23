@@ -41,7 +41,6 @@ export default function LivraisonForm() {
 
         userLogged(res.resultGetData.data())
         router.push(`/user/${user.uid}/panier/livraison/payments`);
-        setLoading(false)
     };
 
     return (

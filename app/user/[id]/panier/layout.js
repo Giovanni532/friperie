@@ -1,4 +1,4 @@
-import { NavigationPanier } from "./components/NavigationPanier";
+import  NavigationPanier from "./components/NavigationPanier";
 
 export const metadata = {
     title: "Panier utilisateur",

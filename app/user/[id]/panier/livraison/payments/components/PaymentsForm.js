@@ -105,8 +105,6 @@ const PaymentsForm = ({ articles }) => {
 
           await addDataWithId("commande", idCommande.toString(), commande)
 
-          articles.map(article => removeArticle(article.idArticle))
-
           router.push(`/user/${user.uid}/panier/livraison/payments/success`)
         }
       }

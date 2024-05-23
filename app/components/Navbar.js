@@ -99,15 +99,15 @@ export default function Navbar() {
                       </Link>
                     </SheetClose>
                     :
-                    <SheetClose asChild>
-                      <div>
-                        <p className="text-md">Pour acceder a votre panier vous devez être connecter.</p>
+                    <div>
+                      <p className="text-md">Pour acceder a votre panier vous devez être connecter.</p>
+                      <SheetClose asChild>
                         <Link className="text-md font-medium hover:underline hover:underline-offset-4"
                           href={`/auth`}>
                           Me connecter
                         </Link>
-                      </div>
-                    </SheetClose>
+                      </SheetClose>
+                    </div>
                   }
                 </div>
               }
