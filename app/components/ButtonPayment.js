@@ -18,7 +18,7 @@ const ButtonPayment = ({ article }) => {
   }, [])
 
   const handlePayment = () => {
-    removeAllExcept(article.idArticle)
+    removeAllExcept(article)
     router.push(`/user/${user.uid}/panier/livraison/payments`)
   }
 

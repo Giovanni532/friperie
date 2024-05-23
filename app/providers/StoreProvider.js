@@ -32,8 +32,16 @@ export const StoreProvider = ({ children }) => {
     localStorage.setItem('panierArticles', JSON.stringify(updatedArticles));
   };
 
-  const removeAllExcept = (idArticle) => {
-    const updatedArticles = articles.filter(article => article.idArticle === idArticle);
+  const removeAllExcept = (articleToBuy) => {
+    const articleExists = articles.some(article => article.idArticle === articleToBuy.idArticle);
+    let updatedArticles;
+
+    if (articleExists) {
+      updatedArticles = articles.filter(article => article.idArticle === articleToBuy.idArticle);
+    } else {
+      updatedArticles = [articleToBuy];
+    }
+
     setArticles(updatedArticles);
     localStorage.setItem('panierArticles', JSON.stringify(updatedArticles));
   };

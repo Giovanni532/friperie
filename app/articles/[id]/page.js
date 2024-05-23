@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
 import ButtonWallet from '@/app/components/ButtonWallet';
+import ButtonPayment from '@/app/components/ButtonPayment';
 
 export async function getArticle(id) {
   const { resultGetData } = await getDataWithId("article", id.toString());
@@ -63,7 +64,7 @@ export default async function ArticleDetail({ params }) {
           <Separator className="my-6" />
           <div className="flex flex-col space-y-4">
             <ButtonWallet article={article} />
-            <Button>Acheter maintenant</Button>
+            <ButtonPayment article={article} />
           </div>
         </div>
       </div>
