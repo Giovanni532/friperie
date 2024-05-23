@@ -6,7 +6,7 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-const ButtonPayment = ({ articles, user }) => {
+const ButtonPayment = ({ articles }) => {
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
@@ -17,7 +17,7 @@ const ButtonPayment = ({ articles, user }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ articles, user }),
+        body: JSON.stringify({ articles }),
       });
 
       const data = await response.json();

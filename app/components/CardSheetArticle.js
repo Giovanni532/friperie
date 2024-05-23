@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card"
 import ButtonWallet from "./ButtonWallet"
 import ButtonPayment from "./ButtonPayment"
 
-export default function CardSheetArticle({ article, user }) {
+export default function CardSheetArticle({ article }) {
     return (
         <Card className="mb-8">
             <div className="flex gap-6">
@@ -19,7 +19,7 @@ export default function CardSheetArticle({ article, user }) {
                     </p>
                     <div className='flex flex-col md:flex-row '>
                         <ButtonWallet article={article} />
-                        <ButtonPayment articles={article} user={user} />
+                        <ButtonPayment articles={article} />
                     </div>
                 </div>
             </div>

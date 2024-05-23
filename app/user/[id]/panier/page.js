@@ -55,9 +55,6 @@ export default function Panier() {
       <h1 className="text-2xl font-bold p-3">Mon panier</h1>
       {articles.map(article => <CardPanier key={article.idArticle} article={article} user={user} />)}
       <Button onClick={pushToLivraison}>Valider mon panier</Button>
-      <Button onClick={handlePayment} disabled={loading}>
-        {loading ? 'Redirection en cours ...' : 'Acheter les articles'}
-      </Button>
     </div>
   )
 }

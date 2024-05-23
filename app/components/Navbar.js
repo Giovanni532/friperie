@@ -23,10 +23,12 @@ export default function Navbar() {
   const { articles } = useStore();
 
   const handleLogout = async () => {
-    userLogged([])
     router.push('/')
+    userLogged(false)
     await logout()
   }
+
+  console.log(user)
 
   return (
     <>
@@ -57,7 +59,7 @@ export default function Navbar() {
                 Contact
               </Link>
             </li>
-            {isAdmin && user.length != 0 || admin === "true" && user.length != 0 ?
+            {isAdmin && user || admin === "true" && user ?
               <li>
                 <Link className="text-sm font-medium hover:underline hover:underline-offset-4" href={`/admin/${user.uid}/dashboard`}>
                   Dashboard
@@ -83,35 +85,35 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent side="right">
               {articles.length === 0 ?
-                <p>Votre panier est vide.</p>
+                <p>Votre panier est vide</p>
                 :
-                <div key={articles.length}>
+                <div>
                   <p className="p-2">Votre panier</p>
-                  {articles.map(article => <CardSheetArticle key={article.idArticle} article={article} user={user}/>)}
+                  {articles.map(article => <CardSheetArticle key={article.idArticle} article={article} />)}
                   <Separator className="my-4" />
-                  {user.length != 0?
+                  {user ?
                     <SheetClose asChild>
-                        <Link className="text-md font-medium hover:underline hover:underline-offset-4"
-                          href={`/user/${user.uid}/panier`}>
-                          Voir mon panier
-                        </Link>
+                      <Link className="text-md font-medium hover:underline hover:underline-offset-4"
+                        href={`/user/${user.uid}/panier`}>
+                        Voir mon panier
+                      </Link>
                     </SheetClose>
                     :
                     <SheetClose asChild>
-                      <p className="text-md">Pour acceder a votre panier vous devez être connecter.</p>
-                      <Link className="text-md font-medium hover:underline hover:underline-offset-4"
-                        href={`/auth`}>
-                        Me connecter
-                      </Link>
+                      <div>
+                        <p className="text-md">Pour acceder a votre panier vous devez être connecter.</p>
+                        <Link className="text-md font-medium hover:underline hover:underline-offset-4"
+                          href={`/auth`}>
+                          Me connecter
+                        </Link>
+                      </div>
                     </SheetClose>
                   }
-
                 </div>
               }
-
             </SheetContent>
           </Sheet>
-          {user.length != 0?
+          {user ?
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar style={{ cursor: "pointer" }} className="h-9 w-9">
@@ -180,7 +182,7 @@ export default function Navbar() {
                   Contact
                 </Link>
               </SheetClose>
-              {isAdmin && user.length != 0|| admin === "true" && user.length != 0? (
+              {isAdmin && user || admin === "true" && user ? (
                 <SheetClose asChild>
                   <Link
                     className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
@@ -193,7 +195,7 @@ export default function Navbar() {
                 :
                 null
               }
-              {user.length != 0?
+              {user ?
                 <>
                   <SheetClose asChild>
                     <Link
