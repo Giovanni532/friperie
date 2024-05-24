@@ -10,6 +10,7 @@ import { IoFilter } from "react-icons/io5";
 import { MdOutlineFilterListOff } from "react-icons/md";
 import DeleteButton from '../components/DeleteButton';
 import UpdateButtonArticle from '../components/UpdateButtonArticle';
+import Link from 'next/link';
 
 
 
@@ -19,6 +20,7 @@ export default function DataTableArticle({ columns, articles }) {
   const [priceOrder, setPriceOrder] = useState(null);
   const [statusFilter, setStatusFilter] = useState(null);
   const [categoryFilter, setCategoryFilter] = useState(null);
+  const [subCategoryFilter, setSubCategoryFilter] = useState(null);
 
   // État pour suivre l'index de la page actuelle
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,10 +41,17 @@ export default function DataTableArticle({ columns, articles }) {
     setCurrentPage(1);
   };
 
+  const handleSubCategoryFilter = (subCategory) => {
+    setSubCategoryFilter(subCategory);
+    setCurrentPage(1);
+  };
+
+
   const resetFilter = () => {
     setCategoryFilter(null);
     setStatusFilter(null);
     setPriceOrder(null);
+    setSubCategoryFilter(null);
     setCurrentPage(1);
   }
 
@@ -64,6 +73,11 @@ export default function DataTableArticle({ columns, articles }) {
 
     // Filtre de catégorie
     if (categoryFilter && article.categorie !== categoryFilter) {
+      return false;
+    }
+
+    // Filtre de sous catégorie
+    if (subCategoryFilter && article.sousCategorie !== subCategoryFilter) {
       return false;
     }
 
@@ -139,10 +153,36 @@ export default function DataTableArticle({ columns, articles }) {
               <DropdownMenuCheckboxItem onClick={() => handleCategoryFilter("Haut")}>Haut</DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem onClick={() => handleCategoryFilter("Bas")}>Bas</DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem onClick={() => handleCategoryFilter("Chaussure")}>Chaussure</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleCategoryFilter("Robe")}>Robe</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleCategoryFilter("Chaussure")}>Chaussure</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleCategoryFilter("Accessoires")}>Accessoires</DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem onClick={() => handleCategoryFilter("Autre")}>Autre</DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {priceOrder || categoryFilter || statusFilter ?
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button size="sm" variant="outline">
+                <IoFilter className="w-4 h-4 mr-4" />
+                Filtrer par sous categorie
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-[200px]">
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("T-shirts")}>T-shirts</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Chemises")}>Chemises</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Pulls")}>Pulls</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Vestes")}>Vestes</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Pantalons")}>Pantalons</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Shorts")}>Shorts</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Jupes")}>Jupes</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Talons")}>Talons</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Baskets")}>Baskets</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Accessoires de cheveux")}>Accessoires de cheveux</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Écharpes")}>Écharpes</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Bijoux")}>Bijoux</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleSubCategoryFilter("Sacs à mains")}>Sacs à mains</DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {priceOrder || categoryFilter || statusFilter || subCategoryFilter ?
             (
               <Button size="sm" variant="outline" onClick={resetFilter}>
                 <MdOutlineFilterListOff className="w-4 h-4 mr-4" />
@@ -174,11 +214,13 @@ export default function DataTableArticle({ columns, articles }) {
                       col.key === "prix" ? (
                         article[col.key] + ".-"
                       ) : (
-                        article[col.key]
+                        <Link key={index} href={`/articles/${article.idArticle}`}>
+                          {article[col.key]}
+                        </Link>
                       )
                     ) : (
                       <div className="flex items-center gap-2">
-                        <UpdateButtonArticle article={article}/>
+                        <UpdateButtonArticle article={article} />
                         <DeleteButton
                           documentId={article.idArticle}
                           collectionName="article"

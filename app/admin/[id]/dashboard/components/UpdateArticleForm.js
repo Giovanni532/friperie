@@ -19,6 +19,12 @@ import { storage } from "@/app/db/config";
 import { useState, useEffect } from "react";
 import Spinner from "@/app/components/Spinner";
 import { updateData } from "@/app/db/request/updateDoc";
+import getDataWithId from "@/app/db/request/getDataWithId";
+
+const getArticle = async (idArticle) => {
+    const article = await getDataWithId("article", idArticle.toString());
+    return article;
+};
 
 
 export default function UpdateArticleForm({ article }) {
@@ -44,20 +50,32 @@ export default function UpdateArticleForm({ article }) {
 
     const onSubmit = async (data) => {
         setLoading(true);
-        // Telechargement de l'image sur le storage
-        const fileUploadPromises = Array.from(data.images).map(async (file) => {
-            const storageRef = ref(
-                storage,
-                `images/article/${article.idArticle}/${file.name}`
-            );
-            const snapshot = await uploadBytesResumable(storageRef, file);
-            return await getDownloadURL(snapshot.ref);
-        });
-        // Recuperation des urls
-        const filesUrls = await Promise.all(fileUploadPromises);
 
-        const articleData = { ...data, images: filesUrls };
+        const existingArticle = await getArticle(article.idArticle);
+        const existingImages = existingArticle.images || [];
 
+        let filesUrls = [];
+
+        if (data.images && data.images.length > 0) {
+            // Si de nouvelles images sont fournies
+            const fileUploadPromises = Array.from(data.images).map(async (file) => {
+                const storageRef = ref(
+                    storage,
+                    `images/article/${article.idArticle}/${file.name}`
+                );
+                const snapshot = await uploadBytesResumable(storageRef, file);
+                return await getDownloadURL(snapshot.ref);
+            });
+
+            // Recuperation des urls des nouvelles images
+            filesUrls = await Promise.all(fileUploadPromises);
+        }
+
+        // Combiner les URL des images existantes avec les nouvelles URL
+        const combinedImages = [...existingImages, ...filesUrls];
+
+        // Mettre à jour l'article avec toutes les images
+        const articleData = { ...data, images: combinedImages };
         await updateData(article.idArticle.toString(), "article", articleData);
 
         revalidate();
@@ -65,7 +83,7 @@ export default function UpdateArticleForm({ article }) {
         toast({
             variant: "success",
             title: data.nomArticle,
-            description: `Votre article ${data.nomArticle} à bien été modifier`,
+            description: `Votre article ${data.nomArticle} a bien été modifié`,
         });
 
         reset();
@@ -105,6 +123,8 @@ export default function UpdateArticleForm({ article }) {
                             <SelectItem value="Haut">Haut</SelectItem>
                             <SelectItem value="Bas">Bas</SelectItem>
                             <SelectItem value="Chaussure">Chaussure</SelectItem>
+                            <SelectItem value="Accessoires">Accessoires</SelectItem>
+                            <SelectItem value="Sacs">Sacs</SelectItem>
                             <SelectItem value="Autre">Autre</SelectItem>
                         </SelectContent>
                     </Select>
@@ -124,17 +144,26 @@ export default function UpdateArticleForm({ article }) {
                             <SelectValue placeholder="Sélectionnez une sous-catégorie" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="Robe">Robe</SelectItem>
-                            <SelectItem value="Débardeur">Débardeur</SelectItem>
-                            <SelectItem value="T-shirt">T-shirt</SelectItem>
-                            <SelectItem value="Pull">Pull</SelectItem>
-                            <SelectItem value="Veste">Veste</SelectItem>
-                            <SelectItem value="Pantalon">Pantalon</SelectItem>
-                            <SelectItem value="Short">Short</SelectItem>
-                            <SelectItem value="Jupe">Jupe</SelectItem>
-                            <SelectItem value="Basket">Basket</SelectItem>
-                            <SelectItem value="Talon">Talon</SelectItem>
-                            <SelectItem value="Sac">Sac</SelectItem>
+                            <SelectItem value=" ">Aucune</SelectItem>
+                            <SelectItem value="T-shirts">T-shirts</SelectItem>
+                            <SelectItem value="Chemises">Chemises</SelectItem>
+                            <SelectItem value="Pulls">Pulls</SelectItem>
+                            <SelectItem value="Vestes">Vestes</SelectItem>
+                            <SelectItem value="Pantalons">Pantalons</SelectItem>
+                            <SelectItem value="Shorts">Shorts</SelectItem>
+                            <SelectItem value="Jupes">Jupes</SelectItem>
+                            <SelectItem value="Talons">Talons</SelectItem>
+                            <SelectItem value="Baskets">Baskets</SelectItem>
+                            <SelectItem value="Accessoires de cheveux">Accessoires de cheveux</SelectItem>
+                            <SelectItem value="Chapeaux">Chapeaux</SelectItem>
+                            <SelectItem value="Écharpes">Écharpes</SelectItem>
+                            <SelectItem value="Lunettes de soleil">Lunettes de soleil</SelectItem>
+                            <SelectItem value="Bijoux">Bijoux</SelectItem>
+                            <SelectItem value="Sacs à main">Sacs à main</SelectItem>
+                            <SelectItem value="Colliers">Colliers</SelectItem>
+                            <SelectItem value="Bracelets">Bracelets</SelectItem>
+                            <SelectItem value="Boucles d'oreilles">Boucles d'oreilles</SelectItem>
+                            <SelectItem value="Bagues">Bagues</SelectItem>
                         </SelectContent>
                     </Select>
                     <input type="hidden" {...register("sousCategorie")} />
@@ -155,16 +184,21 @@ export default function UpdateArticleForm({ article }) {
                             <SelectValue placeholder="Sélectionnez une couleur" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="Noir">Noir</SelectItem>
-                            <SelectItem value="Blanc">Blanc</SelectItem>
-                            <SelectItem value="Rouge">Rouge</SelectItem>
-                            <SelectItem value="Vert">Vert</SelectItem>
-                            <SelectItem value="Bleu">Bleu</SelectItem>
-                            <SelectItem value="Jaune">Jaune</SelectItem>
-                            <SelectItem value="Violet">Violet</SelectItem>
-                            <SelectItem value="Cyan">Cyan</SelectItem>
-                            <SelectItem value="#800000">Marron</SelectItem>
+                            <SelectItem value="#FF0000">Rouge</SelectItem>
                             <SelectItem value="#FFA500">Orange</SelectItem>
+                            <SelectItem value="#FFFF00">Jaune</SelectItem>
+                            <SelectItem value="#008000">Vert</SelectItem>
+                            <SelectItem value="#0000FF">Bleu</SelectItem>
+                            <SelectItem value="#4B0082">Indigo</SelectItem>
+                            <SelectItem value="#9400D3">Violet</SelectItem>
+                            <SelectItem value="#FFC0CB">Rose</SelectItem>
+                            <SelectItem value="#000000">Noir</SelectItem>
+                            <SelectItem value="#FFFFFF">Blanc</SelectItem>
+                            <SelectItem value="#808080">Gris</SelectItem>
+                            <SelectItem value="#A52A2A">Brun</SelectItem>
+                            <SelectItem value="#D3D3D3">Argent</SelectItem>
+                            <SelectItem value="#C0C0C0">Or</SelectItem>
+                            <SelectItem value="#800080">Pourpre</SelectItem>
                         </SelectContent>
                     </Select>
                     <input type="hidden" {...register("couleur")} />
@@ -267,7 +301,7 @@ export default function UpdateArticleForm({ article }) {
                 )}
             </div>
             <DialogFooter>
-                    <Button type="submit">Modifier l'article</Button>
+                <Button type="submit">Modifier l'article</Button>
             </DialogFooter>
         </form>
     );
