@@ -25,6 +25,7 @@ export const AuthContextProvider = ({ children }) => {
         const userStored = getCookie('user');
         if (userStored) {
             userLogged(JSON.parse(userStored))
+            setIsLoading(false);
         };
         setIsLoading(false);
     }, []);

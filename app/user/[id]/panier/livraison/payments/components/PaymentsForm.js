@@ -9,7 +9,7 @@ import { useStore } from '@/app/providers/StoreProvider';
 import getFormattedDate, { getFormattedDateWithOffset } from '@/app/utils/(client)/getFormatedData';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import { useStripe, useElements, CardCvcElement, CardExpiryElement, CardNumberElement } from '@stripe/react-stripe-js';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
@@ -63,7 +63,7 @@ const PaymentsForm = ({ articles }) => {
 
       const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
-          card: elements.getElement(CardElement),
+          card: elements.getElement(CardNumberElement),
           billing_details: {
             name: `${formData.prenom} ${formData.nom}`,
             email: formData.email,
@@ -80,12 +80,11 @@ const PaymentsForm = ({ articles }) => {
         setError(result.error.message);
       } else {
         if (result.paymentIntent.status === 'succeeded') {
-
-          let idArticle = []
+          let idArticle = [];
           articles.map(article => {
-            idArticle.push(article.idArticle)
-            updateData(article.idArticle.toString(), "article", { statut: "Vendu" })
-          })
+            idArticle.push(article.idArticle);
+            updateData(article.idArticle.toString(), "article", { statut: "Vendu" });
+          });
 
           idArticle = idArticle.join(', ');
 
@@ -103,8 +102,8 @@ const PaymentsForm = ({ articles }) => {
             statutCommande: "En traitement",
             emailUser: formData.email,
             usernameUser: formData.prenom + " " + formData.nom,
-            ville: formData.ville
-          }
+            ville: formData.ville,
+          };
 
           await addDataWithId("commande", idCommande.toString(), commande);
 
@@ -112,7 +111,7 @@ const PaymentsForm = ({ articles }) => {
 
           await revalidateWebSite();
 
-          router.push(`/user/${user.uid}/panier/livraison/payments/success`)
+          router.push(`/user/${user.uid}/panier/livraison/payments/success`);
         }
       }
     } catch (error) {
@@ -221,12 +220,14 @@ const PaymentsForm = ({ articles }) => {
             />
           </div>
         </div>
-        <CardElement options={cardElementOptions} className="p-3 border border-gray-300 rounded-md mb-4" />
+        <CardNumberElement options={cardElementOptions} className="p-3 border border-gray-300 rounded-md mb-4"/>
+        <CardExpiryElement options={cardElementOptions} className="p-3 border border-gray-300 rounded-md mb-4"/>
+        <CardCvcElement options={cardElementOptions} className="p-3 border border-gray-300 rounded-md mb-4"/>
         <Button
           type="submit"
           disabled={!stripe || loading}
           className={`w-full bg-blue-500 text-white py-3 px-4 rounded-md 
-            ${loading ? 'opaville-50 cursor-not-allowed' : 'hover:bg-blue-600 transition-colors'}`}
+            ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600 transition-colors'}`}
         >
           {loading ? 'En cours de paiements ...' : `Payer ${totalPrice} CHF`}
         </Button>
