@@ -1,13 +1,30 @@
+import { useEffect, useState } from "react";
 import { getData } from "../action/action";
 import CardArticle from "./CardArticle";
+import SkeletonCardList from "./SkeletonCardList";
 
-export async function getArticles() {
+async function fetchArticles() {
   const result = await getData("article");
   return result.filter(article => article.statut === "En vente");
 }
 
-export default async function ArticlesList({ sortArticles }) {
-  const articles = await getArticles();
+export default function ArticlesList({ sortArticles }) {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadArticles() {
+      const fetchedArticles = await fetchArticles();
+      setArticles(fetchedArticles);
+      setLoading(false);
+    }
+
+    loadArticles();
+  }, []);
+
+  if (loading) {
+    return <SkeletonCardList />;
+  }
 
   const sortedArticles = sortArticles(articles);
 

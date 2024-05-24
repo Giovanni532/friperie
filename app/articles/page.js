@@ -24,7 +24,7 @@ export default function Articles() {
   return (
     <>
       <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8 py-8 my-20">
-        <div className="md:block ">
+        <div className="md:block">
           <h3 className="text-lg font-semibold mb-4">Filters</h3>
           <div className="relative w-full max-w-md my-4">
               <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 dark:text-gray-400" />
@@ -36,7 +36,7 @@ export default function Articles() {
             </div>
           <div className="space-y-4">
             <div>
-              <h4 className="text-base font-medium mb-2">Category</h4>
+              <h4 className="text-base font-medium mb-2">Categories</h4>
               <div className="space-y-2">
                 <Label className="flex items-center gap-2">
                   <Checkbox onClick={() => setSortOption('priceAsc')} id="category-1" />
@@ -53,36 +53,36 @@ export default function Articles() {
               </div>
             </div>
             <div>
-              <h4 className="text-base font-medium mb-2">Price</h4>
+              <h4 className="text-base font-medium mb-2">Etat</h4>
               <div className="space-y-2">
                 <Label className="flex items-center gap-2">
                   <Checkbox id="price-1" />
-                  Under $50
+                  Neuf
                 </Label>
                 <Label className="flex items-center gap-2">
                   <Checkbox id="price-2" />
-                  $50 - $100
+                  Comme neuf
                 </Label>
                 <Label className="flex items-center gap-2">
                   <Checkbox id="price-3" />
-                  Over $100
+                  Bonne état
                 </Label>
               </div>
             </div>
             <div>
-              <h4 className="text-base font-medium mb-2">Brand</h4>
+              <h4 className="text-base font-medium mb-2">Taille</h4>
               <div className="space-y-2">
                 <Label className="flex items-center gap-2">
                   <Checkbox id="brand-1" />
-                  Brand A
+                  XS
                 </Label>
                 <Label className="flex items-center gap-2">
                   <Checkbox id="brand-2" />
-                  Brand B
+                  S
                 </Label>
                 <Label className="flex items-center gap-2">
                   <Checkbox id="brand-3" />
-                  Brand C
+                  M
                 </Label>
               </div>
             </div>
