@@ -1,21 +1,26 @@
-import Link from "next/link"
+'use client';
+
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { getData } from "../action/action";
-import CardArticle from "../components/CardArticle";
-
-export async function getArticles() {
-  const result = await getData("article")
-  return result
-}
+import ArticlesList from "../components/ArticlesList";
+import { Suspense, useState } from "react";
+import SkeletonCardList from "../components/SkeletonCardList";
 
 
+export default function Articles() {
+  const [sortOption, setSortOption] = useState(''); // État pour l'option de tri
 
-export default async function Articles() {
-  const articles = await getArticles();
-
+  // Fonctions de tri
+  const sortArticles = (articles) => {
+    if (sortOption === 'priceAsc') {
+      return articles.sort((a, b) => a.prix - b.prix);
+    }
+    if (sortOption === 'priceDesc') {
+      return articles.sort((a, b) => b.prix - a.prix);
+    }
+    return articles;
+  };
   return (
     <>
       <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8 py-8 my-20">
@@ -34,12 +39,12 @@ export default async function Articles() {
               <h4 className="text-base font-medium mb-2">Category</h4>
               <div className="space-y-2">
                 <Label className="flex items-center gap-2">
-                  <Checkbox id="category-1" />
-                  Clothing
+                  <Checkbox onClick={() => setSortOption('priceAsc')} id="category-1" />
+                  Plus cher au moins
                 </Label>
                 <Label className="flex items-center gap-2">
-                  <Checkbox id="category-2" />
-                  Electronics
+                  <Checkbox onClick={() => setSortOption('priceDesc')} id="category-2" />
+                  Moins cher au plus cher
                 </Label>
                 <Label className="flex items-center gap-2">
                   <Checkbox id="category-3" />
@@ -83,9 +88,9 @@ export default async function Articles() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {articles.map(article => <CardArticle key={article.idArticle} article={article}/>)}
-        </div>
+        <Suspense fallback={<SkeletonCardList count={3} />}>
+          <ArticlesList sortArticles={sortArticles} />
+        </Suspense>
       </div>
     </>
   )

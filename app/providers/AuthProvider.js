@@ -30,6 +30,7 @@ export const AuthContextProvider = ({ children }) => {
         setIsLoading(false);
     }, []);
 
+
     return (
         <AuthContext.Provider value={{ user, isAdmin, userLogged }}>
             {isLoading ? <Spinner message="Récuperation des données ..."/> : children}
