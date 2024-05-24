@@ -25,8 +25,6 @@ export async function POST(req) {
       quantity: 1,
     }));
 
-    console.log('Line items:', line_items);
-
     const paymentIntent = await stripe.paymentIntents.create({
       amount: normalizedArticles.reduce((total, article) => total + article.prix * 100, 0),
       currency: 'chf',
@@ -34,8 +32,6 @@ export async function POST(req) {
         enabled: true,
       },
     });
-
-    console.log('PaymentIntent created:', paymentIntent.id);
 
     return NextResponse.json({ clientSecret: paymentIntent.client_secret }, { status: 200 });
   } catch (error) {

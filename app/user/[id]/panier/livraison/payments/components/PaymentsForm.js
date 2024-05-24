@@ -7,13 +7,14 @@ import { getNextCommandeId } from '@/app/db/utils/getNextArticleId';
 import { useAuthContext } from '@/app/providers/AuthProvider';
 import { useStore } from '@/app/providers/StoreProvider';
 import getFormattedDate, { getFormattedDateWithOffset } from '@/app/utils/(client)/getFormatedData';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-const PaymentsForm = ({ articles, setLoadingPayments }) => {
-  const {removeAllArticles} = useStore();
+const PaymentsForm = ({ articles }) => {
+  const { removeAllArticles } = useStore();
   const stripe = useStripe();
   const router = useRouter();
   const { user } = useAuthContext();
@@ -39,7 +40,6 @@ const PaymentsForm = ({ articles, setLoadingPayments }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    setLoadingPayments(true);
     setError(null);
 
     try {
@@ -119,7 +119,6 @@ const PaymentsForm = ({ articles, setLoadingPayments }) => {
       setError(error.message);
     }
     setLoading(false);
-    setLoadingPayments(true);
   };
 
   const handleInputChange = (e) => {
@@ -223,14 +222,14 @@ const PaymentsForm = ({ articles, setLoadingPayments }) => {
           </div>
         </div>
         <CardElement options={cardElementOptions} className="p-3 border border-gray-300 rounded-md mb-4" />
-        <button
+        <Button
           type="submit"
           disabled={!stripe || loading}
           className={`w-full bg-blue-500 text-white py-3 px-4 rounded-md 
             ${loading ? 'opaville-50 cursor-not-allowed' : 'hover:bg-blue-600 transition-colors'}`}
         >
           {loading ? 'En cours de paiements ...' : `Payer ${totalPrice} CHF`}
-        </button>
+        </Button>
         {error && <div className="mt-4 text-red-500">{error}</div>}
       </form>
     </div>

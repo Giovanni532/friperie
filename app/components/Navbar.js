@@ -28,8 +28,6 @@ export default function Navbar() {
     await logout()
   }
 
-  console.log(user)
-
   return (
     <>
       <header className="z-10 fixed flex h-16 w-full items-center justify-between px-4 md:px-6 bg-white">
