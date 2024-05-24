@@ -1,4 +1,4 @@
-import { getSalesData, getWeeklyNewUsers } from "@/app/db/utils/adminData";
+import { getMonthlyNewUsers, getSalesData } from "@/app/db/utils/adminData";
 import ToggleDisplay from "./components/ToggleDisplay";
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { RxArrowUp } from "react-icons/rx";
@@ -11,7 +11,7 @@ const AdminDashboard = async () => {
     const articlesSorted = articlesNotSorted.sort((a, b) => a.idArticle - b.idArticle)
     const commandesSorted = commandesNotSorted.sort((a, b) => a.idCommande - b.idCommande)
     const { totalOrders, totalRevenue, totalSales } = await getSalesData();
-    const newUser = await getWeeklyNewUsers();
+    const newUser = await getMonthlyNewUsers();
 
     return (
         <main className="flex-1 p-4 md:p-10 my-20">
@@ -20,7 +20,7 @@ const AdminDashboard = async () => {
                     <Card>
                         <CardHeader className="pb-4">
                             <CardTitle>Total de livraison</CardTitle>
-                            <CardDescription>Vous avez livrée {totalSales} articles durant cette semaine.</CardDescription>
+                            <CardDescription>Vous avez livrée {totalSales} articles durant ce mois.</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-center gap-2">
@@ -34,7 +34,7 @@ const AdminDashboard = async () => {
                     <Card>
                         <CardHeader className="pb-4">
                             <CardTitle>Revenue total</CardTitle>
-                            <CardDescription>Vous avez fais un bénéfices de {totalRevenue}$ durant cette semaine.</CardDescription>
+                            <CardDescription>Vous avez fais un bénéfices de {totalRevenue}$ durant ce mois.</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-center gap-2">
@@ -48,7 +48,7 @@ const AdminDashboard = async () => {
                     <Card>
                         <CardHeader className="pb-4">
                             <CardTitle>Commande total</CardTitle>
-                            <CardDescription>Vous avez eu {totalOrders} commandes durant cette semaine.</CardDescription>
+                            <CardDescription>Vous avez eu {totalOrders} commandes durant ce mois.</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-center gap-2">
@@ -62,7 +62,7 @@ const AdminDashboard = async () => {
                     <Card>
                         <CardHeader className="pb-4">
                             <CardTitle>Nouveaux clients</CardTitle>
-                            <CardDescription>Vous avez eu {newUser} nouveau clients durant cette semaine.</CardDescription>
+                            <CardDescription>Vous avez eu {newUser} nouveau clients durant ce mois.</CardDescription>
                         </CardHeader>
                         <CardContent>
                         <div className="flex items-center gap-2">
