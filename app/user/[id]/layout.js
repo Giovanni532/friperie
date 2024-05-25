@@ -10,9 +10,9 @@ export const metadata = {
 export default function LayoutUser({ children }) {
     const user = getCookie("user", { cookies });
 
-    if (user.length === 0) {
+    if (user.length === 0 || user === "false") {
         return (
-            <ErrorPage/>
+            <ErrorPage />
         );
     }
 

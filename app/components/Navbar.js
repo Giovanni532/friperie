@@ -6,7 +6,7 @@ import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownM
 import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet, SheetClose } from "@/components/ui/sheet";
 import { useAuthContext } from "@/app/providers/AuthProvider";
-import { getCookie } from "cookies-next";
+import { deleteCookie, getCookie } from "cookies-next";
 import logout from "@/app/db/auth/logout";
 import { useRouter } from "next/navigation";
 import { RiMenu4Line } from "react-icons/ri";
@@ -23,9 +23,11 @@ export default function Navbar() {
   const { articles } = useStore();
 
   const handleLogout = async () => {
-    router.push('/')
-    userLogged(false)
     await logout()
+    deleteCookie("user")
+    router.refresh()
+    userLogged(false)
+    router.push('/')
   }
 
   return (
