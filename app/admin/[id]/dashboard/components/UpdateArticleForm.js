@@ -28,14 +28,13 @@ export default function UpdateArticleForm({ article }) {
     });
 
     useEffect(() => {
-        // Pré-remplir les valeurs du formulaire avec les valeurs de l'article
         setValue("nomArticle", article.nomArticle);
         setValue("categorie", article.categorie);
         setValue("sousCategorie", article.sousCategorie);
         setValue("couleur", article.couleur);
         setValue("etat", article.etat);
         setValue("marque", article.marque);
-        setValue("prix", article.prix);
+        setValue("prix", article.prix.toString());
         setValue("statut", article.statut);
         setValue("taille", article.taille);
     }, [article, setValue]);

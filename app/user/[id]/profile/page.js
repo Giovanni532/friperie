@@ -34,11 +34,6 @@ export default async function User({ params }) {
   const user = await getUser(params.id)
   const commandes = await getUserCommandes(params.id)
 
-  const updateUser = () => {
-    "use server"
-    console.log(user)
-  }
-
   return (
     <div className='my-20 flex justify-center'>
       <Tabs defaultValue="profil" className="w-10/12 mx-auto">

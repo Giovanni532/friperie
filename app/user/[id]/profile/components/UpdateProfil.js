@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,6 @@ import { updateUserFormSchema } from "@/app/utils/formSchema";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -18,6 +17,7 @@ import {
 import Spinner from "@/app/components/Spinner";
 import { updateData } from "@/app/db/request/updateDoc";
 import { toast } from "@/components/ui/use-toast";
+import { revalidateUser } from "@/app/admin/[id]/dashboard/action/action";
 
 export default function UpdateProfil({ user }) {
     const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ export default function UpdateProfil({ user }) {
             nom: user.username.split(" ")[1],
             email: user.email,
             adresse: user.adresse,
-            nip: user.nip,
+            nip: user.nip.toString(),
             ville: user.ville
         },
     });
@@ -44,13 +44,14 @@ export default function UpdateProfil({ user }) {
             ville: data.ville
         };
         await updateData(user.uid, "user", userData);
+        await revalidateUser(user.uid);
         setTimeout(() => {
             toast({
                 title: `${userData.username}`,
-                description: `Vos informations on bien été mis à jour.`,
+                description: `Vos informations ont bien été mises à jour.`,
             });
-            setLoading(false)
-        }, 500)
+            setLoading(false);
+        }, 500);
     };
 
     return (
@@ -117,7 +118,7 @@ export default function UpdateProfil({ user }) {
                                             <FormItem>
                                                 <FormLabel>Code postal</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="1214" {...field} />
+                                                    <Input type="number" placeholder="1214" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -163,5 +164,5 @@ export default function UpdateProfil({ user }) {
                 </Form>
             }
         </div>
-    )
+    );
 }
