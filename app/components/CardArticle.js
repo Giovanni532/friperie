@@ -2,10 +2,10 @@
 
 import Image from 'next/image'
 import React from 'react'
-import Link from 'next/link'
 import ButtonWallet from './ButtonWallet'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
+import { Card } from '@/components/ui/card'
 
 export default function CardArticle({ article }) {
     const router = useRouter();
@@ -14,7 +14,7 @@ export default function CardArticle({ article }) {
         router.push(`/articles/${article.idArticle}`)
     }
     return (
-        <div key={article.idArticle} className="z-0 w-72 group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2 mx-auto">
+        <Card key={article.idArticle} className="z-0 w-72 h-[405px] group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2 mx-auto">
             <div className="block" href="#">
                 <Image
                     className="w-full h-64"
@@ -36,6 +36,6 @@ export default function CardArticle({ article }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </Card>
     )
 }
