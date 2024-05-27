@@ -14,17 +14,9 @@ import {
 import { articleUpdateSchema } from "@/app/utils/formSchema";
 import { toast } from "@/components/ui/use-toast";
 import { revalidate } from "../action/action";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import { storage } from "@/app/db/config";
 import { useState, useEffect } from "react";
 import Spinner from "@/app/components/Spinner";
 import { updateData } from "@/app/db/request/updateDoc";
-import getDataWithId from "@/app/db/request/getDataWithId";
-
-const getArticle = async (idArticle) => {
-    const article = await getDataWithId("article", idArticle.toString());
-    return article;
-};
 
 
 export default function UpdateArticleForm({ article }) {
@@ -51,32 +43,7 @@ export default function UpdateArticleForm({ article }) {
     const onSubmit = async (data) => {
         setLoading(true);
 
-        const existingArticle = await getArticle(article.idArticle);
-        const existingImages = existingArticle.images || [];
-
-        let filesUrls = [];
-
-        if (data.images && data.images.length > 0) {
-            // Si de nouvelles images sont fournies
-            const fileUploadPromises = Array.from(data.images).map(async (file) => {
-                const storageRef = ref(
-                    storage,
-                    `images/article/${article.idArticle}/${file.name}`
-                );
-                const snapshot = await uploadBytesResumable(storageRef, file);
-                return await getDownloadURL(snapshot.ref);
-            });
-
-            // Recuperation des urls des nouvelles images
-            filesUrls = await Promise.all(fileUploadPromises);
-        }
-
-        // Combiner les URL des images existantes avec les nouvelles URL
-        const combinedImages = [...existingImages, ...filesUrls];
-
-        // Mettre à jour l'article avec toutes les images
-        const articleData = { ...data, images: combinedImages };
-        await updateData(article.idArticle.toString(), "article", articleData);
+        await updateData(article.idArticle.toString(), "article", data);
 
         revalidate();
 
@@ -292,13 +259,6 @@ export default function UpdateArticleForm({ article }) {
                         <p className="text-red-500 text-xs">{errors.taille.message}</p>
                     )}
                 </div>
-            </div>
-            <div className="grid gap-4">
-                <Label htmlFor="images">Images</Label>
-                <Input id="images" multiple type="file" {...register("images")} />
-                {errors.images && (
-                    <p className="text-red-500 text-xs">{errors.images.message}</p>
-                )}
             </div>
             <DialogFooter>
                 <Button type="submit">Modifier l'article</Button>

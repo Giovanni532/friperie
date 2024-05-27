@@ -97,6 +97,7 @@ const PaymentsForm = ({ articles }) => {
             dateDeLivraison: getFormattedDateWithOffset(14),
             idArticle,
             idCommande,
+            idUser: user.uid,
             nip: formData.nip,
             prixCommande: totalPrice,
             statutCommande: "En traitement",
