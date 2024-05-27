@@ -57,7 +57,7 @@ export default function ArticlesData({ articles }) {
     };
 
     const handleInput = (value) => {
-        setLoading(true); // Démarrer le chargement
+        setLoading(true); 
         setSizeFilters(new Set());
         setCategoryFilters(new Set());
         setPriceOrder(null);
@@ -68,7 +68,7 @@ export default function ArticlesData({ articles }) {
     useEffect(() => {
         if (loading) {
             const timer = setTimeout(() => {
-                setLoading(false); // Arrêter le chargement après 1 seconde
+                setLoading(false); 
             }, 300);
             return () => clearTimeout(timer);
         }
