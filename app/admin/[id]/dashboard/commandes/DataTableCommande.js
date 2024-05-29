@@ -6,8 +6,6 @@ import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@
 import { PaginationPrevious, PaginationItem, PaginationLink, PaginationNext, PaginationContent, Pagination } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuTrigger, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu";
-import { FaTrash } from "react-icons/fa";
-import { GrDocumentUpdate } from "react-icons/gr";
 import { IoFilter } from "react-icons/io5";
 import { MdOutlineFilterListOff } from "react-icons/md";
 import UpdateButtonCommande from '../components/UpdateButtonCommande';

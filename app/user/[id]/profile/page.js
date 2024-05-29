@@ -19,6 +19,8 @@ import getDataWithId from '@/app/db/request/getDataWithId'
 import { getData } from '@/app/action/action'
 import { CommandeData } from './components/CommandesData'
 import UpdateProfil from './components/UpdateProfil'
+import Image from 'next/image'
+import ImageProfile from './components/ImageProfile'
 
 export async function getUser(id) {
   const user = await getDataWithId("user", id)
@@ -50,21 +52,19 @@ export default async function User({ params }) {
                 Vos informations personnelles.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="space-y-2 flex flex-col items-center">
+              <ImageProfile user={user} />
               <div className="space-y-1">
-                <p>Prenom : {user.username.split(" ")[0]}</p>
+                <p>{user.username}</p>
               </div>
               <div className="space-y-1">
-                <p>Nom : {user.username.split(" ")[1]}</p>
+                <p>{user.email}</p>
               </div>
               <div className="space-y-1">
-                <p>Email : {user.email}</p>
+                <p>{`${user.adresse}, ${user.nip}, ${user.ville}`}</p>
               </div>
               <div className="space-y-1">
-                <p>Adresse complete : {`${user.adresse}, ${user.nip}, ${user.ville}`}</p>
-              </div>
-              <div className="space-y-1">
-                <Button>modifier mon mot de passe</Button>
+                <Button>Changer de mot de passe</Button>
               </div>
             </CardContent>
           </Card>
@@ -78,7 +78,7 @@ export default async function User({ params }) {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              <UpdateProfil user={user}/>
+              <UpdateProfil user={user} />
             </CardContent>
           </Card>
         </TabsContent>

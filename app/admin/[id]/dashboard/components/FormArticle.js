@@ -52,7 +52,6 @@ export default function FormArticle() {
 
         revalidate();
 
-
         toast({
             title: data.nomArticle,
             description: `Votre article ${data.nomArticle} à bien été ajouter`,
