@@ -19,6 +19,7 @@ import { updateData } from "@/app/db/request/updateDoc";
 import { toast } from "@/components/ui/use-toast";
 import { revalidateUser } from "@/app/admin/[id]/dashboard/action/action";
 
+
 export default function UpdateProfil({ user }) {
     const [loading, setLoading] = useState(false);
 
@@ -27,7 +28,6 @@ export default function UpdateProfil({ user }) {
         defaultValues: {
             prenom: user.username.split(" ")[0],
             nom: user.username.split(" ")[1],
-            email: user.email,
             adresse: user.adresse,
             nip: user.nip.toString(),
             ville: user.ville
@@ -38,7 +38,6 @@ export default function UpdateProfil({ user }) {
         setLoading(true);
         const userData = {
             username: data.prenom + " " + data.nom,
-            email: data.email,
             adresse: data.adresse,
             nip: data.nip,
             ville: data.ville
@@ -93,21 +92,6 @@ export default function UpdateProfil({ user }) {
                                         )}
                                     />
                                 </div>
-                            </div>
-                            <div className="space-y-2">
-                                <FormField
-                                    control={form.control}
-                                    name="email"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Votre email</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="exemple@gmail.com" {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">

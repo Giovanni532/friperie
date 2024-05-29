@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const changePasswordSchema = z.object({
-  currentPassword: z.string().min(6, 'Le mot de passe actuel est requis.'),
+  currentPassword: z.string().optional(),
   newPassword: z.string().min(6, 'Le nouveau mot de passe doit contenir au moins 6 caractères.'),
 });
 
@@ -36,9 +36,6 @@ export const updateUserFormSchema = z.object({
   }),
   nom: z.string().min(3, {
     message: "Entre votre nom.",
-  }),
-  email: z.string().email({
-    message: "Email invalide, veuillez entrer un mail valide.",
   }),
   adresse: z.string().min(8, {
     message: "Votre adresse doit contenir au moins 8 caractères.",
