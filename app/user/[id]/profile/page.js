@@ -15,12 +15,14 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { DialogTrigger, DialogTitle, DialogDescription, DialogHeader, DialogContent, Dialog } from "@/components/ui/dialog"
 import getDataWithId from '@/app/db/request/getDataWithId'
 import { getData } from '@/app/action/action'
 import { CommandeData } from './components/CommandesData'
 import UpdateProfil from './components/UpdateProfil'
 import Image from 'next/image'
 import ImageProfile from './components/ImageProfile'
+import UpdatePassword from './components/UpdatePassword'
 
 export async function getUser(id) {
   const user = await getDataWithId("user", id)
@@ -64,7 +66,22 @@ export default async function User({ params }) {
                 <p>{`${user.adresse}, ${user.nip}, ${user.ville}`}</p>
               </div>
               <div className="space-y-1">
-                <Button>Changer de mot de passe</Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">Changer de mot de passe</Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[600px]">
+                    <DialogHeader>
+                      <DialogTitle>Modifier votre mot de passe.</DialogTitle>
+                      <DialogDescription>
+                        Remplissez les informations ci-dessous pour ajouter un nouvel article à votre inventaire.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4 h-1/2">
+                      <UpdatePassword />
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </CardContent>
           </Card>

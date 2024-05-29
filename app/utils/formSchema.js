@@ -1,5 +1,11 @@
 import { z } from "zod";
 
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(6, 'Le mot de passe actuel est requis.'),
+  newPassword: z.string().min(6, 'Le nouveau mot de passe doit contenir au moins 6 caractères.'),
+});
+
+
 export const signupFormSchema = z.object({
   prenom: z.string().min(3, {
     message: "Entrer votre prenom.",
