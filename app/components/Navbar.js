@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useStore } from "../providers/StoreProvider";
 import CardSheetArticle from "./CardSheetArticle";
+import { CircleUserRound } from 'lucide-react'
 
 
 export default function Navbar() {
@@ -116,9 +117,12 @@ export default function Navbar() {
           {user ?
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Avatar style={{ cursor: "pointer" }} className="h-9 w-9">
-                  <AvatarImage alt="Profil utilisateur" />
-                  <AvatarFallback>GS</AvatarFallback>
+                <Avatar style={{ cursor: "pointer" }} className="h-9 w-9" >
+                  {user.image ?
+                    <AvatarImage alt="Profil utilisateur" src={user.image} />
+                    :
+                    <CircleUserRound style={{ height: '35px', width: '35px' }} />
+                  }
                   <span className="sr-only">Toggle user menu</span>
                 </Avatar>
               </DropdownMenuTrigger>

@@ -8,9 +8,11 @@ import { storage } from '@/app/db/config';
 import Image from 'next/image';
 import { revalidateUser } from '@/app/admin/[id]/dashboard/action/action';
 import { Button } from '@/components/ui/button';
+import { useAuthContext } from '@/app/providers/AuthProvider';
 
 const ImageProfile = ({ user }) => {
     const [file, setFile] = useState(null);
+    const { userLogged } = useAuthContext();
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -21,7 +23,9 @@ const ImageProfile = ({ user }) => {
             const storageRef = ref(storage, `user/${user.uid}/`);
             await uploadBytes(storageRef, file);
             const downloadUrl = await getDownloadURL(storageRef);
+            const userData = { ...user, image: downloadUrl }
             await updateData(user.uid, "user", { image: downloadUrl });
+            userLogged(userData)
             await revalidateUser(user.uid);
             setFile(null);
         }
@@ -29,7 +33,7 @@ const ImageProfile = ({ user }) => {
 
     return (
         <div className="space-y-1">
-            <label className="cursor-pointer mt-2">
+            <label className="cursor-pointer my-2 flex flex-col items-center">
                 <input aria-label="Ajout image photo de profile"
                     onChange={handleFileChange}
                     className="hidden"
@@ -50,8 +54,8 @@ const ImageProfile = ({ user }) => {
                     :
                     <CircleUserRound style={{ height: '100px', width: '100px' }} />
                 }
+                {file && <Button onClick={uploadImage} className="my-2">Ajoutez l'image</Button>}
             </label>
-            {file && <Button onClick={uploadImage}>Ajoutez l'image</Button>}
         </div>
     )
 }
