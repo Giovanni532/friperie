@@ -55,7 +55,7 @@ export default function UpdateProfil({ user }) {
     };
 
     return (
-        <div className="">
+        <div className="w-7/12 mx-auto">
             {loading ?
                 <Spinner message={"Modification en cours ..."} />
                 :

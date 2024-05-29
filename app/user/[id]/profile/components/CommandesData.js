@@ -15,7 +15,7 @@ export function CommandeData({ commandes }) {
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[100px]">Numero de commande</TableHead>
+                    <TableHead>Numero de commande</TableHead>
                     <TableHead>Adresse de livraison</TableHead>
                     <TableHead>Suivie</TableHead>
                     <TableHead>Prix</TableHead>
