@@ -9,6 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import Link from "next/link"
+import DetailCommande from "./DetailCommande"
 
 export function CommandeData({ commandes }) {
     return (
@@ -19,7 +20,7 @@ export function CommandeData({ commandes }) {
                     <TableHead>Adresse de livraison</TableHead>
                     <TableHead>Suivie</TableHead>
                     <TableHead>Prix</TableHead>
-                    <TableHead className="text-right">Détails</TableHead>
+                    <TableHead>Détails</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -29,10 +30,8 @@ export function CommandeData({ commandes }) {
                         <TableCell>{`${commande.adresse}, ${commande.nip}, ${commande.ville}`}</TableCell>
                         <TableCell>{commande.statutCommande}</TableCell>
                         <TableCell>{`${commande.prixCommande} CHF`}</TableCell>
-                        <TableCell className="text-right">
-                            <Link href="#">
-                                Voir plus
-                            </Link>
+                        <TableCell>
+                        <DetailCommande commande={commande}/>
                         </TableCell>
                     </TableRow>
                 ))}

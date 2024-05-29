@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 .bg-gradient-left-to-right {
-  background-color: rgba(255, 255, 255, 0); /* Couleur de fond transparente */
-  background-position: 100% 0; /* Initialiser le fond complètement à gauche */
-  transition: background-position 0.5s ease, background-color 0.5s ease; /* Transition de la position du fond et de la couleur de fond */
+  background-color: rgba(255, 255, 255, 0);
+  background-position: 100% 0;
+  transition: background-position 0.3s ease, background-color 0.4s ease;
 }
 
 .bg-gradient-left-to-right:hover {
-  background-position: 0 0; /* Déplacer le fond complètement à droite */
-  background-color: rgba(255, 255, 255, 1); /* Couleur de fond blanc plein */
+  background-position: 0 0;
+  background-color: rgba(255, 255, 255, 1);
 }
 
 @layer base {
