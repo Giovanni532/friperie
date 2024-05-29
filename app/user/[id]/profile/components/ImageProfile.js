@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React  from 'react'
 import { CircleUserRound } from 'lucide-react'
 import { updateData } from '@/app/db/request/updateDoc';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -11,14 +11,13 @@ import { Button } from '@/components/ui/button';
 import { useAuthContext } from '@/app/providers/AuthProvider';
 
 const ImageProfile = ({ user }) => {
-    const [file, setFile] = useState(null);
     const { userLogged } = useAuthContext();
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
+    const handleFileChange = async (e) => {
+        await uploadImage(e.target.files[0]);
     };
 
-    const uploadImage = async () => {
+    const uploadImage = async (file) => {
         if (file) {
             const storageRef = ref(storage, `user/${user.uid}/`);
             await uploadBytes(storageRef, file);
@@ -27,7 +26,6 @@ const ImageProfile = ({ user }) => {
             await updateData(user.uid, "user", { image: downloadUrl });
             userLogged(userData)
             await revalidateUser(user.uid);
-            setFile(null);
         }
     }
 
@@ -54,7 +52,6 @@ const ImageProfile = ({ user }) => {
                     :
                     <CircleUserRound style={{ height: '100px', width: '100px' }} />
                 }
-                {file && <Button onClick={uploadImage} className="my-2">Ajoutez l'image</Button>}
             </label>
         </div>
     )

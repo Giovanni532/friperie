@@ -65,8 +65,7 @@ export default function SignupForm({ change }) {
 
     const googleSubmit = async () => {
         setLoading(true);
-        const now = new Date();
-        const today = new Date(now.getDay());
+        const today = new Date().toDateString();
         await loginWithGoogle(today, getFormattedDate())
             .then((result) => {
                 setCookie("admin", false)
