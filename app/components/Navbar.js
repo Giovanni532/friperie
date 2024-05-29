@@ -33,7 +33,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="z-10 fixed flex h-16 w-full items-center justify-between px-4 md:px-6 bg-white">
+      <header className="z-50 fixed flex h-16 w-full items-center justify-between px-4 md:px-6 bg-white">
         <Link className="flex items-center gap-2" href="/">
           <MountainIcon className="h-6 w-6" />
           <span className="font-semibold">Friperie</span>

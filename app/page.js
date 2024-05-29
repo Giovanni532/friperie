@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { getData } from "./action/action";
-import CardArticle from "./components/CardArticle";
 import { ParallaxScroll } from "@/components/ui/parallax-scroll";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-card";
 
 const images = [
   "https://images.unsplash.com/photo-1554080353-a576cf803bda?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
@@ -32,6 +32,38 @@ const images = [
   "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
   "https://images.unsplash.com/photo-1554080353-a576cf803bda?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
   "https://images.unsplash.com/photo-1505144808419-1957a94ca61e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3070&q=80",
+];
+
+const testimonials = [
+  {
+    quote:
+      "J'ai trouvé le site de friperie parfait pour renouveler ma garde-robe à moindre coût. Les vêtements sont de bonne qualité et les prix sont vraiment intéressants!",
+    name: "Sophie",
+    title: "Client satisfait",
+  },
+  {
+    quote:
+      "C'est incroyable de pouvoir acheter des vêtements d'occasion en ligne avec autant de facilité. Je suis ravie de mes achats sur ce site de friperie!",
+    name: "Marc",
+    title: "Expérience agréable",
+  },
+  {
+    quote: "Je recommande vivement ce site de friperie à tous mes amis. Les articles sont variés et on trouve toujours de bonnes affaires!",
+    name: "Alice",
+    title: "Satisfaite et fidèle cliente",
+  },
+  {
+    quote:
+      "Grâce à ce site de friperie, j'ai pu dénicher des pièces uniques que je ne trouverais nulle part ailleurs. Je suis ravie de mes trouvailles!",
+    name: "Thomas",
+    title: "Fan de la première heure",
+  },
+  {
+    quote:
+      "Je suis toujours impressionné par la qualité des vêtements que je reçois de ce site de friperie. Ils sont comme neufs et à des prix imbattables!",
+    name: "Laura",
+    title: "Achat malin",
+  },
 ];
 
 export async function getArticles() {
@@ -69,19 +101,13 @@ export default async function Home() {
       </section>
       <section className="py-16 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6 w-full">
-          <div className="flex flex-col items-center text-center">
+          <div className="flex flex-col items-center text-center mb-25">
             <h2 id="articles" className="text-3xl md:text-4xl font-bold tracking-tight">Nos articles</h2>
             <p className="text-gray-500 dark:text-gray-400 max-w-md">
               Discover our curated selection of the latest and greatest home decor items.
             </p>
           </div>
           <ParallaxScroll images={images}/>
-          {/* <ScrollArea className="w-h whitespace-nowrap rounded-md">
-            <div className="flex w-max space-x-4 p-4">
-              {articlesNotSolded.map(article => <CardArticle key={article.idArticle} article={article}/>)}
-              </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea> */}
         </div>
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
@@ -134,91 +160,11 @@ export default async function Home() {
         </div>
       </section>
       <section className="mx-auto max-w-2xl py-12 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-        <div className="mb-8">
+        <div className="mb-8 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">What Our Customers Say</h2>
           <p className="mt-4 text-gray-500 dark:text-gray-400">Hear from real people who love our products.</p>
         </div>
-        <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-          <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <div className="inline-block h-12 w-12 overflow-hidden rounded-full">
-                  {/* <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" /> */}
-                </div>
-              </div>
-              <div className="ml-4">
-                <h3 className="text-base font-medium text-gray-900 dark:text-gray-100">Jane Doe</h3>
-                <div className="flex items-center">
-                  <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <p className="mt-4 text-gray-500 dark:text-gray-400">
-              "I love the quality and design of this product. It's been a game-changer for my business."
-            </p>
-          </div>
-          <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <div className="inline-block h-12 w-12 overflow-hidden rounded-full">
-                  {/* <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" /> */}
-                </div>
-              </div>
-              <div className="ml-4">
-                <h3 className="text-base font-medium text-gray-900 dark:text-gray-100">John Smith</h3>
-                <div className="flex items-center">
-                  <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <p className="mt-4 text-gray-500 dark:text-gray-400">
-              "This product has exceeded all my expectations. The customer service is also top-notch."
-            </p>
-          </div>
-          <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <div className="inline-block h-12 w-12 overflow-hidden rounded-full">
-                  {/* <img alt="User Avatar" className="h-full w-full object-cover" src="/placeholder.svg" /> */}
-                </div>
-              </div>
-              <div className="ml-4">
-                <h3 className="text-base font-medium text-gray-900 dark:text-gray-100">Sarah Lee</h3>
-                <div className="flex items-center">
-                  <svg className="h-5 w-5 fill-yellow-400" fill="currentColor" viewBox="0 0 20 20" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <InfiniteMovingCards items={testimonials}/>
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
         <div className="container px-4 md:px-6 text-center">
