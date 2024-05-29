@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { getData } from "./action/action";
 import { ParallaxScroll } from "@/components/ui/parallax-scroll";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-card";
+import ButtonForScroll from "./components/ButtonForScroll";
 
 const images = [
   "https://images.unsplash.com/photo-1554080353-a576cf803bda?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
@@ -88,21 +89,16 @@ export default async function Home() {
               Explorez notre sélection de vêtements seconde main pour trouver des pièces uniques qui reflètent votre style et votre personnalité.
             </p>
             <div>
-              <Link
-                className="inline-flex items-center justify-center h-10 px-6 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300"
-                href="#articles"
-              >
-                Trouvez votre style
-              </Link>
+              <ButtonForScroll/>
             </div>
           </div>
           {/* <div className="bg-[url('/hero-image.jpg')] bg-cover bg-center h-[450px] rounded-xl" /> */}
         </div>
       </section>
-      <section className="py-16 md:py-24 lg:py-32">
+      <section key="articles" id="articles" className="py-16 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6 w-full">
           <div className="flex flex-col items-center text-center mb-25">
-            <h2 id="articles" className="text-3xl md:text-4xl font-bold tracking-tight mb-5">Trouvez l'inspiration dans notre sélection.</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-5">Trouvez l'inspiration dans notre sélection.</h2>
           </div>
           <ParallaxScroll images={images} />
         </div>
