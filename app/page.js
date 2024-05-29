@@ -81,18 +81,18 @@ export default async function Home() {
       <section className="bg-white dark:bg-gray-800 py-20 md:py-32 lg:py-40">
         <div className="container px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="space-y-6">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-              Discover the perfect home decor for your space
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-4 md:mb-6">
+              Découvrez les Vêtements Uniques pour Votre Style
             </h1>
-            <p className="text-gray-500 dark:text-gray-400 text-lg md:text-xl">
-              Elevate your living environment with our curated collection of high-quality, stylish home furnishings.
+            <p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl leading-relaxed">
+              Explorez notre sélection de vêtements seconde main pour trouver des pièces uniques qui reflètent votre style et votre personnalité.
             </p>
             <div>
               <Link
                 className="inline-flex items-center justify-center h-10 px-6 rounded-md bg-gray-900 text-gray-50 text-sm font-medium transition-colors hover:bg-gray-900/90 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus:ring-gray-300"
                 href="#articles"
               >
-                Shop Now
+                Trouvez votre style
               </Link>
             </div>
           </div>
@@ -102,21 +102,17 @@ export default async function Home() {
       <section className="py-16 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6 w-full">
           <div className="flex flex-col items-center text-center mb-25">
-            <h2 id="articles" className="text-3xl md:text-4xl font-bold tracking-tight">Nos articles</h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-md">
-              Discover our curated selection of the latest and greatest home decor items.
-            </p>
+            <h2 id="articles" className="text-3xl md:text-4xl font-bold tracking-tight mb-5">Trouvez l'inspiration dans notre sélection.</h2>
           </div>
-          <ParallaxScroll images={images}/>
+          <ParallaxScroll images={images} />
         </div>
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
         <div className="container px-4 md:px-6">
           <div className="text-center space-y-4">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Quality You Can Count On</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Une qualité sur laquelle vous pouvez compter.</h2>
             <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Our products are designed with the highest standards of quality and craftsmanship, ensuring you get the best
-              experience.
+              Découvrez notre sélection soigneusement choisie d'articles de mode de haute qualité. Chaque pièce est minutieusement examinée pour vous offrir le meilleur.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
@@ -161,10 +157,10 @@ export default async function Home() {
       </section>
       <section className="mx-auto max-w-2xl py-12 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="mb-8 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">What Our Customers Say</h2>
-          <p className="mt-4 text-gray-500 dark:text-gray-400">Hear from real people who love our products.</p>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Témoignages de nos Clients</h2>
+          <p className="mt-4 text-gray-500 dark:text-gray-400">Découvrez ce que disent nos clients qui adorent nos produits.</p>
         </div>
-        <InfiniteMovingCards items={testimonials}/>
+        <InfiniteMovingCards items={testimonials} />
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
         <div className="container px-4 md:px-6 text-center">
