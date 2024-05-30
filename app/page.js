@@ -89,7 +89,7 @@ export default async function Home() {
               Explorez notre sélection de vêtements seconde main pour trouver des pièces uniques qui reflètent votre style et votre personnalité.
             </p>
             <div>
-              <ButtonForScroll/>
+              <ButtonForScroll />
             </div>
           </div>
           {/* <div className="bg-[url('/hero-image.jpg')] bg-cover bg-center h-[450px] rounded-xl" /> */}
@@ -157,6 +157,7 @@ export default async function Home() {
           <p className="mt-4 text-gray-500 dark:text-gray-400">Découvrez ce que disent nos clients qui adorent nos produits.</p>
         </div>
         <InfiniteMovingCards items={testimonials} />
+        <InfiniteMovingCards items={testimonials} direction="right" speed="normalRight" />
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
         <div className="container px-4 md:px-6 text-center">

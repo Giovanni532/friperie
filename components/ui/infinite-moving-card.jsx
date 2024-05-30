@@ -57,7 +57,10 @@ export const InfiniteMovingCards = ({
             if (speed === "fast") {
                 containerRef.current.style.setProperty("--animation-duration", "20s");
             } else if (speed === "normal") {
-                containerRef.current.style.setProperty("--animation-duration", "40s");
+                containerRef.current.style.setProperty("--animation-duration", "50s");
+            }
+            else if (speed === "normalRight") {
+                containerRef.current.style.setProperty("--animation-duration", "55s");
             } else {
                 containerRef.current.style.setProperty("--animation-duration", "80s");
             }
@@ -68,7 +71,7 @@ export const InfiniteMovingCards = ({
         <div
             ref={containerRef}
             className={cn(
-                "scroller relative z-20  max-w-7xl overflow-hidden  [mask-image:linear-gradient(to_right,transparent,white_0%,white_100%,transparent)]",
+                "scroller relative z-20  max-w-7xl overflow-hidden  [mask-image:linear-gradient(to_right,transparent,white_05%,white_95%,transparent)]",
                 className
             )}
         >
