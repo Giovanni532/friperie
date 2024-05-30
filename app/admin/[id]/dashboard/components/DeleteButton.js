@@ -37,7 +37,7 @@ const DeleteButton = ({ collectionName, documentId, nameArticle }) => {
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Êtes-vous sur de vouloir supprimer l'article {nameArticle}</AlertDialogTitle>
+                    <AlertDialogTitle>Êtes-vous sur de vouloir supprimer l&apos;article {nameArticle}</AlertDialogTitle>
                     <AlertDialogDescription>
                         Cette action sera irréversible et vous ne pourrez pas récuperer cette article.
                     </AlertDialogDescription>

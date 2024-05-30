@@ -9,7 +9,7 @@ export default function ErrorPage() {
         <Compass className="h-20 w-20 text-gray-500 dark:text-gray-400" />
         <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">Oops, page not found!</h1>
         <p className="text-gray-500 dark:text-gray-400">
-          The page you're looking for doesn't exist or has been moved. Don't worry, you can find plenty of other things
+          The page you&apos;re looking for doesn&apos;t exist or has been moved. Don&apos;t worry, you can find plenty of other things
           on our platform.
         </p>
         <Link

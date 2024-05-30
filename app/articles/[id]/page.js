@@ -22,19 +22,19 @@ export default async function ArticleDetail({ params }) {
           <Carousel className="w-full max-w-md">
             <CarouselContent>
               {article.images.map(image => (
-                <CarouselItem>
-                <Image
-                  alt={article.nomArticle}
-                  className="w-full h-auto object-cover rounded-md"
-                  height={350}
-                  width={350}
-                  src={image}
-                  style={{
-                    aspectRatio: "350/350",
-                    objectFit: "cover",
-                  }}
-                />
-              </CarouselItem>
+                <CarouselItem key={image}>
+                  <Image
+                    alt={article.nomArticle}
+                    className="w-full h-auto object-cover rounded-md"
+                    height={350}
+                    width={350}
+                    src={image}
+                    style={{
+                      aspectRatio: "350/350",
+                      objectFit: "cover",
+                    }}
+                  />
+                </CarouselItem>
               ))}
             </CarouselContent>
             <CarouselPrevious />
@@ -56,8 +56,8 @@ export default async function ArticleDetail({ params }) {
           </div>
           <div className="flex items-center justify-between my-4">
             <div className="flex items-center">
-            <span>Couleur :</span>
-            <div class="mx-2 my-2 w-4 h-4 border rounded-full circle" style={{backgroundColor: article.couleur}}></div>
+              <span>Couleur :</span>
+              <div class="mx-2 my-2 w-4 h-4 border rounded-full circle" style={{ backgroundColor: article.couleur }}></div>
             </div>
             <p>Marque : {article.marque}</p>
           </div>

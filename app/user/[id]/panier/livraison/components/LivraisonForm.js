@@ -23,7 +23,7 @@ import getDataWithId from "@/app/db/request/getDataWithId";
 export default function LivraisonForm() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const {user, userLogged} = useAuthContext();
+    const { user, userLogged } = useAuthContext();
 
     const form = useForm({
         resolver: zodResolver(livraisonFormSchema),
@@ -47,7 +47,7 @@ export default function LivraisonForm() {
         <div className="mx-auto max-w-md space-y-8 border rounded-lg p-8">
             <div className="space-y-2 text-center">
                 <h1 className="text-3xl font-bold">Votre adresse</h1>
-                <p className="text-gray-500 dark:text-gray-400">Entrez votre adresse pour que l'on puisse vous envoyer votre nouvelle habits !</p>
+                <p className="text-gray-500 dark:text-gray-400">Entrez votre adresse pour que l&apos;on puisse vous envoyer votre nouvelle habits !</p>
             </div>
             {loading ?
                 <Spinner message={"Redirection vers la page de paiement en cours ..."} />

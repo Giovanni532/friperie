@@ -15,7 +15,7 @@ const ButtonPayment = ({ article }) => {
 
   useEffect(() => {
     user ? setAccess(false) : setAccess(true)
-  }, [])
+  }, [user])
 
   const handlePayment = () => {
     removeAllExcept(article)
@@ -24,7 +24,7 @@ const ButtonPayment = ({ article }) => {
 
   return (
     <Button onClick={handlePayment} className="my-2 mr-2" disabled={access}>
-      Acheter l'article
+      Acheter l&apos;article
     </Button>
   );
 };

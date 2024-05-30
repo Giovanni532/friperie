@@ -69,7 +69,7 @@ export default function FormArticle() {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
             <div className="grid gap-2">
-                <Label htmlFor="nomArticle" name="nomArticle">Nom de l'article</Label>
+                <Label htmlFor="nomArticle" name="nomArticle">Nom de l&apos;article</Label>
                 <Input
                     id="nomArticle"
                     name="nomArticle"
@@ -266,7 +266,7 @@ export default function FormArticle() {
                 )}
             </div>
             <DialogFooter>
-                <Button type="submit">Ajouter l'article</Button>
+                <Button type="submit">Ajouter l&apos;article</Button>
             </DialogFooter>
         </form>
     );

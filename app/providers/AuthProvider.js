@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getCookie, setCookie } from 'cookies-next';
 import Spinner from '../components/Spinner';
-import { useRouter } from 'next/navigation';
 
 export const AuthContext = createContext({});
 
@@ -12,8 +11,7 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
 
     const userLogged = (data) => {
         setUser(data);
@@ -21,13 +19,13 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        router.refresh();
+        setIsLoading(true)
         const userStored = getCookie('user');
         if (userStored) {
             userLogged(JSON.parse(userStored));
         }
         setIsLoading(false);
-    }, []);
+    }, [isLoading]);
 
     return (
         <AuthContext.Provider value={{ user, isAdmin, userLogged }}>

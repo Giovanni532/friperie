@@ -98,7 +98,7 @@ export default async function Home() {
       <section key="articles" id="articles" className="py-16 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6 w-full">
           <div className="flex flex-col items-center text-center mb-25">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-5">Trouvez l'inspiration dans notre sélection.</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-5">Trouvez l&apos;inspiration dans notre sélection.</h2>
           </div>
           <ParallaxScroll images={images} />
         </div>
@@ -108,7 +108,7 @@ export default async function Home() {
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Une qualité sur laquelle vous pouvez compter.</h2>
             <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Découvrez notre sélection soigneusement choisie d'articles de mode de haute qualité. Chaque pièce est minutieusement examinée pour vous offrir le meilleur.
+              Découvrez notre sélection soigneusement choisie d&apos;articles de mode de haute qualité. Chaque pièce est minutieusement examinée pour vous offrir le meilleur.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">

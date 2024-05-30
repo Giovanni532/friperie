@@ -27,7 +27,7 @@ import Spinner from "@/app/components/Spinner";
 import { useAuthContext } from "@/app/providers/AuthProvider";
 
 export default function SignupForm({ change }) {
-    const {userLogged} = useAuthContext();
+    const { userLogged } = useAuthContext();
     const [loading, setLoading] = useState(false);
     const [emailAlreadyExist, setEmailAlreadyExist] = useState(false);
     const router = useRouter();
@@ -153,11 +153,11 @@ export default function SignupForm({ change }) {
                                 />
                             </div>
                             <Button className="w-full" type="submit">
-                                S'inscrire
+                                S&apos;inscrire
                             </Button>
                             <Button className="w-full" variant="outline" onClick={googleSubmit}>
                                 <FcGoogle className="h-5 w-5 mr-2" />
-                                S'inscrire avec Google
+                                S&apos;inscrire avec Google
                             </Button>
                         </div>
                         <Separator className="my-3" />

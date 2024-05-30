@@ -133,7 +133,7 @@ export default function LoginForm({ change }) {
                         <div className="text-center text-sm">
                             Pas de compte ? {" "}
                             <Link className="underline" href="#" onClick={change}>
-                                S'inscrire
+                                S&apos;inscrire
                             </Link>
                         </div>
                     </form>

@@ -15,13 +15,13 @@ const UpdateButtonArticle = ({ article }) => {
             </DialogTrigger>
             <DialogContent className="sm:max-w-[600px]">
                 <DialogHeader>
-                    <DialogTitle>Modifier l'article {article.nomArticle}</DialogTitle>
+                    <DialogTitle>Modifier l&apos;article {article.nomArticle}</DialogTitle>
                     <DialogDescription>
                         Remplissez les informations ci-dessous pour modifier votre article.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4 h-1/2">
-                    <UpdateArticleForm article={article}/>
+                    <UpdateArticleForm article={article} />
                 </div>
             </DialogContent>
         </Dialog>

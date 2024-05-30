@@ -63,7 +63,7 @@ export default function UpdateArticleForm({ article }) {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
             <div className="grid gap-2">
-                <Label htmlFor="nomArticle" name="nomArticle">Nom de l'article</Label>
+                <Label htmlFor="nomArticle" name="nomArticle">Nom de l&apos;article</Label>
                 <Input
                     id="nomArticle"
                     name="nomArticle"
@@ -128,7 +128,7 @@ export default function UpdateArticleForm({ article }) {
                             <SelectItem value="Sacs à main">Sacs à main</SelectItem>
                             <SelectItem value="Colliers">Colliers</SelectItem>
                             <SelectItem value="Bracelets">Bracelets</SelectItem>
-                            <SelectItem value="Boucles d'oreilles">Boucles d'oreilles</SelectItem>
+                            <SelectItem value="Boucles d'oreilles">Boucles d&apos;oreilles</SelectItem>
                             <SelectItem value="Bagues">Bagues</SelectItem>
                         </SelectContent>
                     </Select>
@@ -260,7 +260,7 @@ export default function UpdateArticleForm({ article }) {
                 </div>
             </div>
             <DialogFooter>
-                <Button type="submit">Modifier l'article</Button>
+                <Button type="submit">Modifier l&apos;article</Button>
             </DialogFooter>
         </form>
     );
