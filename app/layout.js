@@ -12,9 +12,9 @@ export const metadata = {
     "vêtements uniques",
     "boutique de vêtements",
   ],
-  image: "/src/next.svg", // Chemin de l'image représentant la page d'accueil
+  image: "/src/next.svg",
   author: "Votre Nom ou Nom de la Friperie",
-  url: "https://www.votrefriperieenligne.com", // Lien vers la page d'accueil de votre site
+  url: "https://www.votrefriperieenligne.com",
 };
 
 

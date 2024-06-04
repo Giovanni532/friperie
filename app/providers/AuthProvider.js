@@ -11,7 +11,7 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const userLogged = (data) => {
         setUser(data);
@@ -19,7 +19,6 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        setIsLoading(true)
         const userStored = getCookie('user');
         if (userStored) {
             userLogged(JSON.parse(userStored));
@@ -29,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{ user, isAdmin, userLogged }}>
-            {isLoading && !user ? (
+            {isLoading ? (
                 <Spinner message="Récupération des données ..." />
             ) : (
                 children

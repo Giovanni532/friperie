@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { getData } from "./action/action";
 import { ParallaxScroll } from "@/components/ui/parallax-scroll";

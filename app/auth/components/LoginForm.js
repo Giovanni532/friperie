@@ -24,6 +24,7 @@ import login from "@/app/db/auth/login";
 import { IsAdmin } from "@/app/utils/(server)/isAdmin";
 import { useAuthContext } from "@/app/providers/AuthProvider";
 import getDataWithId from "@/app/db/request/getDataWithId";
+import ForgotPassword from "./ForgotPassword";
 
 export default function LoginForm({ change }) {
     const { userLogged } = useAuthContext()
@@ -111,7 +112,10 @@ export default function LoginForm({ change }) {
                                     name="password"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Votre mot de passe</FormLabel>
+                                            <div className="flex justify-between items-center">
+                                                <FormLabel>Votre mot de passe</FormLabel>
+                                                <ForgotPassword/>
+                                            </div>
                                             <FormControl>
                                                 <Input type="password" {...field} />
                                             </FormControl>
